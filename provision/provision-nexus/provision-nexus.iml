@@ -128,6 +128,7 @@
     <orderEntry type="library" name="Maven: org.eclipse.aether:aether-spi:1.0.2.v20150114" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.indexer:indexer-reader:5.1.2-816025a" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.archetype:archetype-catalog:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-raw:3.1.0-04" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-script-plugin:3.1.0-04" level="project" />
   </component>
 </module>

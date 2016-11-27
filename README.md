@@ -14,6 +14,12 @@ This will:
 **NB** If you are new to Groovy, be sure to check the [Groovy Learn X in Y minutes page](https://learnxinyminutes.com/docs/groovy/).
 
 
+# Caveats
+
+* Most of the repository plugins are not open-source.
+  * Only `maven` and `raw` are open-source.
+
+
 # Usage
 
 Build and install the [Ubuntu Base Box](https://github.com/rgl/ubuntu-vagrant).
