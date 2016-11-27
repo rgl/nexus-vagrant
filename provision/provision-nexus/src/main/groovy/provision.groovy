@@ -16,6 +16,19 @@ import org.sonatype.nexus.scheduling.schedule.Daily
 repository.createRawHosted("adhoc-package", "default")
 
 
+// create a npm repository backed by the default blob store.
+repository.createNpmHosted("npm-hosted", "default")
+
+
+// create a npm proxy repository backed by the default blob store.
+// see http://books.sonatype.com/nexus-book/reference3/npm.html
+repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "default")
+
+
+// create a npm group repository that merges the npm-host and npmjs.org-proxy together.
+repository.createNpmGroup("npm-group", ["npm-hosted", "npmjs.org-proxy"], "default")
+
+
 // see http://stackoverflow.com/questions/8138164/groovy-generate-random-string-from-given-character-set
 def random(String alphabet, int n) {
     new Random().with {
@@ -47,6 +60,9 @@ taskScheduler.scheduleTask(taskConfiguration, new Daily(new Date().clearTime().n
 // enable the NuGet API-Key Realm.
 realmManager = container.lookup(RealmManager.class.getName())
 realmManager.enableRealm("NuGetApiKey")
+
+// enable the npm Bearer Token Realm.
+realmManager.enableRealm("NpmToken")
 
 
 // the intent is to get or create an NuGet API Key like the one we can see on the user page:

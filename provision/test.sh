@@ -168,7 +168,78 @@ apt-get install -y curl
 # see https://books.sonatype.com/nexus-book/3.0/reference/raw.html#_uploading_files_to_hosted_raw_repositories
 expected='this is an adhoc package'
 echo "$expected" >package-1.0.0.txt
-curl --silent --user 'admin:admin123' --upload-file package-1.0.0.txt http://localhost:8081/repository/adhoc-package/package-1.0.0.txt
+curl --silent --user 'alice.doe:password' --upload-file package-1.0.0.txt http://localhost:8081/repository/adhoc-package/package-1.0.0.txt
 # download.
 actual=$(curl --silent http://localhost:8081/repository/adhoc-package/package-1.0.0.txt)
 [ "$actual" = "$expected" ] || (echo 'upload adhoc package test failed' && false)
+
+
+#
+# test the npm repositories.
+
+# install node LTS.
+# see https://github.com/nodesource/distributions#debinstall
+curl -sL https://deb.nodesource.com/setup_6.x | bash
+apt-get install -y nodejs
+node --version
+npm --version
+
+# configure npm to use the npm-group repository.
+npm config set registry http://localhost:8081/repository/npm-group/
+
+# install a package that indirectly uses the npmjs.org-proxy repository.
+mkdir /tmp/hello-world-npm
+pushd /tmp/hello-world-npm
+cat >package.json <<'EOF'
+{
+  "name": "hello-world",
+  "description": "the classic hello world",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "hello-world.js",
+  "repository": {
+    "type": "git",
+    "url": "https://git.example.com/hello-world.git"
+  },
+  "dependencies": {}
+}
+EOF
+cat >hello-world.js <<'EOF'
+const leftPad = require('left-pad')
+console.log(leftPad('hello world', 40))
+EOF
+npm install --save left-pad
+node hello-world.js
+
+# publish a package to the npm-hosted repository.
+# see https://www.npmjs.com/package/npm-cli-login
+npm install npm-cli-login
+export NPM_USER=alice.doe
+export NPM_PASS=password
+export NPM_EMAIL=alice.doe@example.com
+# NB npm-cli-login always adds the trailing slash to the registry url,
+#    BUT npm publish refuses to work without it, so workaround this.
+export NPM_REGISTRY=http://localhost:8081/repository/npm-hosted
+./node_modules/.bin/npm-cli-login
+export NPM_REGISTRY=$NPM_REGISTRY/
+npm publish --registry $NPM_REGISTRY
+popd
+# and use it.
+mkdir /tmp/use-hello-world-npm
+pushd /tmp/use-hello-world-npm
+cat >package.json <<'EOF'
+{
+  "name": "use-hello-world",
+  "description": "use the classic hello world",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://git.example.com/use-hello-world.git"
+  },
+  "dependencies": {}
+}
+EOF
+npm install hello-world
+node node_modules/hello-world/hello-world.js
+popd

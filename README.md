@@ -4,6 +4,7 @@ This will:
 
 * Configure Nexus through Groovy scripts.
   * Create the `adhoc-package` repository.
+  * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
   * Schedule a task to remove the old snapshots from the `maven-snapshots` repository.
   * Create users and a custom `deployer` role.
