@@ -124,11 +124,11 @@ EOF
 # test our nexus repository by creating an hello world project, which
 # will pull from our nexus repository.
 mvn \
+  --batch-mode \
   archetype:generate \
   -DgroupId=com.example.helloworld \
   -DartifactId=example-helloworld \
-  -DarchetypeArtifactId=maven-archetype-quickstart \
-  -DinteractiveMode=false
+  -DarchetypeArtifactId=maven-archetype-quickstart
 
 # test publishing a package.
 pushd example-helloworld
@@ -155,7 +155,9 @@ xml = open("pom.xml").read().replace("@@repositories@@", """
 open("pom.xml", "w").write(xml)
 '
 # deploy.
-mvn deploy
+mvn \
+  --batch-mode \
+  deploy
 popd
 
 
