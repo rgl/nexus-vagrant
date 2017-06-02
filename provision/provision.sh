@@ -54,7 +54,7 @@ popd
 # see https://books.sonatype.com/nexus-book/3.0/reference/install.html#reverse-proxy
 apt-get install -y --no-install-recommends nginx
 rm -f /etc/nginx/sites-enabled/default
-cat<<EOF>/etc/nginx/sites-available/$config_fqdn.conf
+cat >/etc/nginx/sites-available/$config_fqdn.conf <<EOF
 ssl_session_cache shared:SSL:4m;
 ssl_session_timeout 6h;
 #ssl_stapling on;

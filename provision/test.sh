@@ -28,7 +28,7 @@ nuget_source_push_api_key=$(nexus-groovy get-jenkins-nuget-api-key | jq -r '.res
 nuget install MsgPack -Source $nuget_source_url
 
 # test publishing a package.
-cat <<'EOF' >example-hello-world.nuspec
+cat >example-hello-world.nuspec <<'EOF'
 <package>
   <metadata>
     <id>example-hello-world</id>
@@ -48,7 +48,7 @@ cat <<'EOF' >example-hello-world.nuspec
   </files> 
 </package>
 EOF
-cat <<'EOF' >MESSAGE.md
+cat >MESSAGE.md <<'EOF'
 # Hello World
 
 Hey Ho Let's Go!
@@ -78,7 +78,7 @@ sudo apt-get install -y xmlstarlet
 # see https://books.sonatype.com/nexus-book/3.0/reference/maven.html
 # see https://maven.apache.org/guides/mini/guide-mirror-settings.html
 mkdir -p ~/.m2
-cat <<'EOF' >~/.m2/settings.xml
+cat >~/.m2/settings.xml <<'EOF'
 <settings>
   <servers>
     <server>
