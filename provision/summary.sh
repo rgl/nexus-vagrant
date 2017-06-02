@@ -14,5 +14,5 @@ use the admin/admin123 credentials to login.
 
 the logs are at:
 
-   /opt/nexus/data/log/
+   /opt/nexus/nexus3/log/
 EOF

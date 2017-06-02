@@ -1,6 +1,6 @@
 // run this file inside the Vagrant environment with bash /vagrant/execute-provision.groovy-script.sh
-// see https://books.sonatype.com/nexus-book/3.0/reference/scripting.html
-// see https://github.com/sonatype/nexus-book-examples/tree/nexus-3.0.x/scripting/nexus-script-example 
+// see https://books.sonatype.com/nexus-book/3.3/reference/scripting.html
+// see https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting/nexus-script-example 
 
 import groovy.json.JsonOutput
 import org.sonatype.nexus.security.user.UserSearchCriteria
@@ -11,8 +11,8 @@ import org.sonatype.nexus.scheduling.TaskScheduler
 import org.sonatype.nexus.scheduling.schedule.Daily
 
 // create a raw repository backed by the default blob store.
-// see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.0.x/scripting/complex-script/rawRepositories.groovy
-// see https://books.sonatype.com/nexus-book/3.0/reference/raw.html#_uploading_files_to_hosted_raw_repositories 
+// see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/rawRepositories.groovy
+// see https://books.sonatype.com/nexus-book/3.3/reference/raw.html#_uploading_files_to_hosted_raw_repositories 
 repository.createRawHosted("adhoc-package", "default")
 
 
@@ -39,7 +39,7 @@ jenkinsPassword = random((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 16)
 
 
 // set the base url. this is used when sending emails.
-// see https://books.sonatype.com/nexus-book/3.0/reference/admin.html#admin-base-url
+// see https://books.sonatype.com/nexus-book/3.3/reference/admin.html#admin-base-url
 core.baseUrl("https://" + java.net.InetAddress.getLocalHost().getCanonicalHostName())
 
 
@@ -81,7 +81,7 @@ def getOrCreateNuGetApiKey(String userName) {
 
 
 // create users in the deployer role.
-// see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.0.x/scripting/complex-script/security.groovy#L38
+// see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/security.groovy#L38
 def addDeployerUser(firstName, lastName, email, userName, password) {
     if (!security.securitySystem.listRoles().any { it.getRoleId() == "deployer" }) {
         privileges = [

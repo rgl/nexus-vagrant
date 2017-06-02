@@ -51,7 +51,7 @@ popd
 
 
 # install and configure nginx to proxy to nexus.
-# see https://books.sonatype.com/nexus-book/3.0/reference/install.html#reverse-proxy
+# see https://books.sonatype.com/nexus-book/3.3/reference/install.html#reverse-proxy
 apt-get install -y --no-install-recommends nginx
 rm -f /etc/nginx/sites-enabled/default
 cat >/etc/nginx/sites-available/$config_fqdn.conf <<EOF
@@ -124,10 +124,10 @@ install -d -o root -g nexus -m 750 /opt/nexus
 # download and install nexus.
 pushd /opt/nexus
 # see http://www.sonatype.com/download-oss-sonatype
-# see https://books.sonatype.com/nexus-book/3.0/reference/index.html
-nexus_tarball=nexus-3.1.0-04-unix.tar.gz
+# see https://books.sonatype.com/nexus-book/3.3/reference/index.html
+nexus_tarball=nexus-3.3.1-01-unix.tar.gz
 nexus_download_url=https://sonatype-download.global.ssl.fastly.net/nexus/3/$nexus_tarball
-nexus_download_sha1=e42053ba8ab33b3b4f79f7e50dbac2ffe6ca3b6e
+nexus_download_sha1=e7859e13622ea7e04474a2719c07b045c5fabb53
 wget -q $nexus_download_url
 if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
@@ -137,12 +137,12 @@ tar xf $nexus_tarball --strip-components 1
 rm $nexus_tarball
 chmod 700 nexus3
 chown -R nexus:nexus nexus3
-chmod 700 etc
-chown -R nexus:nexus etc # for some reason karaf changes files inside this directory. TODO see why.
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
-cp -p etc/{nexus-default.properties,nexus.properties}
-sed -i -E 's,(application-host=).+,\1127.0.0.1,g' etc/nexus.properties
-sed -i -E 's,nexus-pro-,nexus-oss-,g' etc/nexus.properties
+install -d -o nexus -g nexus -m 700 nexus3/etc
+grep -v -E '\s*##.*' etc/nexus-default.properties >nexus3/etc/nexus.properties
+sed -i -E 's,(application-host=).+,\1127.0.0.1,g' nexus3/etc/nexus.properties
+sed -i -E 's,nexus-pro-,nexus-oss-,g' nexus3/etc/nexus.properties
+diff -u etc/nexus-default.properties nexus3/etc/nexus.properties || true
 sed -i -E 's,\.\./sonatype-work/,,g' bin/nexus.vmoptions
 popd
 
