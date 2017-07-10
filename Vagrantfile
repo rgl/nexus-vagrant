@@ -7,7 +7,8 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
     vb.memory = 4096
   end
-  config.vm.provision :shell, path: 'provision/provision.sh'
+  config.vm.provision :shell, path: 'provision/provision-base.sh'
+  config.vm.provision :shell, path: 'provision/provision-nexus.sh'
   config.vm.provision :shell, path: 'provision/test.sh'
   config.vm.provision :shell, path: 'provision/summary.sh'
 end
