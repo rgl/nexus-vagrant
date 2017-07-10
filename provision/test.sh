@@ -7,7 +7,7 @@ mkdir -p tmp && cd tmp
 
 #
 # test the NuGet repository.
-# see https://books.sonatype.com/nexus-book/3.3/reference/nuget.html
+# see https://books.sonatype.com/nexus-book/3.4/reference/nuget.html
 
 if ! which mono; then
   sudo apt-get install -y mono-complete
@@ -75,7 +75,7 @@ sudo apt-get install -y xmlstarlet
 
 # setup the user maven configuration to use nexus as a mirror the
 # official maven repository.
-# see https://books.sonatype.com/nexus-book/3.3/reference/maven.html
+# see https://books.sonatype.com/nexus-book/3.4/reference/maven.html
 # see https://maven.apache.org/guides/mini/guide-mirror-settings.html
 mkdir -p ~/.m2
 cat >~/.m2/settings.xml <<'EOF'
@@ -167,7 +167,7 @@ popd
 apt-get install -y curl
 
 # upload.
-# see https://books.sonatype.com/nexus-book/3.3/reference/raw.html#_uploading_files_to_hosted_raw_repositories
+# see https://books.sonatype.com/nexus-book/3.4/reference/raw.html#_uploading_files_to_hosted_raw_repositories
 expected='this is an adhoc package'
 echo "$expected" >package-1.0.0.txt
 curl --silent --user 'alice.doe:password' --upload-file package-1.0.0.txt http://localhost:8081/repository/adhoc-package/package-1.0.0.txt
