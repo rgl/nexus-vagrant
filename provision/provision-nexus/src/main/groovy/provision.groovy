@@ -1,6 +1,6 @@
 // run this file inside the Vagrant environment with bash /vagrant/execute-provision.groovy-script.sh
-// see https://books.sonatype.com/nexus-book/3.4/reference/scripting.html
-// see https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting/nexus-script-example 
+// see https://help.sonatype.com/display/NXRM3/REST+and+Integration+API
+// see https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting/nexus-script-example
 
 import groovy.json.JsonOutput
 import org.sonatype.nexus.security.user.UserSearchCriteria
@@ -12,7 +12,7 @@ import org.sonatype.nexus.scheduling.schedule.Daily
 
 // create a raw repository backed by the default blob store.
 // see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/rawRepositories.groovy
-// see https://books.sonatype.com/nexus-book/3.4/reference/raw.html#_uploading_files_to_hosted_raw_repositories 
+// see https://help.sonatype.com/display/NXRM3/Raw+Repositories+and+Maven+Sites#RawRepositoriesandMavenSites-UploadingFilestoHostedRawRepositories
 repository.createRawHosted("adhoc-package", "default")
 
 
@@ -21,7 +21,7 @@ repository.createNpmHosted("npm-hosted", "default")
 
 
 // create a npm proxy repository backed by the default blob store.
-// see http://books.sonatype.com/nexus-book/reference3/npm.html
+// see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
 repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "default")
 
 
@@ -39,7 +39,7 @@ jenkinsPassword = random((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 16)
 
 
 // set the base url. this is used when sending emails.
-// see https://books.sonatype.com/nexus-book/3.4/reference/admin.html#admin-base-url
+// see https://help.sonatype.com/display/NXRM3/Configuration#Configuration-BaseURLCreation
 core.baseUrl("https://" + java.net.InetAddress.getLocalHost().getCanonicalHostName())
 
 

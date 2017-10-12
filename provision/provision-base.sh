@@ -62,7 +62,7 @@ popd
 
 
 # install and configure nginx to proxy to nexus.
-# see https://books.sonatype.com/nexus-book/3.4/reference/install.html#reverse-proxy
+# see https://help.sonatype.com/display/NXRM3/Installation#Installation-RunningBehindaReverseProxy
 apt-get install -y --no-install-recommends nginx
 rm -f /etc/nginx/sites-enabled/default
 cat >/etc/nginx/sites-available/$config_fqdn.conf <<EOF

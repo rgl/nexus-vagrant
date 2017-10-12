@@ -4,7 +4,8 @@ set -eux
 admin_username=${admin_username:-admin}
 admin_password=${admin_password:-admin123}
 
-# see https://books.sonatype.com/nexus-book/3.4/reference/scripting.html
+# see https://help.sonatype.com/display/NXRM3/REST+and+Integration+API
+# see https://nexus.example.com/swagger-ui/
 function nexus-groovy {
     local source_filename="/vagrant/provision/provision-nexus/src/main/groovy/$1.groovy"
 
