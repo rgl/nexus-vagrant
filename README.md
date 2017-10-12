@@ -37,3 +37,41 @@ one of the example accounts, e.g. `alice.doe` and password `password`).
 
 **NB** nginx is setup with a self-signed certificate that you have to trust before being
 able to access the local Nexus home page.
+
+
+# Troubleshooting
+
+## Logs
+
+The logs are at `/opt/nexus/log/nexus.log`.
+
+You can also see them with `journalctl -u nexus`.
+
+## OrientDB
+
+Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. To directly use it from the console run:
+
+```bash
+systemctl stop nexus
+su nexus -s /bin/bash -c 'cd /opt/nexus && java -jar ./lib/support/nexus-orient-console.jar'
+```
+
+Then connect to one of the databases, e.g. to the `security` database:
+
+```plain
+connect plocal:nexus3/db/security admin admin
+```
+
+Then execute some commands, e.g.:
+
+```plain
+help
+list classes
+```
+
+For more information about the console see [Running the OrientDB Console](http://orientdb.com/docs/master/Tutorial-Run-the-console.html).
+
+
+## Reference
+
+* [How to reset a forgotten admin password in Nexus 3.x](https://support.sonatype.com/hc/en-us/articles/213467158-How-to-reset-a-forgotten-admin-password-in-Nexus-3-x)
