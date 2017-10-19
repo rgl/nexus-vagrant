@@ -1,8 +1,9 @@
-// run this file inside the Vagrant environment with bash /vagrant/execute-provision.groovy-script.sh
+// run this file inside the Vagrant environment with bash /vagrant/provision/execute-provision.groovy-script.sh
 // see https://help.sonatype.com/display/NXRM3/REST+and+Integration+API
 // see https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting/nexus-script-example
 
 import groovy.json.JsonOutput
+import org.sonatype.nexus.repository.storage.WritePolicy
 import org.sonatype.nexus.security.user.UserSearchCriteria
 import org.sonatype.nexus.security.authc.apikey.ApiKeyStore
 import org.sonatype.nexus.security.realm.RealmManager
@@ -27,6 +28,15 @@ repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "defa
 
 // create a npm group repository that merges the npm-host and npmjs.org-proxy together.
 repository.createNpmGroup("npm-group", ["npm-hosted", "npmjs.org-proxy"], "default")
+
+
+// create a chocolatey repository backed by the default blob store.
+repository.createNugetHosted("chocolatey-hosted", "default", true, WritePolicy.ALLOW_ONCE)
+// create a chocolatey proxy repository backed by the default blob store.
+// see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
+repository.createNugetProxy("chocolatey.org-proxy", "https://chocolatey.org/api/v2/", "default")
+// create a chocolatey group repository that merges the chocolatey-host and chocolatey.org-proxy together.
+repository.createNugetGroup("chocolatey-group", ["chocolatey-hosted", "chocolatey.org-proxy"], "default")
 
 
 // see http://stackoverflow.com/questions/8138164/groovy-generate-random-string-from-given-character-set

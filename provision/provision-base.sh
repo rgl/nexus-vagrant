@@ -58,6 +58,13 @@ openssl x509 -req -sha256 \
     -days 365 \
     -in  $config_fqdn-csr.pem \
     -out $config_fqdn-crt.pem
+openssl x509 \
+    -in $config_fqdn-crt.pem \
+    -outform der \
+    -out $config_fqdn-crt.der
+# copy the certificate to a place where it can be used by other machines.
+mkdir -p /vagrant/shared
+cp $config_fqdn-crt.* /vagrant/shared
 popd
 
 

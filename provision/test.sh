@@ -23,6 +23,7 @@ function nuget {
 nuget_source_url=http://localhost:8081/repository/nuget-group/
 nuget_source_push_url=http://localhost:8081/repository/nuget-hosted/
 nuget_source_push_api_key=$(nexus-groovy get-jenkins-nuget-api-key | jq -r '.result | fromjson | .apiKey')
+echo -n $nuget_source_push_api_key >/vagrant/shared/jenkins-nuget-api-key
 
 # test installing a package from the public NuGet repository.
 nuget install MsgPack -Source $nuget_source_url

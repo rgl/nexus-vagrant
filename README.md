@@ -5,6 +5,7 @@ This will:
 * Configure Nexus through Groovy scripts.
   * Create the `adhoc-package` repository.
   * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
+  * Create the `chocolatey-group`, `chocolatey-hosted` and `chocolatey.org-proxy` repositories.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
   * Schedule a task to remove the old snapshots from the `maven-snapshots` repository.
   * Create users and a custom `deployer` role.
@@ -24,6 +25,8 @@ This will:
 # Usage
 
 Build and install the [Ubuntu Base Box](https://github.com/rgl/ubuntu-vagrant).
+
+Build and install the [Windows Base Box](https://github.com/rgl/windows-2016-vagrant).
 
 Add the following entry to your `/etc/hosts` file:
 
