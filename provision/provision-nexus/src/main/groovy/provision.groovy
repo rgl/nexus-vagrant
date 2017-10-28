@@ -14,18 +14,14 @@ import org.sonatype.nexus.scheduling.schedule.Daily
 // create a raw repository backed by the default blob store.
 // see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/rawRepositories.groovy
 // see https://help.sonatype.com/display/NXRM3/Raw+Repositories+and+Maven+Sites#RawRepositoriesandMavenSites-UploadingFilestoHostedRawRepositories
-repository.createRawHosted("adhoc-package", "default")
+repository.createRawHosted("adhoc-package", "default", true, WritePolicy.ALLOW_ONCE)
 
 
 // create a npm repository backed by the default blob store.
-repository.createNpmHosted("npm-hosted", "default")
-
-
+repository.createNpmHosted("npm-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a npm proxy repository backed by the default blob store.
 // see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
 repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "default")
-
-
 // create a npm group repository that merges the npm-host and npmjs.org-proxy together.
 repository.createNpmGroup("npm-group", ["npm-hosted", "npmjs.org-proxy"], "default")
 
