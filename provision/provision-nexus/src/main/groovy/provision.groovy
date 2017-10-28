@@ -26,6 +26,15 @@ repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "defa
 repository.createNpmGroup("npm-group", ["npm-hosted", "npmjs.org-proxy"], "default")
 
 
+// create a powershell repository backed by the default blob store.
+repository.createNugetHosted("powershell-hosted", "default", true, WritePolicy.ALLOW_ONCE)
+// create a powershell proxy repository backed by the default blob store.
+// see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
+repository.createNugetProxy("powershellgallery.com-proxy", "https://www.powershellgallery.com/api/v2/", "default")
+// create a powershell group repository that merges the powershell-host and powershellgallery.com-proxy together.
+repository.createNugetGroup("powershell-group", ["powershell-hosted", "powershellgallery.com-proxy"], "default")
+
+
 // create a chocolatey repository backed by the default blob store.
 repository.createNugetHosted("chocolatey-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a chocolatey proxy repository backed by the default blob store.
