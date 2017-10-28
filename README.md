@@ -35,7 +35,8 @@ Add the following entry to your `/etc/hosts` file:
 192.168.56.3 nexus.example.com
 ```
 
-Run `vagrant up` to launch the environment. See its output to known how to login at the
+Run `vagrant up --provider=virtualbox # or --provider=libvirt` to launch the environment.
+See its output to known how to login at the
 [local Nexus home page](https://nexus.example.com) as `admin` (you can also login with
 one of the example accounts, e.g. `alice.doe` and password `password`).
 

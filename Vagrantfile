@@ -1,8 +1,19 @@
+# to make sure the nexus node is created before the other nodes, we
+# have to force a --no-parallel execution.
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
 nexus_domain = 'nexus.example.com'
 nexus_ip = '192.168.56.3'
 
 Vagrant.configure(2) do |config|
-  config.vm.provider 'virtualbox' do |vb|
+  config.vm.provider :libvirt do |lv, config|
+    lv.memory = 2048
+    lv.cpus = 2
+    lv.cpu_mode = 'host-passthrough'
+    lv.keymap = 'pt'
+  end
+
+  config.vm.provider :virtualbox do |vb|
     vb.linked_clone = true
     vb.cpus = 2
     vb.memory = 2048
@@ -21,6 +32,15 @@ Vagrant.configure(2) do |config|
   config.vm.define :windows do |config|
     config.vm.box = 'windows-2016-amd64'
     config.vm.network 'private_network', ip: '192.168.56.4'
+    # replace the default synced_folder with something that works in cygwin.
+    # NB for some reason, this does not work when placed in the base box Vagrantfile.
+    config.vm.provider :libvirt do |lv, config|
+      config.vm.synced_folder '.', '/vagrant', disabled: true
+      config.vm.synced_folder '.', '/cygdrive/c/vagrant', type: 'rsync', rsync__exclude: [
+        '.vagrant/',
+        '.git/',
+        '*.box']
+    end
     config.vm.provider :virtualbox do |v, override|
       v.customize ['modifyvm', :id, '--vram', 64]
       v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
