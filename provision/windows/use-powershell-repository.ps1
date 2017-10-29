@@ -70,5 +70,6 @@ Pop-Location
 
 Write-Host 'Installing and using the ExampleGreeter module...'
 Install-Module ExampleGreeter
-Get-Module ExampleGreeter
+Import-Module ExampleGreeter
+Get-Module ExampleGreeter | Format-List
 Write-Greeting 'World'
