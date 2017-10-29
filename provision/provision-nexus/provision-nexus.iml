@@ -139,5 +139,14 @@
     <orderEntry type="library" name="Maven: org.apache.maven.archetype:archetype-catalog:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-raw:3.6.0-02" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-script-plugin:3.6.0-02" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: org.sonatype.nexus.plugins:nexus-ldap-plugin:3.6.0-02">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/binaries/system/com/sonatype/nexus/plugins/nexus-ldap-plugin/3.6.0-02/nexus-ldap-plugin-3.6.0-02.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

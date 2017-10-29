@@ -46,5 +46,12 @@
       <artifactId>nexus-script-plugin</artifactId>
       <version>${nx-version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.sonatype.nexus.plugins</groupId>
+      <artifactId>nexus-ldap-plugin</artifactId>
+      <version>${nx-version}</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/binaries/system/com/sonatype/nexus/plugins/nexus-ldap-plugin/${nx-version}/nexus-ldap-plugin-${nx-version}.jar</systemPath>
+    </dependency>
   </dependencies>
 </project>

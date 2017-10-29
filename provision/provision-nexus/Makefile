@@ -1,3 +1,5 @@
+all: sources binaries
+
 sources: sources-download
 	mkdir -p sources
 	cd sources && \
@@ -11,7 +13,14 @@ sources: sources-download
 sources-download:
 	mvn dependency:sources
 
-clean:
-	rm -rf sources
+binaries: binaries-download
 
-.PHONY: sources sources-download clean
+binaries-download:
+	mkdir -p binaries
+	wget -qO- https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.6.0-02-unix.tar.gz \
+		| tar xzf - --strip-components 1 -C binaries
+
+clean:
+	rm -rf sources binaries
+
+.PHONY: sources sources-download binaries-download clean

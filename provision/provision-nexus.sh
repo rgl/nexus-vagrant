@@ -2,6 +2,13 @@
 set -eux
 
 
+# use the local nexus user database.
+config_authentication='nexus'
+# OR use LDAP.
+# NB this assumes you are running the Active Directory from https://github.com/rgl/windows-domain-controller-vagrant.
+#config_authentication='ldap'
+
+
 # install java.
 apt-get install -y default-jre
 
@@ -45,6 +52,15 @@ sed -i -E 's,\.\./sonatype-work/,,g' bin/nexus.vmoptions
 popd
 
 
+# trust the LDAP server certificate for user authentication (when enabled).
+# NB this assumes you are running the Active Directory from https://github.com/rgl/windows-domain-controller-vagrant.
+if [ "$config_authentication" = 'ldap' ]; then
+echo '192.168.56.2 dc.example.com' >>/etc/hosts
+openssl x509 -inform der -in /vagrant/shared/ExampleEnterpriseRootCA.der -out /usr/local/share/ca-certificates/ExampleEnterpriseRootCA.crt
+update-ca-certificates
+fi
+
+
 # start nexus.
 cat >/etc/systemd/system/nexus.service <<'EOF'
 [Unit]
@@ -78,3 +94,8 @@ wget -qO- http://localhost:8081/service/extdirect/poll/rapture_State_get | jq .d
 
 # configure nexus with the groovy script.
 bash /vagrant/provision/execute-provision.groovy-script.sh
+
+# configure nexus ldap with a groovy script.
+if [ "$config_authentication" = 'ldap' ]; then
+    bash /vagrant/provision/execute-provision-ldap.groovy-script.sh
+fi

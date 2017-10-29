@@ -3,7 +3,7 @@ Open this directory with [IntelliJ IDEA Community Edition](https://www.jetbrains
 Inside IDEA you can browse the sources with `control+left-click` to see which methods are available.
 
 To execute the `src/main/groovy/provision.groovy` file inside the Vagrant
-environment run `bash /vagrant/execute-provision.groovy-script.sh`.
+environment run `bash /vagrant/provision/execute-provision.groovy-script.sh`.
 
 For more information see the Nexus [scripting documentation](https://help.sonatype.com/display/NXRM3/REST+and+Integration+API) and [examples](https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting).
 

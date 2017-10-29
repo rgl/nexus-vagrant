@@ -10,6 +10,7 @@ This will:
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
   * Schedule a task to remove the old snapshots from the `maven-snapshots` repository.
   * Create users and a custom `deployer` role.
+  * Setup an Active Directory LDAP user authentication source (when `config_authentication='ldap'` is set inside the `provision-nexus.sh` file).
   * For more details look inside the [provision/provision-nexus](provision/provision-nexus) directory.
 * Setup nginx as a Nexus HTTPS proxy and static file server.
 * Test the installed repositories by [using and publishing to them](provision/test.sh).
