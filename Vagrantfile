@@ -25,7 +25,11 @@ Vagrant.configure(2) do |config|
     config.vm.network 'private_network', ip: nexus_ip
     config.vm.provision :shell, path: 'provision/provision-base.sh'
     config.vm.provision :shell, path: 'provision/provision-nexus.sh'
-    config.vm.provision :shell, path: 'provision/test.sh'
+    config.vm.provision :shell, path: 'provision/use-raw-repository.sh'
+    config.vm.provision :shell, path: 'provision/use-maven-repository-from-mvn.sh'
+    config.vm.provision :shell, path: 'provision/use-maven-repository-from-gradle.sh'
+    config.vm.provision :shell, path: 'provision/use-nuget-repository.sh'
+    config.vm.provision :shell, path: 'provision/use-npm-repository.sh'
     config.vm.provision :shell, path: 'provision/summary.sh'
   end
 
