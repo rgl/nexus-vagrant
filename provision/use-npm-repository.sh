@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+nexus_domain=$(hostname --fqdn)
+
 mkdir -p tmp/use-npm-repository && cd tmp/use-npm-repository
 
 #
@@ -16,10 +18,14 @@ apt-get install -y nodejs
 node --version
 npm --version
 
+# configure npm to trust our system trusted CAs.
+# NB never turn off ssl verification with npm config set strict-ssl false
+npm config set cafile /etc/ssl/certs/ca-certificates.crt
+
 #
 # configure npm to use the npm-group repository.
 
-npm config set registry http://localhost:8081/repository/npm-group/
+npm config set registry https://$nexus_domain/repository/npm-group/
 
 # install a package that indirectly uses the npmjs.org-proxy repository.
 mkdir hello-world-npm
@@ -52,10 +58,10 @@ node hello-world.js
 export NPM_USER=alice.doe
 export NPM_PASS=password
 export NPM_EMAIL=alice.doe@example.com
-export NPM_REGISTRY=http://localhost:8081/repository/npm-hosted/
+export NPM_REGISTRY=https://$nexus_domain/repository/npm-hosted/
 npm install npm-registry-client@8.5.0
-npm_auth_token=$(NODE_PATH=$PWD/node_modules node /vagrant/provision/npm-login.js 2>/dev/null)
-npm set //localhost:8081/repository/npm-hosted/:_authToken $npm_auth_token
+npm_auth_token=$(NODE_PATH=$PWD/node_modules node --use-openssl-ca /vagrant/provision/npm-login.js 2>/dev/null)
+npm set //$nexus_domain/repository/npm-hosted/:_authToken $npm_auth_token
 
 # publish.
 npm publish --registry=$NPM_REGISTRY

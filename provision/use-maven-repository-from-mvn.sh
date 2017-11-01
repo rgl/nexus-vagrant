@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+nexus_domain=$(hostname --fqdn)
+
 mkdir -p tmp/use-maven-repository-from-mvn && cd tmp/use-maven-repository-from-mvn
 
 #
@@ -16,7 +18,7 @@ sudo apt-get install -y xmlstarlet
 # see https://help.sonatype.com/display/NXRM3/Maven+Repositories
 # see https://maven.apache.org/guides/mini/guide-mirror-settings.html
 mkdir -p ~/.m2
-cat >~/.m2/settings.xml <<'EOF'
+cat >~/.m2/settings.xml <<EOF
 <settings>
   <servers>
     <server>
@@ -29,7 +31,7 @@ cat >~/.m2/settings.xml <<'EOF'
     <mirror>
       <id>nexus</id>
       <mirrorOf>central</mirrorOf>
-      <url>http://localhost:8081/repository/maven-public/</url>
+      <url>https://$nexus_domain/repository/maven-public/</url>
     </mirror>
   </mirrors>
   <profiles>
@@ -77,21 +79,21 @@ xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
   --name distributionManagement \
   --value '@@repositories@@' \
   pom.xml
-python -c '
-xml = open("pom.xml").read().replace("@@repositories@@", """
+python -c "
+xml = open('pom.xml').read().replace('@@repositories@@', '''
     <repository>
       <id>nexus</id>
       <name>Releases</name>
-      <url>http://localhost:8081/repository/maven-releases</url>
+      <url>https://$nexus_domain/repository/maven-releases</url>
     </repository>
     <snapshotRepository>
       <id>nexus</id>
       <name>Snapshot</name>
-      <url>http://localhost:8081/repository/maven-snapshots</url>
+      <url>https://$nexus_domain/repository/maven-snapshots</url>
     </snapshotRepository>
-  """)
-open("pom.xml", "w").write(xml)
-'
+  ''')
+open('pom.xml', 'w').write(xml)
+"
 # deploy.
 mvn \
   --batch-mode \

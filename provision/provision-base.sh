@@ -69,6 +69,9 @@ openssl x509 \
 # copy the certificate to a place where it can be used by other machines.
 mkdir -p /vagrant/shared
 cp $config_fqdn-crt.* /vagrant/shared
+# configure our system to trust the certificate.
+cp $config_fqdn-crt.pem /usr/local/share/ca-certificates/$config_fqdn.crt
+update-ca-certificates -v
 popd
 
 

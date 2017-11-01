@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eux
 
+nexus_domain=$(hostname --fqdn)
 
 # use the local nexus user database.
 config_authentication='nexus'
@@ -57,7 +58,7 @@ popd
 if [ "$config_authentication" = 'ldap' ]; then
 echo '192.168.56.2 dc.example.com' >>/etc/hosts
 openssl x509 -inform der -in /vagrant/shared/ExampleEnterpriseRootCA.der -out /usr/local/share/ca-certificates/ExampleEnterpriseRootCA.crt
-update-ca-certificates
+update-ca-certificates -v
 fi
 
 
@@ -86,11 +87,11 @@ apt-get install -y --no-install-recommends httpie
 apt-get install -y --no-install-recommends jq
 
 # wait for nexus to come up.
-bash -c 'while [[ "$(wget -qO- http://localhost:8081/service/extdirect/poll/rapture_State_get | jq -r .data.data.status.value.edition)" != "OSS" ]]; do sleep 5; done'
+bash -c "while [[ \"\$(wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq -r .data.data.status.value.edition)\" != 'OSS' ]]; do sleep 5; done"
 
 # print the version using the API.
-wget -qO- http://localhost:8081/service/extdirect/poll/rapture_State_get | jq --raw-output .data.data.uiSettings.value.title
-wget -qO- http://localhost:8081/service/extdirect/poll/rapture_State_get | jq .data.data.status.value
+wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq --raw-output .data.data.uiSettings.value.title
+wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq .data.data.status.value
 
 # configure nexus with the groovy script.
 bash /vagrant/provision/execute-provision.groovy-script.sh

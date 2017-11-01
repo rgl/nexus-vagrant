@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+nexus_domain=$(hostname --fqdn)
+
 . /vagrant/provision/nexus-groovy.sh
 
 # run the provision script.

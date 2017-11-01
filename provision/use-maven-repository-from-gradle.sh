@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+nexus_domain=$(hostname --fqdn)
+
 mkdir -p tmp/use-maven-repository-from-gradle && cd tmp/use-maven-repository-from-gradle
 
 #
@@ -61,7 +63,7 @@ uploadArchives {
 EOF
 gradle build
 unzip -l build/libs/gradle-greeter-1.0.0.jar
-export NEXUS_REPOSITORY_URL='http://localhost:8081/repository/maven-releases'
+export NEXUS_REPOSITORY_URL="https://$nexus_domain/repository/maven-releases"
 export NEXUS_REPOSITORY_USERNAME='alice.doe'
 export NEXUS_REPOSITORY_PASSWORD='password'
 gradle upload
@@ -81,7 +83,7 @@ EOF
 cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter-application'
 EOF
-cat >build.gradle <<'EOF'
+cat >build.gradle <<EOF
 // see https://docs.gradle.org/4.2.1/userguide/java_plugin.html
 // see https://docs.gradle.org/4.2.1/userguide/application_plugin.html
 // see http://imperceptiblethoughts.com/shadow/
@@ -109,7 +111,7 @@ jar {
 
 repositories {
     maven {
-        url 'http://localhost:8081/repository/maven-public'
+        url 'https://$nexus_domain/repository/maven-public'
     }
 }
 

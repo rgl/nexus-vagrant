@@ -12,13 +12,13 @@ function nexus-groovy {
     local delete_result=$(http \
         -a "$admin_username:$admin_password" \
         --ignore-stdin \
-        DELETE http://localhost:8081/service/siesta/rest/v1/script/provision.groovy)   
+        DELETE https://$nexus_domain/service/siesta/rest/v1/script/provision.groovy)   
 
     local create_result=$(http \
         -a "$admin_username:$admin_password" \
         --ignore-stdin \
         --check-status \
-        POST http://localhost:8081/service/siesta/rest/v1/script \
+        POST https://$nexus_domain/service/siesta/rest/v1/script \
         name=provision.groovy \
         type=groovy \
         "content=@$source_filename")
@@ -27,6 +27,6 @@ function nexus-groovy {
         -a "$admin_username:$admin_password" \
         --ignore-stdin \
         --check-status \
-        POST http://localhost:8081/service/siesta/rest/v1/script/provision.groovy/run \
+        POST https://$nexus_domain/service/siesta/rest/v1/script/provision.groovy/run \
         Content-Type:text/plain
 }
