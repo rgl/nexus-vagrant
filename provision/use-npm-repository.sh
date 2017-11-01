@@ -11,7 +11,7 @@ mkdir -p tmp/use-npm-repository && cd tmp/use-npm-repository
 
 # install node LTS.
 # see https://github.com/nodesource/distributions#debinstall
-curl -sL https://deb.nodesource.com/setup_6.x | bash
+curl -sL https://deb.nodesource.com/setup_8.x | bash
 apt-get install -y nodejs
 node --version
 npm --version
