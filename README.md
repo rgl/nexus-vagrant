@@ -13,7 +13,7 @@ This will:
   * Setup an Active Directory LDAP user authentication source (when `config_authentication='ldap'` is set inside the `provision-nexus.sh` file).
   * For more details look inside the [provision/provision-nexus](provision/provision-nexus) directory.
 * Setup nginx as a Nexus HTTPS proxy and static file server.
-* Test the installed repositories by [using and publishing to them](provision/test.sh).
+* Test the installed repositories by using and publishing to them (see the `use-*` files).
 
 **NB** If you are new to Groovy, be sure to check the [Groovy Learn X in Y minutes page](https://learnxinyminutes.com/docs/groovy/).
 
@@ -44,6 +44,58 @@ one of the example accounts, e.g. `alice.doe` and password `password`).
 **NB** nginx is setup with a self-signed certificate that you have to trust before being
 able to access the local Nexus home page.
 
+# Notes
+
+## Check for a component existence
+
+With bash, [HTTPie](https://httpie.org/) and [jq](https://stedolan.github.io/jq/):
+
+```bash
+function nexus-component-exists {
+  [ \
+    "$(
+      http \
+        get \
+        https://nexus.example.com/service/siesta/rest/beta/search \
+        "repository==$1" \
+        "name==$2" \
+        "version==$3" \
+      | jq -r .items[].name)" == "$2" \
+  ]
+}
+
+if nexus-component-exists npm-hosted hello-world 1.0.0; then
+  echo 'component exists'
+else
+  echo 'component does not exists'
+fi
+```
+
+With PowerShell:
+
+```powershell
+function Test-NexusComponent {
+  param(
+    [string]$repository,
+    [string]$name,
+    [string]$version)
+  $items = (Invoke-RestMethod `
+    -Method Get `
+    -Uri https://nexus.example.com/service/siesta/rest/beta/search `
+    -Body @{
+      repository = $repository
+      name = $name
+      version = $version
+    }).items
+  $items.Count -and ($items.name -eq $name)
+}
+
+if (Test-NexusComponent npm-hosted hello-world 1.0.0) {
+  Write-Host 'component exists'
+} else {
+  Write-Host 'component does not exists'
+}
+```
 
 # Troubleshooting
 

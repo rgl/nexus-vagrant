@@ -7,10 +7,13 @@ config_fqdn=$(hostname --fqdn)
 cat <<EOF
 nexus is running at:
 
-   http://localhost:8081
    https://$config_fqdn
 
 use the admin/admin123 credentials to login.
+
+the api browser at:
+
+   https://$config_fqdn/swagger-ui/
 
 the logs are at:
 
