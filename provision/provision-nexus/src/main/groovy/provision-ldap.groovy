@@ -39,6 +39,16 @@ if (!ldapManager.listLdapServerConfigurations().any { it.name == "dc.example.com
     )
 }
 
+// create external role mappings.
+if (!security.securitySystem.listRoles().any { it.roleId == "Administrators" && it.source == "default" }) {
+    security.addRole(
+        "Administrators",
+        "nx-admin",
+        "Administrator Role (LDAP Administrators)",
+        [],
+        ["nx-admin"])
+}
+
 ldapUsers = security.securitySystem.searchUsers(new UserSearchCriteria(source: 'LDAP'))
 return JsonOutput.toJson([
         ldapUsers: ldapUsers.sort { it.userId },
