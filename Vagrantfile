@@ -53,6 +53,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-base.ps1', nexus_domain]
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-chocolatey-repository.ps1', nexus_domain]
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-powershell-repository.ps1', nexus_domain]
+    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-npm-repository.ps1', nexus_domain]
   end
 
   config.trigger.before :up, :vm => ['nexus'] do
