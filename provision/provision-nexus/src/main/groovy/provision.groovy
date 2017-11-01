@@ -55,13 +55,13 @@ jenkinsPassword = random((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 16)
 
 // set the base url. this is used when sending emails.
 // see https://help.sonatype.com/display/NXRM3/Configuration#Configuration-BaseURLCreation
-core.baseUrl("https://" + java.net.InetAddress.getLocalHost().getCanonicalHostName())
+core.baseUrl("https://" + java.net.InetAddress.localHost.canonicalHostName)
 
 
 // schedule a task to remove old snapshots from the maven-snapshots repository.
 // see https://github.com/sonatype/nexus-public/blob/555cc59e7fa659c0a1a4fbc881bf3fcef0e9a5b6/components/nexus-scheduling/src/main/java/org/sonatype/nexus/scheduling/TaskScheduler.java
 // see https://github.com/sonatype/nexus-public/blob/555cc59e7fa659c0a1a4fbc881bf3fcef0e9a5b6/plugins/nexus-coreui-plugin/src/main/java/org/sonatype/nexus/coreui/TaskComponent.groovy
-taskScheduler = (TaskScheduler)container.lookup(TaskScheduler.class.getName())
+taskScheduler = (TaskScheduler)container.lookup(TaskScheduler.class.name)
 taskConfiguration = taskScheduler.createTaskConfigurationInstance("repository.maven.remove-snapshots")
 taskConfiguration.name = "remove old snapshots from the maven-snapshots repository"
 // NB to see the available properties uncomment the tasksDescriptors property from JsonOutput.toJson at the end of this script.
@@ -73,7 +73,7 @@ taskScheduler.scheduleTask(taskConfiguration, new Daily(new Date().clearTime().n
 
 
 // enable the NuGet API-Key Realm.
-realmManager = container.lookup(RealmManager.class.getName())
+realmManager = container.lookup(RealmManager.class.name)
 realmManager.enableRealm("NuGetApiKey")
 
 // enable the npm Bearer Token Realm.
@@ -86,7 +86,7 @@ def getOrCreateNuGetApiKey(String userName) {
     realmName = "NexusAuthenticatingRealm"
     apiKeyDomain = "NuGetApiKey"
     principal = new SimplePrincipalCollection(userName, realmName)
-    keyStore = container.lookup(ApiKeyStore.class.getName())
+    keyStore = container.lookup(ApiKeyStore.class.name)
     apiKey = keyStore.getApiKey(apiKeyDomain, principal)
     if (apiKey == null) {
         apiKey = keyStore.createApiKey(apiKeyDomain, principal)
@@ -98,7 +98,7 @@ def getOrCreateNuGetApiKey(String userName) {
 // create users in the deployer role.
 // see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/security.groovy#L38
 def addDeployerUser(firstName, lastName, email, userName, password) {
-    if (!security.securitySystem.listRoles().any { it.getRoleId() == "deployer" }) {
+    if (!security.securitySystem.listRoles().any { it.roleId == "deployer" }) {
         privileges = [
             "nx-search-read",
             "nx-repository-view-*-*-read",
@@ -123,7 +123,7 @@ addDeployerUser("Bob", "Doe", "bob.doe@example.com", "bob.doe", "password")
 // get the jenkins NuGet API Key.
 jenkinsNuGetApiKey = getOrCreateNuGetApiKey("jenkins")
 
-realms = realmManager.getConfiguration().getRealmNames()
+realms = realmManager.configuration.realmNames
 users = security.securitySystem.searchUsers(new UserSearchCriteria())
 repositories = repository.repositoryManager.browse().collect { [name:it.name,type:it.type.value] }
 
