@@ -45,25 +45,23 @@ EOF
 npm install --save left-pad
 node hello-world.js
 
-
 #
 # publish a package to the npm-hosted repository.
-# see https://www.npmjs.com/package/npm-cli-login
 
 # login.
-npm install npm-cli-login
 export NPM_USER=alice.doe
 export NPM_PASS=password
 export NPM_EMAIL=alice.doe@example.com
-# NB npm-cli-login always adds the trailing slash to the registry url,
-#    BUT npm publish refuses to work without it, so workaround this.
-export NPM_REGISTRY=http://localhost:8081/repository/npm-hosted
-./node_modules/.bin/npm-cli-login
-export NPM_REGISTRY=$NPM_REGISTRY/
+export NPM_REGISTRY=http://localhost:8081/repository/npm-hosted/
+npm install npm-registry-client@8.5.0
+npm_auth_token=$(NODE_PATH=$PWD/node_modules node /vagrant/provision/npm-login.js 2>/dev/null)
+npm set //localhost:8081/repository/npm-hosted/:_authToken $npm_auth_token
+
+# publish.
 npm publish --registry=$NPM_REGISTRY
 popd
 
-# publish.
+# use the published package.
 mkdir use-hello-world-npm
 pushd use-hello-world-npm
 cat >package.json <<'EOF'
