@@ -74,7 +74,8 @@ User=nexus
 Group=nexus
 ExecStart=/opt/nexus/bin/nexus run
 WorkingDirectory=/opt/nexus
-Restart=always
+Restart=on-abort
+LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target
