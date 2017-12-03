@@ -26,11 +26,10 @@ repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "defa
 repository.createNpmGroup("npm-group", ["npm-hosted", "npmjs.org-proxy"], "default")
 
 
-// re-create the default nuget-hosted repository for not allowing re-deployments.
-repository.repositoryManager.delete("nuget-group")
-repository.repositoryManager.delete("nuget-hosted")
-repository.createNugetHosted("nuget-hosted", "default", true, WritePolicy.ALLOW_ONCE)
-repository.createNugetGroup("nuget-group", ["nuget-hosted", "nuget.org-proxy"], "default")
+// modify the default nuget-hosted repository for not allowing re-deployments.
+config = repository.repositoryManager.get("nuget-hosted").configuration.copy()
+config.attributes.storage.writePolicy = WritePolicy.ALLOW_ONCE
+repository.repositoryManager.update(config)
 
 
 // create a powershell repository backed by the default blob store.
