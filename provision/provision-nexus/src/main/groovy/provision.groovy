@@ -3,6 +3,7 @@
 // see https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting/nexus-script-example
 
 import groovy.json.JsonOutput
+import org.sonatype.nexus.capability.CapabilityRegistry
 import org.sonatype.nexus.repository.storage.WritePolicy
 import org.sonatype.nexus.security.user.UserSearchCriteria
 import org.sonatype.nexus.security.authc.apikey.ApiKeyStore
@@ -10,6 +11,20 @@ import org.sonatype.nexus.security.realm.RealmManager
 import org.apache.shiro.subject.SimplePrincipalCollection
 import org.sonatype.nexus.scheduling.TaskScheduler
 import org.sonatype.nexus.scheduling.schedule.Daily
+
+// disable all the outreach capabilities.
+capabilityRegistry = container.lookup(CapabilityRegistry.class)
+capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outreach")}.each {
+    capabilityRegistry.disable(it.context().id())
+}
+// you can retrieve all capabilities with:
+//return JsonOutput.toJson([
+//    capabilities: capabilityRegistry.all.collect {[
+//        id: it.context().id().toString(),
+//        type: it.context().type().toString(),
+//        enabled: it.context().enabled,
+//    ]}
+//])
 
 // create a raw repository backed by the default blob store.
 // see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/rawRepositories.groovy
