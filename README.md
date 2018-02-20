@@ -30,6 +30,12 @@ Build and install the [Ubuntu Base Box](https://github.com/rgl/ubuntu-vagrant).
 
 Build and install the [Windows Base Box](https://github.com/rgl/windows-2016-vagrant).
 
+Install the required Vagrant plugins:
+
+```bash
+vagrant plugin install vagrant-triggers # see https://github.com/emyl/vagrant-triggers
+```
+
 Add the following entry to your `/etc/hosts` file:
 
 ```
@@ -56,7 +62,7 @@ function nexus-component-exists {
     "$(
       http \
         get \
-        https://nexus.example.com/service/siesta/rest/beta/search \
+        https://nexus.example.com/service/rest/beta/search \
         "repository==$1" \
         "name==$2" \
         "version==$3" \
@@ -81,7 +87,7 @@ function Test-NexusComponent {
     [string]$version)
   $items = (Invoke-RestMethod `
     -Method Get `
-    -Uri https://nexus.example.com/service/siesta/rest/beta/search `
+    -Uri https://nexus.example.com/service/rest/beta/search `
     -Body @{
       repository = $repository
       name = $name
