@@ -15,12 +15,16 @@ if ! which mono; then
   sudo apt-get install -y mono-complete
 fi
 if [[ ! -f /tmp/nuget.exe ]]; then
-  wget -qO/tmp/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+  # NB ubuntu 16.04 mono cannot run nuget.exe versions above 4.5.1.
+  #    see https://github.com/NuGet/Home/issues/6790
+  wget -qO/tmp/nuget.exe https://dist.nuget.org/win-x86-commandline/v4.5.1/nuget.exe
 fi
 
 function nuget {
   mono /tmp/nuget.exe $*
 }
+
+nuget | grep -i version:
 
 nuget_source_url=https://$nexus_domain/repository/nuget-group/
 nuget_source_push_url=https://$nexus_domain/repository/nuget-hosted/
