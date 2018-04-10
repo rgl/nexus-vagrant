@@ -12,12 +12,17 @@ mkdir -p tmp/use-nuget-repository && cd tmp/use-nuget-repository
 # see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
 
 if ! which mono; then
-  sudo apt-get install -y mono-complete
+  # install the latest stable mono.
+  # NB this is needed to run the latest nuget.exe.
+  # see https://www.mono-project.com/download/stable/#download-lin-ubuntu
+  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  apt-get install -y apt-transport-https
+  echo "deb https://download.mono-project.com/repo/ubuntu stable-$(lsb_release -sc) main" >/etc/apt/sources.list.d/mono-official-stable.list
+  apt-get update
+  apt-get install -y mono-complete
 fi
 if [[ ! -f /tmp/nuget.exe ]]; then
-  # NB ubuntu 16.04 mono cannot run nuget.exe versions above 4.5.1.
-  #    see https://github.com/NuGet/Home/issues/6790
-  wget -qO/tmp/nuget.exe https://dist.nuget.org/win-x86-commandline/v4.5.1/nuget.exe
+  wget -qO/tmp/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 fi
 
 function nuget {
