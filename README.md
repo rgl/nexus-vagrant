@@ -30,17 +30,13 @@ Build and install the [Ubuntu Base Box](https://github.com/rgl/ubuntu-vagrant).
 
 Build and install the [Windows Base Box](https://github.com/rgl/windows-2016-vagrant).
 
-Install the required Vagrant plugins:
-
-```bash
-vagrant plugin install vagrant-triggers # see https://github.com/emyl/vagrant-triggers
-```
-
 Add the following entry to your `/etc/hosts` file:
 
 ```
 192.168.56.3 nexus.example.com
 ```
+
+Install Vagrant 2.1+.
 
 Run `vagrant up --provider=virtualbox # or --provider=libvirt` to launch the environment.
 See its output to known how to login at the

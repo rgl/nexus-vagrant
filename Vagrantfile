@@ -56,8 +56,9 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-npm-repository.ps1', nexus_domain]
   end
 
-  config.trigger.before :up, :vm => ['nexus'] do
+  config.trigger.before :up do |trigger|
+    trigger.only_on = 'nexus'
     ldap_ca_cert_path = '../windows-domain-controller-vagrant/tmp/ExampleEnterpriseRootCA.der'
-    run "sh -c 'mkdir -p shared && cp #{ldap_ca_cert_path} shared'" if File.file? ldap_ca_cert_path
+    trigger.run = {inline: "sh -c 'mkdir -p shared && cp #{ldap_ca_cert_path} shared'"} if File.file? ldap_ca_cert_path
   end
 end
