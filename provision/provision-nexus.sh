@@ -11,7 +11,7 @@ config_authentication='nexus'
 
 
 # install java.
-apt-get install -y default-jre
+apt-get install -y openjdk-8-jre-headless
 
 
 # add the nexus user.

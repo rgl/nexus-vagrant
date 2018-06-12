@@ -10,7 +10,7 @@ mkdir -p tmp/use-maven-repository-from-mvn && cd tmp/use-maven-repository-from-m
 
 # install maven and the java development kit.
 sudo apt-get install -y maven
-sudo apt-get install -y default-jdk
+sudo apt-get install -y openjdk-8-jdk-headless
 sudo apt-get install -y xmlstarlet
 
 # setup the user maven configuration to use nexus as a mirror the
@@ -79,7 +79,7 @@ xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
   --name distributionManagement \
   --value '@@repositories@@' \
   pom.xml
-python -c "
+python3 -c "
 xml = open('pom.xml').read().replace('@@repositories@@', '''
     <repository>
       <id>nexus</id>
