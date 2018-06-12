@@ -21,7 +21,7 @@ This will:
 # Caveats
 
 * Most of the repository plugins are not open-source.
-  * Only `maven` and `raw` are open-source.
+  * Only `maven`, `raw`, `npm` and `PyPI` are open-source.
 
 
 # Usage
