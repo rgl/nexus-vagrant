@@ -31,9 +31,9 @@ install -d -o root -g nexus -m 750 /opt/nexus
 pushd /opt/nexus
 # see http://www.sonatype.com/download-oss-sonatype
 # see https://help.sonatype.com/display/NXRM3
-nexus_tarball=nexus-3.11.0-01-unix.tar.gz
+nexus_tarball=nexus-3.12.1-01-unix.tar.gz
 nexus_download_url=https://sonatype-download.global.ssl.fastly.net/nexus/3/$nexus_tarball
-nexus_download_sha1=c9cd1c40861480ab6f36e22f9f69825d3af418d8
+nexus_download_sha1=4edc154398e27e6a0000915655f462aead374c90
 wget -q $nexus_download_url
 if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
