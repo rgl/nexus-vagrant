@@ -12,6 +12,7 @@ config_authentication='nexus'
 
 # install java.
 apt-get install -y openjdk-8-jre-headless
+apt-get install -y gnupg
 
 
 # add the nexus user.
@@ -31,9 +32,9 @@ install -d -o root -g nexus -m 750 /opt/nexus
 pushd /opt/nexus
 # see http://www.sonatype.com/download-oss-sonatype
 # see https://help.sonatype.com/display/NXRM3
-nexus_tarball=nexus-3.12.1-01-unix.tar.gz
+nexus_tarball=nexus-3.13.0-01-unix.tar.gz
 nexus_download_url=https://sonatype-download.global.ssl.fastly.net/nexus/3/$nexus_tarball
-nexus_download_sha1=4edc154398e27e6a0000915655f462aead374c90
+nexus_download_sha1=baf74b6d61254fd409ca8a058f113c8e18e55b0f
 wget -q $nexus_download_url
 if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
