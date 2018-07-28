@@ -23,6 +23,9 @@ Vagrant.configure(2) do |config|
     config.vm.box = 'ubuntu-18.04-amd64'
     config.vm.hostname = nexus_domain
     config.vm.network 'private_network', ip: nexus_ip
+    config.vm.provider :libvirt do |lv, config|
+      config.vm.synced_folder '.', '/vagrant', type: 'nfs'
+    end
     config.vm.provision :shell, path: 'provision/provision-base.sh'
     config.vm.provision :shell, path: 'provision/provision-nexus.sh'
     config.vm.provision :shell, path: 'provision/use-raw-repository.sh'
@@ -36,14 +39,8 @@ Vagrant.configure(2) do |config|
   config.vm.define :windows do |config|
     config.vm.box = 'windows-2016-amd64'
     config.vm.network 'private_network', ip: '192.168.56.4'
-    # replace the default synced_folder with something that works in cygwin.
-    # NB for some reason, this does not work when placed in the base box Vagrantfile.
     config.vm.provider :libvirt do |lv, config|
-      config.vm.synced_folder '.', '/vagrant', disabled: true
-      config.vm.synced_folder '.', '/cygdrive/c/vagrant', type: 'rsync', rsync__exclude: [
-        '.vagrant/',
-        '.git/',
-        '*.box']
+      config.vm.synced_folder '.', '/vagrant', type: 'smb', smb_username: ENV['USER'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
     end
     config.vm.provider :virtualbox do |v, override|
       v.customize ['modifyvm', :id, '--vram', 64]
