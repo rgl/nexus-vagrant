@@ -8,6 +8,11 @@ config_domain=$(hostname --domain)
 echo "127.0.0.1 $config_fqdn" >>/etc/hosts
 
 
+# enable systemd-journald persistent logs.
+sed -i -E 's,^#?(Storage=).*,\1persistent,' /etc/systemd/journald.conf
+systemctl restart systemd-journald
+
+
 # disable IPv6.
 cat >/etc/sysctl.d/98-disable-ipv6.conf <<'EOF'
 net.ipv6.conf.all.disable_ipv6 = 1
