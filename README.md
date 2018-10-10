@@ -156,7 +156,7 @@ For more information about the console see [Running the OrientDB Console](http:/
 ## OrientDB Check Databases
 
 Execute the commands from the OrientDB section to stop nexus, to enter the
-nexus account and create the orientdb-console function, then:
+nexus account and create the `orientdb-console` function, then:
 
 ```bash
 # check the databases.
@@ -172,18 +172,6 @@ orientdb-console 'CONNECT PLOCAL:db/security admin admin; CHECK DATABASE;'
 ```
 
 Then start nexus.
-
-## OrientDB Export Databases
-
-Execute the commands from the OrientDB section to stop nexus, to enter the
-nexus account and create the orientdb-console function, then:
-
-```bash
-# export the databases.
-orientdb-console 'CONNECT PLOCAL:db/config admin admin; EXPORT DATABASE /tmp/nexus-export-config.json.gz;'
-#orientdb-console 'CONNECT PLOCAL:db/security admin admin; EXPORT DATABASE /tmp/nexus-export-security.json.gz;'
-orientdb-console 'CONNECT PLOCAL:db/component admin admin; EXPORT DATABASE /tmp/nexus-export-component.json.gz;'
-
 
 ## Reference
 
