@@ -32,7 +32,9 @@ install -d -o root -g nexus -m 750 /opt/nexus
 pushd /opt/nexus
 # see http://www.sonatype.com/download-oss-sonatype
 # see https://help.sonatype.com/display/NXRM3
-nexus_tarball=nexus-3.13.0-01-unix.tar.gz
+nexus_version=3.13.0-01
+nexus_home=/opt/nexus/nexus-$nexus_version
+nexus_tarball=nexus-$nexus_version-unix.tar.gz
 nexus_download_url=https://sonatype-download.global.ssl.fastly.net/nexus/3/$nexus_tarball
 nexus_download_sha1=baf74b6d61254fd409ca8a058f113c8e18e55b0f
 wget -q $nexus_download_url
@@ -40,17 +42,15 @@ if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ];
     echo "downloaded $nexus_download_url failed the checksum verification"
     exit 1
 fi
-tar xf $nexus_tarball --strip-components 1
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.13.0-01) and sonatype-work directories.
 rm $nexus_tarball
-chmod 700 nexus3
-chown -R nexus:nexus nexus3
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
-install -d -o nexus -g nexus -m 700 nexus3/etc
-grep -v -E '\s*##.*' etc/nexus-default.properties >nexus3/etc/nexus.properties
-sed -i -E 's,(application-host=).+,\1127.0.0.1,g' nexus3/etc/nexus.properties
-sed -i -E 's,nexus-pro-,nexus-oss-,g' nexus3/etc/nexus.properties
-diff -u etc/nexus-default.properties nexus3/etc/nexus.properties || true
-sed -i -E 's,\.\./sonatype-work/,,g' bin/nexus.vmoptions
+install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc
+chown -R nexus:nexus sonatype-work
+grep -v -E '\s*##.*' $nexus_home/etc/nexus-default.properties >sonatype-work/nexus3/etc/nexus.properties
+sed -i -E 's,(application-host=).+,\1127.0.0.1,g' sonatype-work/nexus3/etc/nexus.properties
+sed -i -E 's,nexus-pro-,nexus-oss-,g' sonatype-work/nexus3/etc/nexus.properties
+diff -u $nexus_home/etc/nexus-default.properties sonatype-work/nexus3/etc/nexus.properties || true
 popd
 
 
@@ -64,7 +64,7 @@ fi
 
 
 # start nexus.
-cat >/etc/systemd/system/nexus.service <<'EOF'
+cat >/etc/systemd/system/nexus.service <<EOF
 [Unit]
 Description=Nexus
 After=network.target
@@ -73,8 +73,8 @@ After=network.target
 Type=simple
 User=nexus
 Group=nexus
-ExecStart=/opt/nexus/bin/nexus run
-WorkingDirectory=/opt/nexus
+ExecStart=$nexus_home/bin/nexus run
+WorkingDirectory=$nexus_home
 Restart=on-abort
 LimitNOFILE=65536
 

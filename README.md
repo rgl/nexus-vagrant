@@ -112,26 +112,81 @@ You can also see them with `journalctl -u nexus`.
 Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. To directly use it from the console run:
 
 ```bash
-systemctl stop nexus
-su nexus -s /bin/bash -c 'cd /opt/nexus && java -jar ./lib/support/nexus-orient-console.jar'
+systemctl stop nexus                  # make sure nexus is not running while you use the database.
+su -s /bin/bash nexus                 # switch to the nexus user.
+nexus_home=/opt/nexus/nexus-3.13.0-01 # make sure you have the correct version here.
+nexus_data=$nexus_home/../sonatype-work/nexus3
+function orientdb-console {
+    java -jar $nexus_home/lib/support/nexus-orient-console.jar $*
+}
+cd $nexus_data
+ls -laF db | grep ^d  # list the databases
+orientdb-console      # start the console.
 ```
 
 Then connect to one of the databases, e.g. to the `security` database:
 
 ```plain
-connect plocal:nexus3/db/security admin admin
+connect plocal:db/security admin admin
 ```
 
-Then execute some commands, e.g.:
+Then execute some commands and exit the orientdb console, e.g.:
 
 ```plain
 help
+config
 list classes
+exit
+```
+
+Exit the nexus user shell:
+
+```bash
+exit
+```
+
+And start nexus again:
+
+```bash
+systemctl start nexus
 ```
 
 For more information about the console see [Running the OrientDB Console](http://orientdb.com/docs/master/Tutorial-Run-the-console.html).
+
+## OrientDB Check Databases
+
+Execute the commands from the OrientDB section to stop nexus, to enter the
+nexus account and create the orientdb-console function, then:
+
+```bash
+# check the databases.
+# NB use CHECK DATABASE -v to see the verbose log.
+orientdb-console 'CONNECT PLOCAL:db/accesslog admin admin; CHECK DATABASE;'
+orientdb-console 'CONNECT PLOCAL:db/analytics admin admin; CHECK DATABASE;'
+orientdb-console 'CONNECT PLOCAL:db/audit admin admin; CHECK DATABASE;'
+orientdb-console 'CONNECT PLOCAL:db/component admin admin; CHECK DATABASE;'
+#orientdb-console 'CONNECT PLOCAL:db/component admin admin; REPAIR DATABASE;'
+orientdb-console 'CONNECT PLOCAL:db/config admin admin; CHECK DATABASE;'
+orientdb-console 'CONNECT PLOCAL:db/security admin admin; CHECK DATABASE;'
+#orientdb-console 'CONNECT PLOCAL:db/OSystem admin admin; CONFIG; LIST CLASSES;' # XXX fails to connect. see https://groups.google.com/a/glists.sonatype.com/forum/#!topic/nexus-users/7dVofIwC5HM
+```
+
+Then start nexus.
+
+## OrientDB Export Databases
+
+Execute the commands from the OrientDB section to stop nexus, to enter the
+nexus account and create the orientdb-console function, then:
+
+```bash
+# export the databases.
+orientdb-console 'CONNECT PLOCAL:db/config admin admin; EXPORT DATABASE /tmp/nexus-export-config.json.gz;'
+#orientdb-console 'CONNECT PLOCAL:db/security admin admin; EXPORT DATABASE /tmp/nexus-export-security.json.gz;'
+orientdb-console 'CONNECT PLOCAL:db/component admin admin; EXPORT DATABASE /tmp/nexus-export-component.json.gz;'
 
 
 ## Reference
 
 * [How to reset a forgotten admin password in Nexus 3.x](https://support.sonatype.com/hc/en-us/articles/213467158-How-to-reset-a-forgotten-admin-password-in-Nexus-3-x)
+* [Backup and Restore](https://help.sonatype.com/repomanager3/backup-and-restore)
+* [Upgrading](https://help.sonatype.com/repomanager3/upgrading)
