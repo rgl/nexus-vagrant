@@ -27,9 +27,10 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //])
 
 // create a raw repository backed by the default blob store.
+// NB this repository can host any type of artifact, so we disable strictContentTypeValidation.
 // see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/rawRepositories.groovy
 // see https://help.sonatype.com/display/NXRM3/Raw+Repositories+and+Maven+Sites#RawRepositoriesandMavenSites-UploadingFilestoHostedRawRepositories
-repository.createRawHosted("adhoc-package", "default", true, WritePolicy.ALLOW_ONCE)
+repository.createRawHosted("adhoc-package", "default", false, WritePolicy.ALLOW_ONCE)
 
 
 // create a npm repository backed by the default blob store.
