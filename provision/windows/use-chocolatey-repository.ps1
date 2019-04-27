@@ -27,6 +27,10 @@ cp -Force GoogleChrome-external_extensions.json (Get-Item "$chromeLocation\*\def
 cp -Force GoogleChrome-master_preferences.json "$chromeLocation\master_preferences"
 cp -Force GoogleChrome-master_bookmarks.html "$chromeLocation\master_bookmarks.html"
 
+# set the default browser.
+choco install -y SetDefaultBrowser
+SetDefaultBrowser HKLM "Google Chrome"
+
 # see https://github.com/chocolatey/choco/wiki/CreatePackages
 # see https://docs.nuget.org/docs/reference/nuspec-reference
 Write-Host 'Creating the graceful-terminating-console-application-windows chocolatey package...'
