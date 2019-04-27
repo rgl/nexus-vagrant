@@ -17,7 +17,7 @@ binaries: binaries-download
 
 binaries-download:
 	mkdir -p binaries
-	wget -qO- https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.14.0-04-unix.tar.gz \
+	wget -qO- https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-3.16.1-02-unix.tar.gz \
 		| tar xzf - --strip-components 1 -C binaries
 
 clean:
