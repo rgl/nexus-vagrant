@@ -112,6 +112,7 @@ You can also see them with `journalctl -u nexus`.
 Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. To directly use it from the console run:
 
 ```bash
+sudo su -l                            # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
 nexus_home=/opt/nexus/nexus-3.16.1-02 # make sure you have the correct version here.
