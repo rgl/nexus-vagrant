@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define :windows do |config|
-    config.vm.box = 'windows-2016-amd64'
+    config.vm.box = 'windows-2019-amd64'
     config.vm.network 'private_network', ip: '192.168.56.4'
     config.vm.provider :libvirt do |lv, config|
       config.vm.synced_folder '.', '/vagrant', type: 'smb', smb_username: ENV['USER'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
