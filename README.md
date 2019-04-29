@@ -58,7 +58,7 @@ function nexus-component-exists {
     "$(
       http \
         get \
-        https://nexus.example.com/service/rest/beta/search \
+        https://nexus.example.com/service/rest/v1/search \
         "repository==$1" \
         "name==$2" \
         "version==$3" \
@@ -83,7 +83,7 @@ function Test-NexusComponent {
     [string]$version)
   $items = (Invoke-RestMethod `
     -Method Get `
-    -Uri https://nexus.example.com/service/rest/beta/search `
+    -Uri https://nexus.example.com/service/rest/v1/search `
     -Body @{
       repository = $repository
       name = $name
