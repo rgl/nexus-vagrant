@@ -64,6 +64,8 @@ npm_auth_token=$(NODE_PATH=$PWD/node_modules node --use-openssl-ca /vagrant/prov
 npm set //$nexus_domain/repository/npm-hosted/:_authToken $npm_auth_token
 
 # publish.
+# NB instead of using the token from the npm configuration you can
+#    export the NPM_TOKEN environment variable.
 npm publish --registry=$NPM_REGISTRY
 popd
 
