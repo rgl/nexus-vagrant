@@ -59,7 +59,7 @@ export NPM_USER=alice.doe
 export NPM_PASS=password
 export NPM_EMAIL=alice.doe@example.com
 export NPM_REGISTRY=https://$nexus_domain/repository/npm-hosted/
-npm install npm-registry-client@8.5.0
+npm install npm-registry-client@8.6.0
 npm_auth_token=$(NODE_PATH=$PWD/node_modules node --use-openssl-ca /vagrant/provision/npm-login.js 2>/dev/null)
 npm set //$nexus_domain/repository/npm-hosted/:_authToken $npm_auth_token
 

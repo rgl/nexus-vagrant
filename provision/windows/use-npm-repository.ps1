@@ -83,7 +83,7 @@ $env:NPM_USER='alice.doe'
 $env:NPM_PASS='password'
 $env:NPM_EMAIL='alice.doe@example.com'
 $env:NPM_REGISTRY="https://$nexusDomain/repository/npm-hosted/"
-npm install npm-registry-client@8.5.0
+npm install npm-registry-client@8.6.0
 $env:NODE_PATH="$PWD/node_modules"
 $env:NODE_EXTRA_CA_CERTS='C:\ProgramData\ca-certificates.crt'
 $npmAuthToken = node --use-openssl-ca /vagrant/provision/npm-login.js 2>$null
