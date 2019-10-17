@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+. /vagrant/provision/nexus-groovy.sh
+
 config_fqdn=$(hostname --fqdn)
 
 # show the installation summary.
@@ -9,7 +11,7 @@ nexus is running at:
 
    https://$config_fqdn
 
-use the admin/admin123 credentials to login.
+use the admin/$admin_password credentials to login.
 
 the api browser at:
 

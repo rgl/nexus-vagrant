@@ -20,8 +20,8 @@ This will:
 
 # Caveats
 
-* Most of the repository plugins are not open-source.
-  * Only `maven`, `raw`, `npm` and `PyPI` are open-source.
+* Not all the repository plugins are open-source.
+  * The open-source ones are available at [sonatype/nexus-public/plugins](https://github.com/sonatype/nexus-public/tree/master/plugins).
 
 
 # Usage
@@ -115,7 +115,7 @@ Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. T
 sudo su -l                            # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.16.1-02 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.19.1-01 # make sure you have the correct version here.
 nexus_data=$nexus_home/../sonatype-work/nexus3
 function orientdb-console {
     java -jar $nexus_home/lib/support/nexus-orient-console.jar $*

@@ -2,7 +2,7 @@
 set -eux
 
 admin_username=${admin_username:-admin}
-admin_password=${admin_password:-admin123}
+admin_password=${admin_password:-$(cat /opt/nexus/sonatype-work/nexus3/admin.password)}
 
 # see https://help.sonatype.com/display/NXRM3/REST+and+Integration+API
 # see https://nexus.example.com/swagger-ui/

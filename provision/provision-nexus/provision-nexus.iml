@@ -8,41 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-core:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-bootstrap:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-supportzip-api:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-email:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-cleanup:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-ssl:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-webhooks:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-script:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-common:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-common:2.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-lifecycle:2.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-task-logging:3.16.1-02" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-validation:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-security:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-audit:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-formfields:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-i18n:2.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-jmx:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-cache:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: javax.cache:cache-api:1.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-crypto:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcpg-jdk15on:1.60" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.60" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-repository:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-capability:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-mime:3.16.1-02" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.19" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-orient:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-rest:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-thread:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-api:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-file:3.16.1-02" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-group:3.16.1-02" level="project" />
     <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-annotation:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-extdirect:3.16.1-02" level="project" />
@@ -55,33 +22,21 @@
     <orderEntry type="library" name="Maven: org.sonatype.directjngine:directjngine:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.3.2" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-httpclient:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.5" level="project" />
-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-elasticsearch:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.bundles:org.sonatype.nexus.bundles.elasticsearch:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-transaction:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-scheduling:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-selector:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-commands:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-maven:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-raw:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-script-plugin:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-core:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-bootstrap:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-core:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-bootstrap:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:log4j-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: uk.org.lidalia:sysout-over-slf4j:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-interpolation:1.24" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-supportzip-api:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-email:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-supportzip-api:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-email:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-email:1.5" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-cleanup:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-ssl:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-cleanup:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-ssl:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.geronimo.framework:geronimo-crypto:2.2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-webhooks:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-script:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-common:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-webhooks:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-script:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-common:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:25.0-jre" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.sisu:org.eclipse.sisu.inject:0.3.2" level="project" />
@@ -94,17 +49,17 @@
     <orderEntry type="library" name="Maven: javax.interceptor:javax.interceptor-api:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-common:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-common:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.gossip:gossip-support:1.8" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.gossip:gossip-bootstrap:1.8" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-lifecycle:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-lifecycle:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.9.5" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy-all:2.4.15" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-task-logging:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-validation:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-task-logging:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-validation:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:5.1.2.Final" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.0.0" level="project" />
@@ -113,18 +68,20 @@
     <orderEntry type="library" name="Maven: org.glassfish.web:javax.el:2.2.6" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.paranamer:paranamer:2.8" level="project" />
     <orderEntry type="library" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-security:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-audit:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-formfields:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-i18n:2.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-jmx:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-cache:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-security:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-audit:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-formfields:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.goodies:goodies-i18n:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-jmx:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-cache:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: javax.cache:cache-api:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-crypto:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-crypto:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcpg-jdk15on:1.60" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.60" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-rest:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.21" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-core:1.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-web:1.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-guice:1.3.2" level="project" />
@@ -133,14 +90,13 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-servlet:4.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:4.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-repository:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-capability:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-mime:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.20" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-repository:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-capability:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-mime:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.22" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-orient:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-rest:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-orient:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: com.orientechnologies:orientdb-core:2.2.36" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:4.5.0" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna-platform:4.5.0" level="project" />
@@ -152,19 +108,21 @@
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.2" level="project" />
-    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-core:4.0.5" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-thread:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-api:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-file:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-core:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-thread:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-api:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-blobstore-file:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Maven: com.squareup:tape:1.2.3" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-httpclient:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-datastore:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-datastore-api:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-httpclient:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.5" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.9" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-elasticsearch:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.bundles:org.sonatype.nexus.bundles.elasticsearch:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-elasticsearch:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus.bundles:org.sonatype.nexus.bundles.elasticsearch:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.2" level="project" />
@@ -173,19 +131,18 @@
     <orderEntry type="library" name="Maven: com.vividsolutions:jts:1.13" level="project" />
     <orderEntry type="library" name="Maven: com.ning:compress-lzf:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.10.6.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-transaction:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-scheduling:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-selector:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-transaction:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-scheduling:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-selector:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-jexl3:3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-commands:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus:nexus-commands:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.osgi:org.osgi.core:6.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.karaf.shell:org.apache.karaf.shell.core:4.0.9" level="project" />
-    <orderEntry type="library" name="Maven: jline:jline:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.karaf.jaas:org.apache.karaf.jaas.boot:4.0.9" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.sshd:sshd-core:0.14.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.karaf.shell:org.apache.karaf.shell.commands:4.0.9" level="project" />
-    <orderEntry type="library" name="Maven: org.jledit:core:0.2.1" level="project" />
-    <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.21" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.karaf.shell:org.apache.karaf.shell.core:4.2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.jline:jline:3.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.karaf.jaas:org.apache.karaf.jaas.boot:4.2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.sshd:sshd-core:1.7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.karaf.shell:org.apache.karaf.shell.commands:4.2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.gogo.runtime:1.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-multipart-provider:3.1.3.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jaxrs:3.1.3.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec:1.0.1.Beta1" level="project" />
@@ -198,10 +155,10 @@
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.james:apache-mime4j:0.6" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.3.2.SONATYPE" level="project" />
+    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.4" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.2" level="project" />
-    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-healthchecks:4.0.5" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-maven:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-healthchecks:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-maven:3.19.1-01" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0.20" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-repository-metadata:3.3.3" level="project" />
@@ -210,12 +167,12 @@
     <orderEntry type="library" name="Maven: org.eclipse.aether:aether-spi:1.0.2.v20150114" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.indexer:indexer-reader:5.1.2-816025a" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.archetype:archetype-catalog:2.4" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-raw:3.16.1-02" level="project" />
-    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-script-plugin:3.16.1-02" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-repository-raw:3.19.1-01" level="project" />
+    <orderEntry type="library" name="Maven: org.sonatype.nexus.plugins:nexus-script-plugin:3.19.1-01" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: org.sonatype.nexus.plugins:nexus-ldap-plugin:3.16.1-02">
+      <library name="Maven: org.sonatype.nexus.plugins:nexus-ldap-plugin:3.19.1-01">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/binaries/system/com/sonatype/nexus/plugins/nexus-ldap-plugin/3.16.1-02/nexus-ldap-plugin-3.16.1-02.jar!/" />
+          <root url="jar://$MODULE_DIR$/binaries/system/com/sonatype/nexus/plugins/nexus-ldap-plugin/3.19.1-01/nexus-ldap-plugin-3.19.1-01.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
