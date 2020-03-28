@@ -33,17 +33,17 @@ pushd /opt/nexus
 # see https://www.sonatype.com/download-oss-sonatype
 # see https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3
 # see https://help.sonatype.com/display/NXRM3
-nexus_version=3.20.1-01
+nexus_version=3.22.0-02
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-unix.tar.gz
 nexus_download_url=https://sonatype-download.global.ssl.fastly.net/nexus/3/$nexus_tarball
-nexus_download_sha1=5cabc748671dc510e4374548ac8c9b0f4b2517c1
+nexus_download_sha1=cccf70509def19c1b0db644a62cc57922f9f86b7
 wget -q $nexus_download_url
 if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
     exit 1
 fi
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.20.1-01) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.22.0-02) and sonatype-work directories.
 rm $nexus_tarball
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
 install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc
@@ -52,11 +52,17 @@ grep -v -E '\s*##.*' $nexus_home/etc/nexus-default.properties >sonatype-work/nex
 sed -i -E 's,(application-host=).+,\1127.0.0.1,g' sonatype-work/nexus3/etc/nexus.properties
 sed -i -E 's,nexus-pro-,nexus-oss-,g' sonatype-work/nexus3/etc/nexus.properties
 cat >>sonatype-work/nexus3/etc/nexus.properties <<'EOF'
+
 # disable the wizard.
 nexus.onboarding.enabled=false
 
 # disable generating a random password for the admin user.
 nexus.security.randompassword=false
+
+# allow the use of groovy scripts because we use them to configure nexus.
+# see https://issues.sonatype.org/browse/NEXUS-23205
+# see Scripting Nexus Repository Manager 3 at https://support.sonatype.com/hc/en-us/articles/360045220393
+nexus.scripts.allowCreation=true
 EOF
 diff -u $nexus_home/etc/nexus-default.properties sonatype-work/nexus3/etc/nexus.properties || true
 popd
