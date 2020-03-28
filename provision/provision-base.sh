@@ -129,6 +129,96 @@ server {
     proxy_pass http://127.0.0.1:8081;
   }
 }
+
+# docker-group repository.
+server {
+  listen 5001 ssl http2;
+  server_name $config_fqdn;
+  access_log /var/log/nginx/$config_fqdn-docker-group.access.log;
+
+  ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
+  ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  # see https://github.com/cloudflare/sslconfig/blob/master/conf
+  # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
+  # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
+  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
+  ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
+
+  tcp_nodelay on;
+  client_max_body_size 10G;
+  proxy_send_timeout 120;
+  proxy_read_timeout 300;
+  proxy_buffering off;
+  proxy_set_header X-Forwarded-Proto \$scheme;
+  proxy_set_header Host \$host;
+  proxy_set_header X-Forwarded-Host \$host;
+  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+
+  location / {
+    proxy_pass http://127.0.0.1:6001;
+  }
+}
+
+# docker-hub-proxy repository.
+server {
+  listen 5002 ssl http2;
+  server_name $config_fqdn;
+  access_log /var/log/nginx/$config_fqdn-docker-hub-proxy.access.log;
+
+  ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
+  ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  # see https://github.com/cloudflare/sslconfig/blob/master/conf
+  # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
+  # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
+  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
+  ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
+
+  tcp_nodelay on;
+  client_max_body_size 10G;
+  proxy_send_timeout 120;
+  proxy_read_timeout 300;
+  proxy_buffering off;
+  proxy_set_header X-Forwarded-Proto \$scheme;
+  proxy_set_header Host \$host;
+  proxy_set_header X-Forwarded-Host \$host;
+  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+
+  location / {
+    proxy_pass http://127.0.0.1:6002;
+  }
+}
+
+# docker-hosted repository.
+server {
+  listen 5003 ssl http2;
+  server_name $config_fqdn;
+  access_log /var/log/nginx/$config_fqdn-docker-hosted.access.log;
+
+  ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
+  ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  # see https://github.com/cloudflare/sslconfig/blob/master/conf
+  # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
+  # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
+  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
+  ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
+
+  tcp_nodelay on;
+  client_max_body_size 10G;
+  proxy_send_timeout 120;
+  proxy_read_timeout 300;
+  proxy_buffering off;
+  proxy_set_header X-Forwarded-Proto \$scheme;
+  proxy_set_header Host \$host;
+  proxy_set_header X-Forwarded-Host \$host;
+  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+
+  location / {
+    proxy_pass http://127.0.0.1:6003;
+  }
+}
 EOF
 ln -s ../sites-available/$config_fqdn.conf /etc/nginx/sites-enabled/
 systemctl restart nginx

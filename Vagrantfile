@@ -27,7 +27,9 @@ Vagrant.configure(2) do |config|
       config.vm.synced_folder '.', '/vagrant', type: 'nfs'
     end
     config.vm.provision :shell, path: 'provision/provision-base.sh'
+    config.vm.provision :shell, path: 'provision/provision-docker.sh'
     config.vm.provision :shell, path: 'provision/provision-nexus.sh'
+    config.vm.provision :shell, path: 'provision/use-docker-repository.sh'
     config.vm.provision :shell, path: 'provision/use-raw-repository.sh'
     config.vm.provision :shell, path: 'provision/use-maven-repository-from-mvn.sh'
     config.vm.provision :shell, path: 'provision/use-maven-repository-from-gradle.sh'

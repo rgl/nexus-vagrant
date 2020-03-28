@@ -66,6 +66,23 @@ repository.createNugetProxy("chocolatey.org-proxy", "https://chocolatey.org/api/
 repository.createNugetGroup("chocolatey-group", ["chocolatey-hosted", "chocolatey.org-proxy"], "default")
 
 
+// create a docker registry repository backed by the default blob store.
+repository.createDockerHosted("docker-hosted", 6003, null, "default", true, true, WritePolicy.ALLOW, true)
+// create a docker proxy repository backed by the default blob store.
+// see https://help.sonatype.com/repomanager3/formats/docker-registry
+// TODO set Allow Nexus Repository Manager to download and cache foreign layers.
+// NB as-of docker 19.03.5, there is still no way to specify a registry mirror credentials...
+//    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
+//    registry, enable the Docker Bearer Token Realm and allow anonymous access to it.
+//    see https://github.com/moby/moby/issues/30880
+// NB this will make https://nexus.example.com:5002/v2/library/debian/manifests/buster-slim proxy
+//    to https://registry-1.docker.io/v2/library/debian/manifests/buster-slim
+//       https://registry-1.docker.io/v2/library/golang/tags/list
+repository.createDockerProxy("docker-hub-proxy", "https://registry-1.docker.io", "HUB", null, 6002, null, "default", true, true, false)
+// create a docker group repository that merges the docker-hosted and docker-hub-proxy together.
+repository.createDockerGroup("docker-group", 6001, null, ["docker-hosted", "docker-hub-proxy"], true, "default", true)
+
+
 // see http://stackoverflow.com/questions/8138164/groovy-generate-random-string-from-given-character-set
 def random(String alphabet, int n) {
     new Random().with {
@@ -94,12 +111,19 @@ taskConfiguration.setString("snapshotRetentionDays", "30")
 taskScheduler.scheduleTask(taskConfiguration, new Daily(new Date().clearTime().next()))
 
 
-// enable the NuGet API-Key Realm.
+// NB you can list the available realms with realmManager.availableRealms.
 realmManager = container.lookup(RealmManager.class.name)
+// enable the NuGet API-Key Realm.
 realmManager.enableRealm("NuGetApiKey")
-
 // enable the npm Bearer Token Realm.
 realmManager.enableRealm("NpmToken")
+// enable the Docker Bearer Token Realm.
+realmManager.enableRealm("DockerToken")
+// allow Anonymous access to nexus to be able to use the docker-hub-proxy repository.
+// NB this might be worked around by creating an docker-anonymous user and force its
+//    credentials in the nginx reverse-proxy configuration.
+//    see https://github.com/moby/moby/issues/30880#issuecomment-601513505
+security.anonymousAccess = true
 
 // set the admin password.
 // NB we set it to something different than the default (admin123) to get
