@@ -39,9 +39,10 @@ Add the following entry to your `/etc/hosts` file:
 Install Vagrant 2.1+.
 
 Run `vagrant up --provider=virtualbox # or --provider=libvirt` to launch the environment.
-See its output to known how to login at the
-[local Nexus home page](https://nexus.example.com) as `admin` (you can also login with
-one of the example accounts, e.g. `alice.doe` and password `password`).
+
+Access the [Nexus home page](https://nexus.example.com) and login as the `admin` user and password `admin`.
+
+You can also login with one of the example accounts, e.g. `alice.doe` and password `password`.
 
 **NB** nginx is setup with a self-signed certificate that you have to trust before being
 able to access the local Nexus home page.

@@ -54,6 +54,9 @@ sed -i -E 's,nexus-pro-,nexus-oss-,g' sonatype-work/nexus3/etc/nexus.properties
 cat >>sonatype-work/nexus3/etc/nexus.properties <<'EOF'
 # disable the wizard.
 nexus.onboarding.enabled=false
+
+# disable generating a random password for the admin user.
+nexus.security.randompassword=false
 EOF
 diff -u $nexus_home/etc/nexus-default.properties sonatype-work/nexus3/etc/nexus.properties || true
 popd

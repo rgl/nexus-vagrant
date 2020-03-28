@@ -101,6 +101,11 @@ realmManager.enableRealm("NuGetApiKey")
 // enable the npm Bearer Token Realm.
 realmManager.enableRealm("NpmToken")
 
+// set the admin password.
+// NB we set it to something different than the default (admin123) to get
+//    rid of the "Default Admin Credentials" warning... and because this
+//    password is easier to remember.
+security.securitySystem.changePassword('admin', 'admin')
 
 // the intent is to get or create an NuGet API Key like the one we can see on the user page:
 // http://nexus.example.com:8081/#user/nugetapitoken.
