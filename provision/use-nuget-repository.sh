@@ -11,67 +11,131 @@ mkdir -p tmp/use-nuget-repository && cd tmp/use-nuget-repository
 # test the NuGet repository.
 # see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
 
-if ! which mono; then
-  # install the latest stable mono.
-  # NB this is needed to run the latest nuget.exe.
-  # see https://www.mono-project.com/download/stable/#download-lin-ubuntu
-  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-  apt-get install -y apt-transport-https
-  echo "deb https://download.mono-project.com/repo/ubuntu stable-$(lsb_release -sc) main" >/etc/apt/sources.list.d/mono-official-stable.list
-  apt-get update
-  apt-get install -y mono-complete
+# install the dotnet core sdk.
+if ! which dotnet; then
+  bash -eux /vagrant/provision/provision-dotnet-core-sdk.sh
 fi
-if [[ ! -f /tmp/nuget.exe ]]; then
-  wget -qO/tmp/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-fi
-
-function nuget {
-  mono /tmp/nuget.exe $*
-}
-
-nuget | grep -i version:
 
 nuget_source_url=https://$nexus_domain/repository/nuget-group/
 nuget_source_push_url=https://$nexus_domain/repository/nuget-hosted/
 nuget_source_push_api_key=$(nexus-groovy get-jenkins-nuget-api-key | jq -r '.result | fromjson | .apiKey')
 echo -n $nuget_source_push_api_key >/vagrant/shared/jenkins-nuget-api-key
+nuget_source_push_api_key="$(cat /vagrant/shared/jenkins-nuget-api-key)"
 
-# test installing a package from the public NuGet repository.
-nuget install MsgPack -Source $nuget_source_url
-
-# test publishing a package.
-cat >example-hello-world.nuspec <<'EOF'
-<package>
-  <metadata>
-    <id>example-hello-world</id>
-    <version>1.0.0</version>
-    <authors>Alice Doe</authors>
-    <owners>Bob Doe</owners>
-    <licenseUrl>http://choosealicense.com/licenses/mit/</licenseUrl>
-    <projectUrl>http://example.com</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Example Package Description</description>
-    <releaseNotes>Hello World.</releaseNotes>
-    <copyright>Copyleft Alice Doe</copyright>
-    <tags>hello world</tags>
-  </metadata>
-  <files>
-    <file src="MESSAGE.md" target="content" />
-  </files> 
-</package>
+# configure the project nuget package sources to use nexus.
+# NB the projects inside the current directory (and childs) inherit
+#    this nuget configuration.
+# see https://docs.microsoft.com/en-us/nuget/reference/nuget-config-file
+cat >nuget.config <<EOF
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="$nexus_domain" value="$nuget_source_url" />
+  </packageSources>
+</configuration>
 EOF
-cat >MESSAGE.md <<'EOF'
-# Hello World
 
-Hey Ho Let's Go!
+# show the package sources.
+dotnet nuget list source
+
+# create the example project.
+# see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec
+# see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
+cat >example-hello-world.csproj <<'EOF'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.0.0</Version>
+    <Authors>Alice Doe</Authors>
+    <Copyright>Copyleft Alice Doe</Copyright>
+    <Description>Example Package Description</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>http://example.com</PackageProjectUrl>
+    <PackageReleaseNotes>Example Release Notes.</PackageReleaseNotes>
+    <PackageTags>example tags</PackageTags>
+    <NuspecProperties>
+      owners=Bob Doe
+    </NuspecProperties>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.9.0" />
+  </ItemGroup>
+</Project>
 EOF
-nuget pack example-hello-world.nuspec
-nuget push example-hello-world.1.0.0.nupkg -Source $nuget_source_push_url -ApiKey $nuget_source_push_api_key
-# test installing it back.
+cat >Greeter.cs <<'EOF'
+namespace Example
+{
+  using Serilog;
+
+  public class Greeter
+  {
+    private static readonly ILogger Logger = Log.ForContext<Greeter>();
+
+    public static string Greet(string name)
+    {
+      Logger.Information("Creating greet for {name}", name);
+
+      return $"Hello {name}!";
+    }
+  }
+}
+EOF
+
+# restore package and build the project.
+dotnet build -v=n -c=Release
+
+# package it into a nuget/nupkg package.
+dotnet pack -v=n -c=Release --no-build --output .
+
+# show the resulting package files and the nuspec.
+unzip -l example-hello-world.1.0.0.nupkg
+unzip -c example-hello-world.1.0.0.nupkg example-hello-world.nuspec
+
+# publish the package to nexus.
+dotnet nuget push \
+  example-hello-world.1.0.0.nupkg \
+  --source $nuget_source_push_url \
+  --api-key $nuget_source_push_api_key
+
+# test its usage from a test application.
 rm -rf test && mkdir test && pushd test 
-nuget install example-hello-world -Source $nuget_source_url
-if [[ ! -f example-hello-world.1.0.0/content/MESSAGE.md ]]; then
-  echo 'the package did not install as expected'
-  exit 1
-fi
+cat >test.csproj <<'EOF'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+</Project>
+EOF
+cat >Program.cs <<'EOF'
+namespace Example
+{
+  using System;
+  using Serilog;
+
+  public class Program
+  {
+    public static void Main()
+    {
+      Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .Enrich.WithProperty("Application", "example")
+        .Enrich.FromLogContext()
+        .WriteTo.Console(
+          outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Properties:j} {Message:lj}{NewLine}{Exception}")
+        .CreateLogger();
+
+      Console.WriteLine(Greeter.Greet("Rui"));
+
+      Log.CloseAndFlush();
+    }
+  }
+}
+EOF
+dotnet nuget list source
+dotnet add package example-hello-world
+dotnet add package Serilog.Sinks.Console --version 3.1.1
+dotnet build -v=n -c=Release
+dotnet publish -v=n -c=Release --no-build --output dist
+./dist/test
 popd
