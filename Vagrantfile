@@ -8,14 +8,14 @@ nexus_ip = '192.168.56.3'
 Vagrant.configure(2) do |config|
   config.vm.provider :libvirt do |lv, config|
     lv.memory = 2048
-    lv.cpus = 2
+    lv.cpus = 4
     lv.cpu_mode = 'host-passthrough'
     lv.keymap = 'pt'
   end
 
   config.vm.provider :virtualbox do |vb|
     vb.linked_clone = true
-    vb.cpus = 2
+    vb.cpus = 4
     vb.memory = 2048
   end
 
