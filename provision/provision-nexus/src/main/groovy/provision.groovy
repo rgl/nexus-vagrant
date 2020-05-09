@@ -33,6 +33,12 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 repository.createRawHosted("adhoc-package", "default", false, WritePolicy.ALLOW_ONCE)
 
 
+// create a apt repository backed by the default blob store.
+// see https://help.sonatype.com/repomanager3/formats/apt-repositories
+pgpPrivateKey = new File('/vagrant/shared/apt-hosted-private.key').getText('UTF-8')
+repository.createAptHosted("apt-hosted", "bionic", pgpPrivateKey, "abracadabra", "default", WritePolicy.ALLOW_ONCE, true)
+
+
 // create a npm repository backed by the default blob store.
 repository.createNpmHosted("npm-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a npm proxy repository backed by the default blob store.

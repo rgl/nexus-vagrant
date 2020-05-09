@@ -109,8 +109,53 @@ bash -c "while [[ \"\$(wget -qO- https://$nexus_domain/service/extdirect/poll/ra
 wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq --raw-output .data.data.uiSettings.value.title
 wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq .data.data.status.value
 
+
+# generate a gpg key for the apt-hosted repository.
+# see https://www.gnupg.org/documentation//manuals/gnupg/Unattended-GPG-key-generation.html
+# see https://help.sonatype.com/repomanager3/formats/apt-repositories
+# see https://wiki.archlinux.org/index.php/GnuPG#Unattended_passphrase
+export GNUPGHOME="$(mktemp -d)"
+cat >"$GNUPGHOME/apt-hosted-gpg-batch" <<EOF
+%echo Generating apt-hosted key...
+Key-Type: RSA
+Key-Length: 4096
+Key-Usage: sign
+#Subkey-Type: RSA
+#Subkey-Length: 4096
+#Subkey-Usage: sign
+Name-Real: apt-hosted
+Name-Email: apt-hosted@$nexus_domain
+Name-Comment: nexus apt-hosted
+Expire-Date: 0
+Passphrase: abracadabra
+%commit
+%echo done
+EOF
+cat >"$GNUPGHOME/gpg-agent.conf" <<EOF
+allow-loopback-pinentry
+EOF
+gpgconf --kill gpg-agent
+gpg --batch --generate-key "$GNUPGHOME/apt-hosted-gpg-batch"
+gpg \
+    --export \
+    --armor \
+    "apt-hosted@$nexus_domain" \
+    >/vagrant/shared/apt-hosted-public.key
+gpg \
+    --export-secret-key \
+    --armor \
+    --pinentry-mode loopback \
+    --passphrase abracadabra \
+    "apt-hosted@$nexus_domain" \
+    >/vagrant/shared/apt-hosted-private.key
+gpgconf --kill gpg-agent
+rm -rf "$GNUPGHOME"
+unset GNUPGHOME
+
+
 # configure nexus with the groovy script.
 bash /vagrant/provision/execute-provision.groovy-script.sh
+
 
 # configure nexus ldap with a groovy script.
 if [ "$config_authentication" = 'ldap' ]; then

@@ -3,3 +3,10 @@
 provision/provision-nexus/sources/
 shared/
 binaries/
+/hello-world-debian-package/hello-world/debian/.debhelper/
+/hello-world-debian-package/hello-world_*
+/hello-world-debian-package/hello-world-*
+/hello-world-debian-package/hello-world/debian/hello-world*
+/hello-world-debian-package/hello-world/debian/debhelper-build-stamp
+/hello-world-debian-package/hello-world/debian/files
+/hello-world-debian-package/hello-world/hello-world

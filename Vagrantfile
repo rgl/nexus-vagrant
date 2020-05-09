@@ -11,6 +11,7 @@ Vagrant.configure(2) do |config|
     lv.cpus = 4
     lv.cpu_mode = 'host-passthrough'
     lv.keymap = 'pt'
+    lv.random :model => 'random'
   end
 
   config.vm.provider :virtualbox do |vb|
@@ -31,6 +32,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: 'provision/provision-nexus.sh'
     config.vm.provision :shell, path: 'provision/use-docker-repository.sh'
     config.vm.provision :shell, path: 'provision/use-raw-repository.sh'
+    config.vm.provision :shell, path: 'provision/use-apt-repository.sh'
     config.vm.provision :shell, path: 'provision/use-maven-repository-from-mvn.sh'
     config.vm.provision :shell, path: 'provision/use-maven-repository-from-gradle.sh'
     config.vm.provision :shell, path: 'provision/use-nuget-repository.sh'

@@ -1,0 +1,17 @@
+Source: hello-world
+Section: misc
+Priority: optional
+Maintainer: "Alice Doe" <alice.doe@example.com>
+Build-Depends: debhelper (>=11~)
+Standards-Version: 4.1.4
+Homepage: https://example.com
+
+Package: hello-world
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: classic hello world
+ The classic hello world application.
+ .
+ It serves as an example package that is used
+ to test the nexus apt-hosted repository.

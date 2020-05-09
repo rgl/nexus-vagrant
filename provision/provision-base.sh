@@ -27,6 +27,22 @@ update-grub2
 # update the package cache.
 apt-get -y update
 
+# install a EGD (Entropy Gathering Daemon).
+# NB the host should have an EGD and expose/virtualize it to the guest.
+#    on libvirt there's virtio-rng which will read from the host /dev/random device
+#    so your host should have a TRNG (True RaNdom Generator) with rng-tools
+#    reading from it and feeding it into /dev/random or have the haveged
+#    daemon running.
+# see https://wiki.qemu.org/Features/VirtIORNG
+# see https://wiki.archlinux.org/index.php/Rng-tools
+# see https://www.kernel.org/doc/Documentation/hw_random.txt
+# see https://hackaday.com/2017/11/02/what-is-entropy-and-how-do-i-get-more-of-it/
+# see cat /sys/devices/virtual/misc/hw_random/rng_current
+# see cat /proc/sys/kernel/random/entropy_avail
+# see rngtest -c 1000 </dev/hwrng
+# see rngtest -c 1000 </dev/random
+# see rngtest -c 1000 </dev/urandom
+apt-get install -y rng-tools
 
 # vim.
 apt-get install -y --no-install-recommends vim
