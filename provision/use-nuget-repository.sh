@@ -58,7 +58,7 @@ cat >example-hello-world.csproj <<'EOF'
     </NuspecProperties>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 </Project>
 EOF
