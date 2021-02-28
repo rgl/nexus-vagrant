@@ -2,7 +2,7 @@
 set -eux
 
 # NB execute apt-cache madison docker-ce to known the available versions.
-docker_version="${1:-5:19.03.8~3-0~ubuntu-bionic}"; shift || true
+docker_version="${1:-5:20.10.4~3-0~ubuntu-focal}"; shift || true
 registry_proxy_domain="${1:-$(hostname --fqdn)}"; shift || true
 # NB as-of docker 19.03.8, there is still no way to specify a registry mirror credentials,
 #    as such, we cannot use our docker-group registry, instead we must use the docker-proxy

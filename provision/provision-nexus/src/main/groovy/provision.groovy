@@ -36,7 +36,7 @@ repository.createRawHosted("adhoc-package", "default", false, WritePolicy.ALLOW_
 // create a apt repository backed by the default blob store.
 // see https://help.sonatype.com/repomanager3/formats/apt-repositories
 pgpPrivateKey = new File('/vagrant/shared/apt-hosted-private.key').getText('UTF-8')
-repository.createAptHosted("apt-hosted", "bionic", pgpPrivateKey, "abracadabra", "default", WritePolicy.ALLOW_ONCE, true)
+repository.createAptHosted("apt-hosted", "focal", pgpPrivateKey, "abracadabra", "default", WritePolicy.ALLOW_ONCE, true)
 
 
 // create a npm repository backed by the default blob store.

@@ -3,7 +3,9 @@ set -eux
 
 nexus_domain=$(hostname --fqdn)
 
-cd /vagrant/hello-world-debian-package
+rm -rf tmp/hello-world-debian-package
+cp -r /vagrant/hello-world-debian-package tmp
+cd tmp/hello-world-debian-package
 
 #
 # test the apt repository.
@@ -30,7 +32,7 @@ curl \
 apt-key add /vagrant/shared/apt-hosted-public.key
 
 # install the hello-world package.
-echo "deb [arch=amd64] https://$nexus_domain/repository/apt-hosted bionic main" >/etc/apt/sources.list.d/nexus-apt-hosted.list
+echo "deb [arch=amd64] https://$nexus_domain/repository/apt-hosted focal main" >/etc/apt/sources.list.d/nexus-apt-hosted.list
 apt-get update
 apt-get install -y hello-world
 apt-cache show hello-world
