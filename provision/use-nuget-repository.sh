@@ -9,14 +9,15 @@ mkdir -p tmp/use-nuget-repository && cd tmp/use-nuget-repository
 
 #
 # test the NuGet repository.
-# see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
+# see https://help.sonatype.com/repomanager3/formats/nuget-repositories
+# see https://help.sonatype.com/repomanager3/formats/nuget-repositories/grouping-nuget-repositories
 
 # install the dotnet core sdk.
 if ! which dotnet; then
   bash -eux /vagrant/provision/provision-dotnet-core-sdk.sh
 fi
 
-nuget_source_url=https://$nexus_domain/repository/nuget-group/
+nuget_source_url=https://$nexus_domain/repository/nuget-group/index.json
 nuget_source_push_url=https://$nexus_domain/repository/nuget-hosted/
 nuget_source_push_api_key=$(nexus-groovy get-jenkins-nuget-api-key | jq -r '.result | fromjson | .apiKey')
 echo -n $nuget_source_push_api_key >/vagrant/shared/jenkins-nuget-api-key

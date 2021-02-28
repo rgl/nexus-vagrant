@@ -33,17 +33,17 @@ pushd /opt/nexus
 # see https://www.sonatype.com/download-oss-sonatype
 # see https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3
 # see https://help.sonatype.com/display/NXRM3
-nexus_version=3.23.0-03
+nexus_version=3.29.2-02
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-unix.tar.gz
 nexus_download_url=https://download.sonatype.com/nexus/3/$nexus_tarball
-nexus_download_sha1=8298bd6db3b0f4d083942343a89f47cae7d791de
+nexus_download_sha1=8e29ebdfea3e66723372a23f321233c6fa39f870
 wget -q $nexus_download_url
 if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
     exit 1
 fi
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.23.0-03) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.29.2-02) and sonatype-work directories.
 rm $nexus_tarball
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
 install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc

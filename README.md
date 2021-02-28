@@ -116,7 +116,7 @@ Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. T
 sudo su -l                            # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.23.0-03 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.29.2-02 # make sure you have the correct version here.
 nexus_data=$nexus_home/../sonatype-work/nexus3
 function orientdb-console {
     java -jar $nexus_home/lib/support/nexus-orient-console.jar $*
@@ -163,9 +163,6 @@ nexus account and create the `orientdb-console` function, then:
 ```bash
 # check the databases.
 # NB use CHECK DATABASE -v to see the verbose log.
-orientdb-console 'CONNECT PLOCAL:db/accesslog admin admin; CHECK DATABASE;'
-orientdb-console 'CONNECT PLOCAL:db/analytics admin admin; CHECK DATABASE;'
-orientdb-console 'CONNECT PLOCAL:db/audit admin admin; CHECK DATABASE;'
 orientdb-console 'CONNECT PLOCAL:db/component admin admin; CHECK DATABASE;'
 #orientdb-console 'CONNECT PLOCAL:db/component admin admin; REPAIR DATABASE;'
 orientdb-console 'CONNECT PLOCAL:db/config admin admin; CHECK DATABASE;'

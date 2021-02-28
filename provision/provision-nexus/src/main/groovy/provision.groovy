@@ -4,7 +4,7 @@
 
 import groovy.json.JsonOutput
 import org.sonatype.nexus.capability.CapabilityRegistry
-import org.sonatype.nexus.repository.storage.WritePolicy
+import org.sonatype.nexus.repository.config.WritePolicy
 import org.sonatype.nexus.security.user.UserSearchCriteria
 import org.sonatype.nexus.security.authc.apikey.ApiKeyStore
 import org.sonatype.nexus.security.realm.RealmManager
@@ -57,8 +57,10 @@ repository.repositoryManager.update(config)
 // create a powershell repository backed by the default blob store.
 repository.createNugetHosted("powershell-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a powershell proxy repository backed by the default blob store.
-// see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
-repository.createNugetProxy("powershellgallery.com-proxy", "https://www.powershellgallery.com/api/v2/", "default")
+// see https://help.sonatype.com/repomanager3/formats/nuget-repositories
+config = repository.createNugetProxy("powershellgallery.com-proxy", "https://www.powershellgallery.com/api/v2/", "default").configuration.copy()
+config.attributes.nugetProxy.nugetVersion = "V2"
+repository.repositoryManager.update(config)
 // create a powershell group repository that merges the powershell-host and powershellgallery.com-proxy together.
 repository.createNugetGroup("powershell-group", ["powershell-hosted", "powershellgallery.com-proxy"], "default")
 
@@ -66,8 +68,10 @@ repository.createNugetGroup("powershell-group", ["powershell-hosted", "powershel
 // create a chocolatey repository backed by the default blob store.
 repository.createNugetHosted("chocolatey-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a chocolatey proxy repository backed by the default blob store.
-// see https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet
-repository.createNugetProxy("chocolatey.org-proxy", "https://chocolatey.org/api/v2/", "default")
+// see https://help.sonatype.com/repomanager3/formats/nuget-repositories
+config = repository.createNugetProxy("chocolatey.org-proxy", "https://chocolatey.org/api/v2/", "default").configuration.copy()
+config.attributes.nugetProxy.nugetVersion = "V2"
+repository.repositoryManager.update(config)
 // create a chocolatey group repository that merges the chocolatey-host and chocolatey.org-proxy together.
 repository.createNugetGroup("chocolatey-group", ["chocolatey-hosted", "chocolatey.org-proxy"], "default")
 

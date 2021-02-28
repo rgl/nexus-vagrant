@@ -25,7 +25,11 @@ Vagrant.configure(2) do |config|
     config.vm.hostname = nexus_domain
     config.vm.network 'private_network', ip: nexus_ip
     config.vm.provider :libvirt do |lv, config|
+      lv.memory = 3*1024
       config.vm.synced_folder '.', '/vagrant', type: 'nfs'
+    end
+    config.vm.provider :virtualbox do |vb, config|
+      vb.memory = 3*1024
     end
     config.vm.provision :shell, path: 'provision/provision-base.sh'
     config.vm.provision :shell, path: 'provision/provision-docker.sh'
@@ -46,9 +50,9 @@ Vagrant.configure(2) do |config|
     config.vm.provider :libvirt do |lv, config|
       config.vm.synced_folder '.', '/vagrant', type: 'smb', smb_username: ENV['USER'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
     end
-    config.vm.provider :virtualbox do |v, override|
-      v.customize ['modifyvm', :id, '--vram', 64]
-      v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+    config.vm.provider :virtualbox do |vb, config|
+      vb.customize ['modifyvm', :id, '--vram', 64]
+      vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
     end
     config.vm.provision :shell, inline: "echo '#{nexus_ip} #{nexus_domain}' | Out-File -Encoding Ascii -Append c:/Windows/System32/drivers/etc/hosts"
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-base.ps1', nexus_domain]
