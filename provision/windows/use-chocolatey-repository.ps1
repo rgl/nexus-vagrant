@@ -41,7 +41,7 @@ Set-Content -Encoding Ascii graceful-terminating-console-application-windows.nus
 <package>
   <metadata>
     <id>graceful-terminating-console-application-windows</id>
-    <version>0.4.0</version>
+    <version>0.5.0</version>
     <authors>Rui Lopes</authors>
     <owners>Rui Lopes</owners>
     <licenseUrl>http://choosealicense.com/licenses/mit/</licenseUrl>
@@ -56,7 +56,7 @@ Set-Content -Encoding Ascii graceful-terminating-console-application-windows.nus
 '@
 mkdir tools | Out-Null
 (New-Object Net.WebClient).DownloadFile(
-    'https://github.com/rgl/graceful-terminating-console-application-windows/releases/download/v0.4.0/graceful-terminating-console-application-windows.zip',
+    'https://github.com/rgl/graceful-terminating-console-application-windows/releases/download/v0.5.0/graceful-terminating-console-application-windows.zip',
     "$env:TEMP\graceful-terminating-console-application-windows.zip")
 Expand-Archive "$env:TEMP\graceful-terminating-console-application-windows.zip" tools
 choco pack
