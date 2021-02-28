@@ -58,11 +58,16 @@ func main() {
     }
 }
 EOF
+cat >go.mod <<'EOF'
+module example.com/go-hello
+
+go 1.16
+EOF
 cat >Dockerfile <<'EOF'
-FROM golang:1.14.1-buster as builder
+FROM golang:1.16.0-buster as builder
 WORKDIR /app
-COPY main.go .
-RUN CGO_ENABLED=0 go build -ldflags="-s" -o=go-hello
+COPY go.* main.go ./
+RUN CGO_ENABLED=0 go build -ldflags="-s"
 
 # NB we use the buster-slim (instead of scratch) image so we
 #    can enter the container to execute bash etc.
