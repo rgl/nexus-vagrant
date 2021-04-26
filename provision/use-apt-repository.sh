@@ -23,6 +23,8 @@ popd
 # see https://help.sonatype.com/repomanager3/formats/apt-repositories
 apt-get install -y curl
 curl \
+    --fail \
+    --show-error \
     --user 'alice.doe:password' \
     --header 'Content-Type: multipart/form-data' \
     --data-binary @hello-world_1.0.0_amd64.deb \
