@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -euxo pipefail
 
 # NB execute apt-cache madison docker-ce to known the available versions.
 docker_version="${1:-5:20.10.4~3-0~ubuntu-focal}"; shift || true

@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -euxo pipefail
 
 admin_username=${admin_username:-admin}
 admin_password=${admin_password:-admin}

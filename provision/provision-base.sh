@@ -1,6 +1,6 @@
 #!/bin/bash
 # here be dragons... see http://fvue.nl/wiki/Bash:_Error_handling
-set -eux
+set -euxo pipefail
 
 config_fqdn=$(hostname --fqdn)
 config_domain=$(hostname --domain)

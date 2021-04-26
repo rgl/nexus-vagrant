@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -euxo pipefail
 
 . /vagrant/provision/nexus-groovy.sh
 

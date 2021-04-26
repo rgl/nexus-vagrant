@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -euxo pipefail
 
 nexus_domain=$(hostname --fqdn)
 docker_group_registry_host="$nexus_domain:5001"
