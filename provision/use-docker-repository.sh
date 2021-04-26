@@ -64,7 +64,7 @@ module example.com/go-hello
 go 1.16
 EOF
 cat >Dockerfile <<'EOF'
-FROM golang:1.16.0-buster as builder
+FROM golang:1.16.3-buster as builder
 WORKDIR /app
 COPY go.* main.go ./
 RUN CGO_ENABLED=0 go build -ldflags="-s"
