@@ -3,7 +3,7 @@ param(
 )
 
 # install chocolatey.
-iex ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 Write-Host 'Default Chocolatey sources:'
 choco sources list
