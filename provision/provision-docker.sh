@@ -1,8 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-# NB execute apt-cache madison docker-ce to known the available versions.
-docker_version="${1:-5:20.10.6~3-0~ubuntu-focal}"; shift || true
+docker_version="${1:-20.10.12}"; shift || true
 registry_proxy_domain="${1:-$(hostname --fqdn)}"; shift || true
 # NB as-of docker 19.03.8, there is still no way to specify a registry mirror credentials,
 #    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
@@ -16,16 +15,22 @@ registry_proxy_url="https://$registry_proxy_host"
 #     dpkg-preconfigure: unable to re-open stdin: No such file or directory
 export DEBIAN_FRONTEND=noninteractive
 
+# make sure the package index cache is up-to-date before installing anything.
+apt-get update
+
 # install docker.
-# see https://docs.docker.com/install/linux/docker-ce/ubuntu/
-apt-get install -y apt-transport-https software-properties-common gnupg2
+# see https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
+apt-get install -y apt-transport-https software-properties-common
 wget -qO- https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get update
+apt-cache madison docker-ce
+docker_version="$(apt-cache madison docker-ce | awk "/$docker_version~/{print \$3}")"
 apt-get install -y "docker-ce=$docker_version" "docker-ce-cli=$docker_version" containerd.io
 
 # configure it.
-cat >/etc/docker/daemon.json <<EOF
+systemctl stop docker
+cat >/etc/docker/daemon.json <<'EOF'
 {
     "experimental": false,
     "debug": false,
@@ -48,7 +53,7 @@ ExecStart=
 ExecStart=/usr/bin/dockerd
 EOF
 systemctl daemon-reload
-systemctl restart docker
+systemctl start docker
 
 # let the vagrant user manage docker.
 usermod -aG docker vagrant
