@@ -61,17 +61,17 @@ EOF
 cat >go.mod <<'EOF'
 module example.com/go-hello
 
-go 1.16
+go 1.17
 EOF
 cat >Dockerfile <<'EOF'
-FROM golang:1.16.3-buster as builder
+FROM golang:1.17-bullseye as builder
 WORKDIR /app
 COPY go.* main.go ./
 RUN CGO_ENABLED=0 go build -ldflags="-s"
 
 # NB we use the buster-slim (instead of scratch) image so we
 #    can enter the container to execute bash etc.
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 COPY --from=builder /app/go-hello .
 WORKDIR /
 EXPOSE 8000
