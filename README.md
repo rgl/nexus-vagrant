@@ -116,7 +116,7 @@ Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. T
 sudo su -l                            # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.30.1-01 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.38.0-01 # make sure you have the correct version here.
 nexus_data=$nexus_home/../sonatype-work/nexus3
 function orientdb-console {
     java -jar $nexus_home/lib/support/nexus-orient-console.jar $*
