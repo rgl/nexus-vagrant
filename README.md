@@ -28,7 +28,7 @@ This will:
 
 Build and install the [Ubuntu 20.04 Base Box](https://github.com/rgl/ubuntu-vagrant).
 
-Build and install the [Windows 2019 Base Box](https://github.com/rgl/windows-vagrant).
+Build and install the [Windows 2022 Base Box](https://github.com/rgl/windows-vagrant).
 
 Add the following entry to your `/etc/hosts` file:
 
