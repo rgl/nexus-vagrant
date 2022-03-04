@@ -12,9 +12,9 @@ mkdir -p tmp/use-nuget-repository && cd tmp/use-nuget-repository
 # see https://help.sonatype.com/repomanager3/formats/nuget-repositories
 # see https://help.sonatype.com/repomanager3/formats/nuget-repositories/grouping-nuget-repositories
 
-# install the dotnet core sdk.
+# install the dotnet sdk.
 if ! which dotnet; then
-  bash -eux /vagrant/provision/provision-dotnet-core-sdk.sh
+  bash -eux /vagrant/provision/provision-dotnet-sdk.sh
 fi
 
 nuget_source_url=https://$nexus_domain/repository/nuget-group/index.json
@@ -45,7 +45,7 @@ dotnet nuget list source
 cat >example-hello-world.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Version>1.0.0</Version>
     <Authors>Alice Doe</Authors>
     <Copyright>Copyleft Alice Doe</Copyright>
@@ -99,12 +99,12 @@ dotnet nuget push \
   --api-key $nuget_source_push_api_key
 
 # test its usage from a test application.
-rm -rf test && mkdir test && pushd test 
+rm -rf test && mkdir test && pushd test
 cat >test.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 </Project>
 EOF
@@ -135,7 +135,7 @@ namespace Example
 EOF
 dotnet nuget list source
 dotnet add package example-hello-world
-dotnet add package Serilog.Sinks.Console --version 3.1.1
+dotnet add package Serilog.Sinks.Console --version 4.0.1
 dotnet build -v=n -c=Release
 dotnet publish -v=n -c=Release --no-build --output dist
 ./dist/test
