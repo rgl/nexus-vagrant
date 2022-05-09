@@ -97,7 +97,7 @@ popd
 
 
 # install and configure nginx to proxy to nexus.
-# see https://help.sonatype.com/display/NXRM3/Installation#Installation-RunningBehindaReverseProxy
+# see https://help.sonatype.com/repomanager3/planning-your-implementation/run-behind-a-reverse-proxy
 apt-get install -y --no-install-recommends nginx
 rm -f /etc/nginx/sites-enabled/default
 cat >/etc/nginx/sites-available/$config_fqdn.conf <<EOF
