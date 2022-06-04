@@ -119,11 +119,10 @@ server {
 
   ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
   ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_protocols TLSv1.2 TLSv1.3;
   # see https://github.com/cloudflare/sslconfig/blob/master/conf
   # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
   # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
-  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
   ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
 
   tcp_nodelay on;
@@ -154,11 +153,10 @@ server {
 
   ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
   ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_protocols TLSv1.2 TLSv1.3;
   # see https://github.com/cloudflare/sslconfig/blob/master/conf
   # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
   # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
-  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
   ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
 
   tcp_nodelay on;
@@ -184,11 +182,10 @@ server {
 
   ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
   ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_protocols TLSv1.2 TLSv1.3;
   # see https://github.com/cloudflare/sslconfig/blob/master/conf
   # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
   # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
-  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
   ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
 
   tcp_nodelay on;
@@ -214,11 +211,10 @@ server {
 
   ssl_certificate /etc/ssl/private/$config_fqdn-crt.pem;
   ssl_certificate_key /etc/ssl/private/$config_fqdn-keypair.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_protocols TLSv1.2 TLSv1.3;
   # see https://github.com/cloudflare/sslconfig/blob/master/conf
   # see https://blog.cloudflare.com/it-takes-two-to-chacha-poly/
   # see https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/
-  # NB even though we have CHACHA20 here, the OpenSSL library that ships with Ubuntu 16.04 does not have it. so this is a nop. no problema.
   ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!aNULL:!MD5;
 
   tcp_nodelay on;
