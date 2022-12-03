@@ -61,10 +61,10 @@ EOF
 cat >go.mod <<'EOF'
 module example.com/go-hello
 
-go 1.18
+go 1.19
 EOF
 cat >Dockerfile <<'EOF'
-FROM golang:1.18-bullseye as builder
+FROM golang:1.19-bullseye as builder
 WORKDIR /app
 COPY go.* main.go ./
 RUN CGO_ENABLED=0 go build -ldflags="-s"
