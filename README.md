@@ -26,7 +26,7 @@ This will:
 
 # Usage
 
-Build and install the [Ubuntu 20.04 Base Box](https://github.com/rgl/ubuntu-vagrant).
+Build and install the [Ubuntu 22.04 Base Box](https://github.com/rgl/ubuntu-vagrant).
 
 Build and install the [Windows 2022 Base Box](https://github.com/rgl/windows-vagrant).
 

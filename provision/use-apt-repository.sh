@@ -34,7 +34,7 @@ curl \
 apt-key add /vagrant/shared/apt-hosted-public.key
 
 # install the hello-world package.
-echo "deb [arch=amd64] https://$nexus_domain/repository/apt-hosted focal main" >/etc/apt/sources.list.d/nexus-apt-hosted.list
+echo "deb [arch=amd64] https://$nexus_domain/repository/apt-hosted jammy main" >/etc/apt/sources.list.d/nexus-apt-hosted.list
 apt-get update
 apt-get install -y hello-world
 apt-cache show hello-world
