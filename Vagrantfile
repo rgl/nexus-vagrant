@@ -26,7 +26,7 @@ Vagrant.configure(2) do |config|
     config.vm.network 'private_network', ip: nexus_ip
     config.vm.provider :libvirt do |lv, config|
       lv.memory = 3*1024
-      config.vm.synced_folder '.', '/vagrant', type: 'nfs'
+      config.vm.synced_folder '.', '/vagrant', type: 'nfs', nfs_version: '4.2', nfs_udp: false
     end
     config.vm.provider :virtualbox do |vb, config|
       vb.memory = 3*1024
