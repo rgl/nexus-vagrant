@@ -59,7 +59,7 @@ cat >example-hello-world.csproj <<'EOF'
     </NuspecProperties>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog" Version="2.12.0" />
   </ItemGroup>
 </Project>
 EOF
@@ -135,7 +135,7 @@ namespace Example
 EOF
 dotnet nuget list source
 dotnet add package example-hello-world
-dotnet add package Serilog.Sinks.Console --version 4.0.1
+dotnet add package Serilog.Sinks.Console --version 4.1.0
 dotnet build -v=n -c=Release
 dotnet publish -v=n -c=Release --no-build --output dist
 ./dist/test
