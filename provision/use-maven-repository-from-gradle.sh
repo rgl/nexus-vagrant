@@ -9,7 +9,8 @@ mkdir -p tmp/use-maven-repository-from-gradle && cd tmp/use-maven-repository-fro
 # test the maven repository from gradle.
 
 # download and install gradle.
-gradle_version='7.5.1'
+# see https://gradle.org/releases/
+gradle_version='7.6'
 if [ ! -f /opt/gradle/gradle-$gradle_version/bin/gradle ]; then
     apt-get install -y unzip
     wget -qO/tmp/gradle-$gradle_version-bin.zip https://services.gradle.org/distributions/gradle-$gradle_version-bin.zip
@@ -32,8 +33,8 @@ cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter'
 EOF
 cat >build.gradle <<'EOF'
-// see https://docs.gradle.org/7.5.1/userguide/java_library_plugin.html
-// see https://docs.gradle.org/7.5.1/userguide/maven_plugin.html
+// see https://docs.gradle.org/7.6/userguide/java_library_plugin.html
+// see https://docs.gradle.org/7.6/userguide/maven_plugin.html
 
 plugins {
     id 'java-library'
@@ -97,8 +98,8 @@ cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter-application'
 EOF
 cat >build.gradle <<EOF
-// see https://docs.gradle.org/7.5.1/userguide/java_plugin.html
-// see https://docs.gradle.org/7.5.1/userguide/application_plugin.html
+// see https://docs.gradle.org/7.6/userguide/java_plugin.html
+// see https://docs.gradle.org/7.6/userguide/application_plugin.html
 // see http://imperceptiblethoughts.com/shadow/
 
 plugins {
