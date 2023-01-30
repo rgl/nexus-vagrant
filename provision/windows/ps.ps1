@@ -40,8 +40,8 @@ function choco {
     Start-Choco $Args
 }
 
-cd c:/vagrant/provision/windows
+Set-Location c:/vagrant/provision/windows
 $script = Resolve-Path $script
-cd (Split-Path $script -Parent)
+Set-Location (Split-Path $script -Parent)
 Write-Host "Running $script..."
 . $script @scriptArguments

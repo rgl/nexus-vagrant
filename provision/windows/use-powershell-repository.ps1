@@ -34,7 +34,7 @@ New-Item `
     | Out-Null
 
 Write-Host 'Publishing the ExampleGreeter module into the nexus server...'
-cd $env:TEMP
+Set-Location $env:TEMP
 mkdir ExampleGreeter | Out-Null
 Push-Location ExampleGreeter
 Set-Content `

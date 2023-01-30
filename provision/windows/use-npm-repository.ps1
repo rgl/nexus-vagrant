@@ -17,10 +17,10 @@ function external([string]$cmd, [string[]]$arguments) {
 function node { external node.exe $Args }
 function npm { external npm.cmd $Args }
 
-cd $env:USERPROFILE
+Set-Location $env:USERPROFILE
 mkdir tmp | Out-Null
 mkdir tmp/use-npm-repository | Out-Null
-cd tmp/use-npm-repository
+Set-Location tmp/use-npm-repository
 
 #
 # test the npm repositories.
@@ -47,7 +47,7 @@ npm config set registry https://$nexusDomain/repository/npm-group/
 
 # install a package that indirectly uses the npmjs.org-proxy repository.
 mkdir hello-world-win-npm | Out-Null
-pushd hello-world-win-npm
+Push-Location hello-world-win-npm
 Set-Content `
     -Encoding Ascii `
     package.json `
@@ -93,11 +93,11 @@ npm set "//$nexusDomain/repository/npm-hosted/:_authToken" $npmAuthToken
 # NB instead of using the token from the npm configuration you can
 #    set the NPM_TOKEN environment variable.
 npm publish --registry=$env:NPM_REGISTRY
-popd
+Pop-Location
 
 # use the published package.
 mkdir use-hello-world-win-npm | Out-Null
-pushd use-hello-world-win-npm
+Push-Location use-hello-world-win-npm
 Set-Content `
     -Encoding Ascii `
     hello-world-win.js `
@@ -116,4 +116,4 @@ Set-Content `
 '@
 npm install hello-world-win
 node node_modules/hello-world-win/hello-world-win.js
-popd
+Pop-Location

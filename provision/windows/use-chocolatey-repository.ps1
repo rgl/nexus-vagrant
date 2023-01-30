@@ -36,7 +36,7 @@ SetDefaultBrowser HKLM "Google Chrome"
 Write-Host 'Creating the graceful-terminating-console-application-windows chocolatey package...'
 Push-Location $env:TEMP
 mkdir graceful-terminating-console-application-windows | Out-Null
-cd graceful-terminating-console-application-windows
+Set-Location graceful-terminating-console-application-windows
 Set-Content -Encoding Ascii graceful-terminating-console-application-windows.nuspec @'
 <package>
   <metadata>
@@ -69,4 +69,4 @@ Pop-Location
 Write-Host 'Installing the graceful-terminating-console-application-windows chocolatey package...'
 choco install -y graceful-terminating-console-application-windows
 Write-Host 'graceful-terminating-console-application-windows installed at:'
-dir C:\ProgramData\chocolatey\bin\graceful-terminating-console-application-windows.exe
+Get-ChildItem C:\ProgramData\chocolatey\bin\graceful-terminating-console-application-windows.exe
