@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
-docker_version="${1:-20.10.23}"; shift || true
+# see https://github.com/moby/moby/releases
+docker_version="${1:-23.0.1}"; shift || true
 registry_proxy_domain="${1:-$(hostname --fqdn)}"; shift || true
 # NB as-of docker 19.03.8, there is still no way to specify a registry mirror credentials,
 #    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
@@ -25,7 +26,7 @@ wget -qO- https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get update
 apt-cache madison docker-ce
-docker_version="$(apt-cache madison docker-ce | awk "/$docker_version~/{print \$3}")"
+docker_version="$(apt-cache madison docker-ce | awk "/$docker_version[~-]/{print \$3}")"
 apt-get install -y "docker-ce=$docker_version" "docker-ce-cli=$docker_version" containerd.io
 
 # configure it.
