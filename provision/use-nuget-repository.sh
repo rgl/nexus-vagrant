@@ -42,6 +42,7 @@ dotnet nuget list source
 # create the example project.
 # see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec
 # see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
+# see https://www.nuget.org/packages/serilog/
 cat >example-hello-world.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
@@ -59,7 +60,7 @@ cat >example-hello-world.csproj <<'EOF'
     </NuspecProperties>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.12.0" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
   </ItemGroup>
 </Project>
 EOF
@@ -135,6 +136,7 @@ namespace Example
 EOF
 dotnet nuget list source
 dotnet add package example-hello-world
+# see https://www.nuget.org/packages/Serilog.Sinks.Console/
 dotnet add package Serilog.Sinks.Console --version 4.1.0
 dotnet build -v=n -c=Release
 dotnet publish -v=n -c=Release --no-build --output dist
