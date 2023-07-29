@@ -43,6 +43,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: 'provision/use-maven-repository-from-gradle.sh'
     config.vm.provision :shell, path: 'provision/use-nuget-repository.sh'
     config.vm.provision :shell, path: 'provision/use-npm-repository.sh'
+    config.vm.provision :shell, path: 'provision/use-pypi-repository.sh'
     config.vm.provision :shell, path: 'provision/summary.sh'
   end
 
