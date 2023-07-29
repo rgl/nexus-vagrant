@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # see https://github.com/moby/moby/releases
-docker_version="${1:-23.0.1}"; shift || true
+docker_version="${1:-24.0.5}"; shift || true
 registry_proxy_domain="${1:-$(hostname --fqdn)}"; shift || true
 # NB as-of docker 19.03.8, there is still no way to specify a registry mirror credentials,
 #    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
