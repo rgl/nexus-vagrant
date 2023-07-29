@@ -158,6 +158,29 @@ unset GNUPGHOME
 # configure nexus with the groovy script.
 bash /vagrant/provision/execute-provision.groovy-script.sh
 
+# set the api credentials.
+api_auth="admin:admin"
+
+# create the pypi-hosted repository.
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/pypi/hosted \
+    <<'EOF'
+{
+  "name": "pypi-hosted",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once"
+  },
+  "component": {
+    "proprietaryComponents": true
+  }
+}
+EOF
 
 # configure nexus ldap with a groovy script.
 if [ "$config_authentication" = 'ldap' ]; then
