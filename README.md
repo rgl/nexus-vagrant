@@ -2,6 +2,7 @@ This is a Vagrant Environment for a [Nexus Repository OSS](https://github.com/so
 
 This will:
 
+* Install Nexus via [independently reusable script](provision/provision-nexus.sh).
 * Configure Nexus through Groovy scripts.
   * Create the `adhoc-package` repository.
   * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
