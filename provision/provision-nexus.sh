@@ -406,6 +406,92 @@ http \
   }
 }
 EOF
+
+
+# create the chocolatey-hosted nuget hosted repository.
+# see https://help.sonatype.com/en/nuget-repositories.html
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/nuget/hosted \
+    <<'EOF'
+{
+  "name": "chocolatey-hosted",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once"
+  },
+  "component": {
+    "proprietaryComponents": true
+  }
+}
+EOF
+
+
+# create a chocolatey.org-proxy nuget proxy repository.
+# see https://help.sonatype.com/en/nuget-repositories.html
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/nuget/proxy \
+    <<'EOF'
+{
+  "name": "chocolatey.org-proxy",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true
+  },
+  "proxy": {
+    "remoteUrl": "https://chocolatey.org/api/v2/",
+    "contentMaxAge": 1440,
+    "metadataMaxAge": 1440
+  },
+  "nugetProxy": {
+    "queryCacheItemMaxAge": 3600,
+    "nugetVersion": "V2"
+  },
+  "negativeCache": {
+    "enabled": true,
+    "timeToLive": 1440
+  },
+  "httpClient": {
+    "blocked": false,
+    "autoBlock": true
+  }
+}
+EOF
+
+
+# create the chocolatey-group nuget group repository.
+# see https://help.sonatype.com/en/nuget-repositories.html
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/nuget/group \
+    <<'EOF'
+{
+  "name": "chocolatey-group",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true
+  },
+  "group": {
+    "memberNames": [
+      "chocolatey-hosted",
+      "chocolatey.org-proxy"
+    ]
+  }
+}
+EOF
+
+
 # configure nexus ldap with a groovy script.
 if [ "$config_authentication" = 'ldap' ]; then
     bash /vagrant/provision/execute-provision-ldap.groovy-script.sh

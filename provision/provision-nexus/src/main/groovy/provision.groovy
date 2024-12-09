@@ -26,17 +26,6 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //])
 
 
-// create a chocolatey repository backed by the default blob store.
-repository.createNugetHosted("chocolatey-hosted", "default", true, WritePolicy.ALLOW_ONCE)
-// create a chocolatey proxy repository backed by the default blob store.
-// see https://help.sonatype.com/repomanager3/formats/nuget-repositories
-config = repository.createNugetProxy("chocolatey.org-proxy", "https://chocolatey.org/api/v2/", "default").configuration.copy()
-config.attributes.nugetProxy.nugetVersion = "V2"
-repository.repositoryManager.update(config)
-// create a chocolatey group repository that merges the chocolatey-host and chocolatey.org-proxy together.
-repository.createNugetGroup("chocolatey-group", ["chocolatey-hosted", "chocolatey.org-proxy"], "default")
-
-
 // create a docker registry repository backed by the default blob store.
 repository.createDockerHosted("docker-hosted", 6003, null, "default", true, true, WritePolicy.ALLOW, true)
 // create a docker proxy repository backed by the default blob store.
