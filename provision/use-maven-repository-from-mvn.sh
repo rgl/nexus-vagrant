@@ -3,14 +3,16 @@ set -euxo pipefail
 
 nexus_domain=$(hostname --fqdn)
 
-mkdir -p tmp/use-maven-repository-from-mvn && cd tmp/use-maven-repository-from-mvn
+rm -rf tmp/use-maven-repository-from-mvn
+mkdir -p tmp/use-maven-repository-from-mvn
+cd tmp/use-maven-repository-from-mvn
 
 #
 # test the maven repository.
 
 # install maven and the java development kit.
 sudo apt-get install -y maven
-sudo apt-get install -y openjdk-8-jdk-headless
+sudo apt-get install -y openjdk-17-jdk-headless
 sudo apt-get install -y xmlstarlet
 
 # setup the user maven configuration to use nexus as a mirror the
@@ -72,6 +74,14 @@ mvn \
 
 # test publishing a package.
 pushd example-helloworld
+# set the java version.
+xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
+  --subnode /pom:project --type elem --name properties \
+  pom.xml
+xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
+  --subnode /pom:project/pom:properties --type elem --name maven.compiler.source --value 17 \
+  --subnode /pom:project/pom:properties --type elem --name maven.compiler.target --value 17 \
+  pom.xml
 # add the nexus repository to pom.xml.
 xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
   --subnode '/pom:project' \

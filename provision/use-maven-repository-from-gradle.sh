@@ -3,7 +3,9 @@ set -euxo pipefail
 
 nexus_domain=$(hostname --fqdn)
 
-mkdir -p tmp/use-maven-repository-from-gradle && cd tmp/use-maven-repository-from-gradle
+rm -rf tmp/use-maven-repository-from-gradle
+mkdir -p tmp/use-maven-repository-from-gradle
+cd tmp/use-maven-repository-from-gradle
 
 #
 # test the maven repository from gradle.
@@ -116,8 +118,8 @@ application {
     mainClass = project.mainClassName
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 17
+targetCompatibility = 17
 
 jar {
     manifest {

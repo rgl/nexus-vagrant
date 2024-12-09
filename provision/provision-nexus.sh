@@ -12,7 +12,7 @@ config_authentication='nexus'
 
 # install java.
 # see https://help.sonatype.com/repomanager3/product-information/system-requirements#SystemRequirements-Java
-apt-get install -y openjdk-8-jre-headless
+apt-get install -y openjdk-17-jre-headless
 apt-get install -y gnupg
 
 
@@ -35,17 +35,17 @@ pushd /opt/nexus
 # see https://help.sonatype.com/repomanager3/product-information/download/download-archives---repository-manager-3
 # see https://help.sonatype.com/repomanager3/product-information/release-notes
 # see https://help.sonatype.com/repomanager3
-nexus_version=3.70.3-01
+nexus_version=3.75.1-01
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-unix.tar.gz
 nexus_download_url=https://download.sonatype.com/nexus/3/$nexus_tarball
-nexus_download_sha1=56bf87028892450b2841756bd9fc4caed6b48287
+nexus_download_sha1=cfc9e7bdaeb1f1b9fb45aecc7a50821759c8b847
 wget -q $nexus_download_url
 if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
     exit 1
 fi
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.70.3-01) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.75.1-01) and sonatype-work directories.
 rm $nexus_tarball
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
 install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc
@@ -65,6 +65,11 @@ nexus.security.randompassword=false
 # see https://issues.sonatype.org/browse/NEXUS-23205
 # see Scripting Nexus Repository Manager 3 at https://support.sonatype.com/hc/en-us/articles/360045220393
 nexus.scripts.allowCreation=true
+
+# enable the database console.
+# see https://support.sonatype.com/hc/en-us/articles/213467158-How-to-reset-a-forgotten-admin-password-in-Sonatype-Nexus-Repository-3#DatabaseConsoleforh2Database
+nexus.h2.httpListenerEnabled=true
+nexus.h2.httpListenerPort=8082
 EOF
 diff -u $nexus_home/etc/nexus-default.properties sonatype-work/nexus3/etc/nexus.properties || true
 popd

@@ -109,36 +109,53 @@ The logs are at `/opt/nexus/log/nexus.log`.
 
 You can also see them with `journalctl -u nexus`.
 
-## OrientDB
+## H2 Database
 
-Nexus uses [OrientDB](https://en.wikipedia.org/wiki/OrientDB) as its database. To directly use it from the console run:
+Nexus uses [H2 Database](https://en.wikipedia.org/wiki/H2_(database)) as its database management system.
+
+**NB** Nexus OSS can only use the H2 database management system.
+
+**NB** Nexus Pro can use the H2 or PostgreSQL database management system.
+
+The Web based H2 Database Console is available at https://nexus.example.com/h2-console with the following settings:
+
+| Setting        | Value                                            |
+|----------------|--------------------------------------------------|
+| Saved Settings | Generic H2 (Embedded)                            |
+| Setting Name   | Generic H2 (Embedded)                            |
+| Driver Class   | org.h2.Driver                                    |
+| JDBC URL       | jdbc:h2:/opt/nexus/sonatype-work/nexus3/db/nexus |
+| User Name      | _empty_                                          |
+| Password       | _empty_                                          |
+
+You can also access the database cli shell as:
 
 ```bash
 sudo su -l                            # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.70.3-01 # make sure you have the correct version here.
-nexus_data=$nexus_home/../sonatype-work/nexus3
-function orientdb-console {
-    java -jar $nexus_home/lib/support/nexus-orient-console.jar $*
+nexus_home=/opt/nexus/nexus-3.75.1-01 # make sure you have the correct version here.
+nexus_data="$(realpath $nexus_home/../sonatype-work/nexus3)"
+function h2-shell {
+  java \
+    -cp $nexus_home/system/com/h2database/h2/*/h2*.jar \
+    org.h2.tools.Shell \
+    -url jdbc:h2:$nexus_data/db/nexus
 }
-cd $nexus_data
-ls -laF db | grep ^d  # list the databases
-orientdb-console      # start the console.
+h2-shell
 ```
 
-Then connect to one of the databases, e.g. to the `security` database:
+Then execute some commands and exit the console, e.g.:
 
-```plain
-connect plocal:db/security admin admin
-```
-
-Then execute some commands and exit the orientdb console, e.g.:
-
-```plain
+```sql
+-- see https://h2database.com/html/commands.html
 help
-config
-list classes
+show schemas;
+show tables;
+show columns from security_user;
+select * from security_user;
+select * from api_key_v2;
+select * from repository;
 exit
 ```
 
@@ -154,24 +171,7 @@ And start nexus again:
 systemctl start nexus
 ```
 
-For more information about the console see [Running the OrientDB Console](http://orientdb.com/docs/master/Tutorial-Run-the-console.html).
-
-## OrientDB Check Databases
-
-Execute the commands from the OrientDB section to stop nexus, to enter the
-nexus account and create the `orientdb-console` function, then:
-
-```bash
-# check the databases.
-# NB use CHECK DATABASE -v to see the verbose log.
-orientdb-console 'CONNECT PLOCAL:db/component admin admin; CHECK DATABASE;'
-#orientdb-console 'CONNECT PLOCAL:db/component admin admin; REPAIR DATABASE;'
-orientdb-console 'CONNECT PLOCAL:db/config admin admin; CHECK DATABASE;'
-orientdb-console 'CONNECT PLOCAL:db/security admin admin; CHECK DATABASE;'
-#orientdb-console 'CONNECT PLOCAL:db/OSystem admin admin; CONFIG; LIST CLASSES;' # XXX fails to connect. see https://groups.google.com/a/glists.sonatype.com/forum/#!topic/nexus-users/7dVofIwC5HM
-```
-
-Then start nexus.
+For more information see the [available Command Line Tools](https://h2database.com/html/tutorial.html#command_line_tools).
 
 ## Reference
 

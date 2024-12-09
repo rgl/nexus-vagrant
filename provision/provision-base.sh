@@ -130,10 +130,12 @@ server {
   proxy_send_timeout 120;
   proxy_read_timeout 300;
   proxy_buffering off;
-  proxy_set_header X-Forwarded-Proto \$scheme;
-  proxy_set_header Host \$host;
-  proxy_set_header X-Forwarded-Host \$host;
-  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+
+  location /h2-console/ {
+    proxy_http_version 1.1;
+    proxy_pass http://localhost:8082/;
+    proxy_redirect http://localhost:8082/ /h2-console/;
+  }
 
   location / {
     root /opt/nexus/public;
@@ -141,6 +143,10 @@ server {
   }
 
   location @nexus {
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header Host \$host;
+    proxy_set_header X-Forwarded-Host \$host;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_pass http://127.0.0.1:8081;
   }
 }
