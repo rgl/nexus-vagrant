@@ -3,7 +3,29 @@ set -euxo pipefail
 
 nexus_domain=$(hostname --fqdn)
 
-. /vagrant/provision/nexus-groovy.sh
+# see the requests made when using https://nexus.example.com/#user/nugetapitoken UI.
+function get-jenkins-nuget-api-key {
+  local username='jenkins'
+  local password='password'
+  local user_token=$(http \
+    -a "$username:$password" \
+    --ignore-stdin \
+    --check-status \
+    POST https://$nexus_domain/service/extdirect \
+    action=rapture_Security \
+    method=authenticationToken \
+    type=rpc \
+    tid:=0 \
+    data:="[\"$(echo -n "$username" | base64 -w0)\",\"$(echo -n "$password" | base64 -w0)\"]" \
+    | jq -r .result.data)
+  http \
+    -a "$username:$password" \
+    --ignore-stdin \
+    --check-status \
+    GET https://$nexus_domain/service/rest/internal/nuget-api-key \
+    authToken=="$(echo -n "$user_token" | base64 -w0)" \
+    | jq -r .apiKey
+}
 
 mkdir -p tmp/use-nuget-repository && cd tmp/use-nuget-repository
 
@@ -19,7 +41,7 @@ fi
 
 nuget_source_url=https://$nexus_domain/repository/nuget-group/index.json
 nuget_source_push_url=https://$nexus_domain/repository/nuget-hosted/
-nuget_source_push_api_key=$(nexus-groovy get-jenkins-nuget-api-key | jq -r '.result | fromjson | .apiKey')
+nuget_source_push_api_key=$(get-jenkins-nuget-api-key)
 echo -n $nuget_source_push_api_key >/vagrant/shared/jenkins-nuget-api-key
 nuget_source_push_api_key="$(cat /vagrant/shared/jenkins-nuget-api-key)"
 

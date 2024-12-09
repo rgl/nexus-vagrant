@@ -6,7 +6,6 @@ import groovy.json.JsonOutput
 import org.sonatype.nexus.capability.CapabilityRegistry
 import org.sonatype.nexus.repository.config.WritePolicy
 import org.sonatype.nexus.security.user.UserSearchCriteria
-import org.sonatype.nexus.security.authc.apikey.ApiKeyStore
 import org.sonatype.nexus.security.realm.RealmManager
 import org.apache.shiro.subject.SimplePrincipalCollection
 import org.sonatype.nexus.scheduling.TaskScheduler
@@ -93,15 +92,6 @@ repository.createDockerProxy("docker-hub-proxy", "https://registry-1.docker.io",
 repository.createDockerGroup("docker-group", 6001, null, ["docker-hosted", "docker-hub-proxy"], true, "default", true)
 
 
-// see http://stackoverflow.com/questions/8138164/groovy-generate-random-string-from-given-character-set
-def random(String alphabet, int n) {
-    new Random().with {
-        (1..n).collect { alphabet[nextInt(alphabet.length())] }.join()
-    }
-}
-jenkinsPassword = random((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 16)
-
-
 // set the base url. this is used when sending emails.
 // see https://help.sonatype.com/display/NXRM3/Configuration#Configuration-BaseURLCreation
 core.baseUrl("https://" + java.net.InetAddress.localHost.canonicalHostName)
@@ -141,20 +131,6 @@ security.anonymousAccess = true
 //    password is easier to remember.
 security.securitySystem.changePassword('admin', 'admin')
 
-// the intent is to get or create an NuGet API Key like the one we can see on the user page:
-// http://nexus.example.com:8081/#user/nugetapitoken.
-def getOrCreateNuGetApiKey(String userName) {
-    realmName = "NexusAuthenticatingRealm"
-    apiKeyDomain = "NuGetApiKey"
-    principal = new SimplePrincipalCollection(userName, realmName)
-    keyStore = container.lookup(ApiKeyStore.class.name)
-    apiKey = keyStore.getApiKey(apiKeyDomain, principal)
-    if (apiKey == null) {
-        apiKey = keyStore.createApiKey(apiKeyDomain, principal)
-    }
-    return apiKey.toString()
-}
-
 
 // create users in the deployer role.
 // see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/security.groovy#L38
@@ -174,15 +150,10 @@ def addDeployerUser(firstName, lastName, email, userName, password) {
     } catch (org.sonatype.nexus.security.user.UserNotFoundException e) {
         user = security.addUser(userName, firstName, lastName, email, true, password, ["deployer"])
     }
-    nuGetApiKey = getOrCreateNuGetApiKey(userName)
 }
-addDeployerUser("Jenkins", "Doe", "jenkins@example.com", "jenkins", jenkinsPassword)
+addDeployerUser("Jenkins", "Doe", "jenkins@example.com", "jenkins", "password")
 addDeployerUser("Alice", "Doe", "alice.doe@example.com", "alice.doe", "password")
 addDeployerUser("Bob", "Doe", "bob.doe@example.com", "bob.doe", "password")
-
-
-// get the jenkins NuGet API Key.
-jenkinsNuGetApiKey = getOrCreateNuGetApiKey("jenkins")
 
 realms = realmManager.configuration.realmNames
 users = security.securitySystem.searchUsers(new UserSearchCriteria())
