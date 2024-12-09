@@ -26,15 +26,6 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //])
 
 
-// create a npm repository backed by the default blob store.
-repository.createNpmHosted("npm-hosted", "default", true, WritePolicy.ALLOW_ONCE)
-// create a npm proxy repository backed by the default blob store.
-// see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
-repository.createNpmProxy("npmjs.org-proxy", "https://registry.npmjs.org", "default")
-// create a npm group repository that merges the npm-host and npmjs.org-proxy together.
-repository.createNpmGroup("npm-group", ["npm-hosted", "npmjs.org-proxy"], "default")
-
-
 // modify the default nuget-hosted repository for not allowing re-deployments.
 config = repository.repositoryManager.get("nuget-hosted").configuration.copy()
 config.attributes.storage.writePolicy = WritePolicy.ALLOW_ONCE

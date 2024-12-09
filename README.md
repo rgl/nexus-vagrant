@@ -5,9 +5,9 @@ This will:
 * Configure Nexus through the API.
   * Create the `adhoc-package` repository.
   * Create the `apt-hosted` repository.
+  * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
 * Configure Nexus through Groovy scripts.
-  * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
   * Create the `chocolatey-group`, `chocolatey-hosted` and `chocolatey.org-proxy` repositories.
   * Create the `powershell-group`, `powershell-hosted` and `powershellgallery.com-proxy` repositories.
   * Schedule a task to remove the old snapshots from the `maven-snapshots` repository.

@@ -219,6 +219,89 @@ http \
   }
 }
 EOF
+
+
+# create the npm-hosted npm repository.
+# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/npm/hosted \
+    <<'EOF'
+{
+  "name": "npm-hosted",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once"
+  },
+  "component": {
+    "proprietaryComponents": true
+  }
+}
+EOF
+
+
+# create the npmjs.org-proxy npm proxy repository.
+# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/npm/proxy \
+    <<'EOF'
+{
+  "name": "npmjs.org-proxy",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once"
+  },
+  "proxy": {
+    "remoteUrl": "https://registry.npmjs.org",
+    "contentMaxAge": 1440,
+    "metadataMaxAge": 1440
+  },
+  "negativeCache": {
+    "enabled": true,
+    "timeToLive": 1440
+  },
+  "httpClient": {
+    "blocked": false,
+    "autoBlock": true
+  }
+}
+EOF
+
+
+# create the npm-group npm group repository.
+# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/npm/group \
+    <<'EOF'
+{
+  "name": "npm-group",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true
+  },
+  "group": {
+    "memberNames": [
+      "npm-hosted",
+      "npmjs.org-proxy"
+    ]
+  }
+}
+EOF
+
+
 # create the pypi-hosted repository.
 http \
     --check-status \
