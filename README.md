@@ -3,9 +3,9 @@ This is a Vagrant Environment for a [Nexus Repository OSS](https://github.com/so
 This will:
 
 * Configure Nexus through the API.
+  * Create the `adhoc-package` repository.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
 * Configure Nexus through Groovy scripts.
-  * Create the `adhoc-package` repository.
   * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
   * Create the `chocolatey-group`, `chocolatey-hosted` and `chocolatey.org-proxy` repositories.
   * Create the `powershell-group`, `powershell-hosted` and `powershellgallery.com-proxy` repositories.

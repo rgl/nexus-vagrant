@@ -166,6 +166,31 @@ bash /vagrant/provision/execute-provision.groovy-script.sh
 # set the api credentials.
 api_auth="admin:admin"
 
+
+# create the adhoc-package raw repository.
+# NB this repository can host any type of artifact, so we disable strictContentTypeValidation.
+# see https://help.sonatype.com/display/NXRM3/Raw+Repositories+and+Maven+Sites#RawRepositoriesandMavenSites-UploadingFilestoHostedRawRepositories
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/raw/hosted \
+    <<'EOF'
+{
+  "name": "adhoc-package",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": false,
+    "writePolicy": "allow_once"
+  },
+  "component": {
+    "proprietaryComponents": true
+  }
+}
+EOF
+
+
 # create the pypi-hosted repository.
 http \
     --check-status \
@@ -186,6 +211,7 @@ http \
   }
 }
 EOF
+
 
 # configure nexus ldap with a groovy script.
 if [ "$config_authentication" = 'ldap' ]; then

@@ -25,13 +25,6 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //    ]}
 //])
 
-// create a raw repository backed by the default blob store.
-// NB this repository can host any type of artifact, so we disable strictContentTypeValidation.
-// see https://github.com/sonatype/nexus-book-examples/blob/nexus-3.x/scripting/complex-script/rawRepositories.groovy
-// see https://help.sonatype.com/display/NXRM3/Raw+Repositories+and+Maven+Sites#RawRepositoriesandMavenSites-UploadingFilestoHostedRawRepositories
-repository.createRawHosted("adhoc-package", "default", false, WritePolicy.ALLOW_ONCE)
-
-
 // create a apt repository backed by the default blob store.
 // see https://help.sonatype.com/repomanager3/formats/apt-repositories
 pgpPrivateKey = new File('/vagrant/shared/apt-hosted-private.key').getText('UTF-8')
