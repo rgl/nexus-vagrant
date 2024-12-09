@@ -26,12 +26,6 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //])
 
 
-// modify the default nuget-hosted repository for not allowing re-deployments.
-config = repository.repositoryManager.get("nuget-hosted").configuration.copy()
-config.attributes.storage.writePolicy = WritePolicy.ALLOW_ONCE
-repository.repositoryManager.update(config)
-
-
 // create a powershell repository backed by the default blob store.
 repository.createNugetHosted("powershell-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a powershell proxy repository backed by the default blob store.
