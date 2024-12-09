@@ -4,6 +4,7 @@ This will:
 
 * Configure Nexus through the API.
   * Create the `adhoc-package` repository.
+  * Create the `apt-hosted` repository.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
 * Configure Nexus through Groovy scripts.
   * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.

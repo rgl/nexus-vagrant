@@ -191,6 +191,34 @@ http \
 EOF
 
 
+# create the apt-hosted apt repository.
+# see https://help.sonatype.com/repomanager3/formats/apt-repositories
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/apt/hosted \
+    <<EOF
+{
+  "name": "apt-hosted",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once"
+  },
+  "component": {
+    "proprietaryComponents": true
+  },
+  "apt": {
+    "distribution": "jammy"
+  },
+  "aptSigning": {
+    "keypair": $(cat /vagrant/shared/apt-hosted-private.key | jq --slurp --raw-input .),
+    "passphrase": "abracadabra"
+  }
+}
+EOF
 # create the pypi-hosted repository.
 http \
     --check-status \
