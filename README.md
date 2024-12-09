@@ -6,10 +6,10 @@ This will:
   * Create the `adhoc-package` repository.
   * Create the `apt-hosted` repository.
   * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
+  * Create the `powershell-group`, `powershell-hosted` and `powershellgallery.com-proxy` repositories.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
 * Configure Nexus through Groovy scripts.
   * Create the `chocolatey-group`, `chocolatey-hosted` and `chocolatey.org-proxy` repositories.
-  * Create the `powershell-group`, `powershell-hosted` and `powershellgallery.com-proxy` repositories.
   * Schedule a task to remove the old snapshots from the `maven-snapshots` repository.
   * Create users and a custom `deployer` role.
   * Setup an Active Directory LDAP user authentication source (when `config_authentication='ldap'` is set inside the `provision-nexus.sh` file).

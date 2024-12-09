@@ -26,17 +26,6 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //])
 
 
-// create a powershell repository backed by the default blob store.
-repository.createNugetHosted("powershell-hosted", "default", true, WritePolicy.ALLOW_ONCE)
-// create a powershell proxy repository backed by the default blob store.
-// see https://help.sonatype.com/repomanager3/formats/nuget-repositories
-config = repository.createNugetProxy("powershellgallery.com-proxy", "https://www.powershellgallery.com/api/v2/", "default").configuration.copy()
-config.attributes.nugetProxy.nugetVersion = "V2"
-repository.repositoryManager.update(config)
-// create a powershell group repository that merges the powershell-host and powershellgallery.com-proxy together.
-repository.createNugetGroup("powershell-group", ["powershell-hosted", "powershellgallery.com-proxy"], "default")
-
-
 // create a chocolatey repository backed by the default blob store.
 repository.createNugetHosted("chocolatey-hosted", "default", true, WritePolicy.ALLOW_ONCE)
 // create a chocolatey proxy repository backed by the default blob store.
