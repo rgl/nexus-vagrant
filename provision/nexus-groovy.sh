@@ -12,7 +12,7 @@ function nexus-groovy {
     local delete_result=$(http \
         -a "$admin_username:$admin_password" \
         --ignore-stdin \
-        DELETE https://$nexus_domain/service/rest/v1/script/provision.groovy)   
+        DELETE https://$nexus_domain/service/rest/v1/script/provision.groovy)
 
     local create_result=$(http \
         -a "$admin_username:$admin_password" \

@@ -111,7 +111,7 @@ taskConfiguration.setString("snapshotRetentionDays", "30")
 taskScheduler.scheduleTask(taskConfiguration, new Daily(new Date().clearTime().next()))
 
 
-// NB you can list the available realms with realmManager.availableRealms.
+// enable the required realms.
 realmManager = container.lookup(RealmManager.class.name)
 // enable the NuGet API-Key Realm.
 realmManager.enableRealm("NuGetApiKey")
@@ -155,7 +155,6 @@ addDeployerUser("Jenkins", "Doe", "jenkins@example.com", "jenkins", "password")
 addDeployerUser("Alice", "Doe", "alice.doe@example.com", "alice.doe", "password")
 addDeployerUser("Bob", "Doe", "bob.doe@example.com", "bob.doe", "password")
 
-realms = realmManager.configuration.realmNames
 users = security.securitySystem.searchUsers(new UserSearchCriteria())
 repositories = repository.repositoryManager.browse().collect { [name:it.name,type:it.type.value] }
 
@@ -174,7 +173,6 @@ return JsonOutput.toJson([
             initialValue: it.initialValue,
             ] }
     ] },*/
-    realms: realms.sort { it },
     users: users.sort { it.userId },
     repositories: repositories.sort { it.name },
 ])
