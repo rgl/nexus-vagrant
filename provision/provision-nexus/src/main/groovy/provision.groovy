@@ -26,23 +26,6 @@ capabilityRegistry.all.findAll {it.context().type().toString().startsWith("Outre
 //])
 
 
-// create a docker registry repository backed by the default blob store.
-repository.createDockerHosted("docker-hosted", 6003, null, "default", true, true, WritePolicy.ALLOW, true)
-// create a docker proxy repository backed by the default blob store.
-// see https://help.sonatype.com/repomanager3/formats/docker-registry
-// TODO set Allow Nexus Repository Manager to download and cache foreign layers.
-// NB as-of docker 19.03.5, there is still no way to specify a registry mirror credentials...
-//    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
-//    registry, enable the Docker Bearer Token Realm and allow anonymous access to it.
-//    see https://github.com/moby/moby/issues/30880
-// NB this will make https://nexus.example.com:5002/v2/library/debian/manifests/buster-slim proxy
-//    to https://registry-1.docker.io/v2/library/debian/manifests/buster-slim
-//       https://registry-1.docker.io/v2/library/golang/tags/list
-repository.createDockerProxy("docker-hub-proxy", "https://registry-1.docker.io", "HUB", null, 6002, null, "default", true, true, false)
-// create a docker group repository that merges the docker-hosted and docker-hub-proxy together.
-repository.createDockerGroup("docker-group", 6001, null, ["docker-hosted", "docker-hub-proxy"], true, "default", true)
-
-
 // set the base url. this is used when sending emails.
 // see https://help.sonatype.com/display/NXRM3/Configuration#Configuration-BaseURLCreation
 core.baseUrl("https://" + java.net.InetAddress.localHost.canonicalHostName)

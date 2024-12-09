@@ -8,6 +8,7 @@ This will:
   * Create the `npm-group`, `npm-hosted` and `npmjs.org-proxy` repositories.
   * Create the `powershell-group`, `powershell-hosted` and `powershellgallery.com-proxy` repositories.
   * Create the `chocolatey-group`, `chocolatey-hosted` and `chocolatey.org-proxy` repositories.
+  * Create the `docker-group`, `docker-hosted` and `docker-hub-proxy` repositories.
   * Configure the NuGet `nuget-hosted` repository to accept pushing with an API key.
 * Configure Nexus through Groovy scripts.
   * Schedule a task to remove the old snapshots from the `maven-snapshots` repository.

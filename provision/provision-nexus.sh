@@ -492,6 +492,113 @@ http \
 EOF
 
 
+# create the docker-hosted docker registry repository.
+# see https://help.sonatype.com/en/docker-registry.html
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/docker/hosted \
+    <<'EOF'
+{
+  "name": "docker-hosted",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once",
+    "latestPolicy": true
+  },
+  "component": {
+    "proprietaryComponents": true
+  },
+  "docker": {
+    "v1Enabled": false,
+    "forceBasicAuth": true,
+    "httpPort": 6003
+  }
+}
+EOF
+
+
+# create the docker hub registry proxy repository.
+# see https://help.sonatype.com/en/docker-registry.html
+# NB as-of docker 19.03.5, there is still no way to specify a registry mirror credentials...
+#    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
+#    registry, enable the Docker Bearer Token Realm and allow anonymous access to it.
+#    see https://github.com/moby/moby/issues/30880
+# NB this will make https://nexus.example.com:5002/v2/library/debian/manifests/buster-slim proxy
+#    to https://registry-1.docker.io/v2/library/debian/manifests/buster-slim
+#       https://registry-1.docker.io/v2/library/golang/tags/list
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/docker/proxy \
+    <<'EOF'
+{
+  "name": "docker-hub-proxy",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true
+  },
+  "proxy": {
+    "remoteUrl": "https://registry-1.docker.io",
+    "contentMaxAge": 1440,
+    "metadataMaxAge": 1440
+  },
+  "negativeCache": {
+    "enabled": true,
+    "timeToLive": 1440
+  },
+  "httpClient": {
+    "blocked": false,
+    "autoBlock": true
+  },
+  "docker": {
+    "v1Enabled": false,
+    "forceBasicAuth": true,
+    "httpPort": 6002
+  },
+  "dockerProxy": {
+    "indexType": "HUB",
+    "cacheForeignLayers": true
+  }
+}
+EOF
+
+
+# create the docker-group docker group repository.
+# see https://help.sonatype.com/en/docker-registry.html
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/docker/group \
+    <<'EOF'
+{
+  "name": "docker-group",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true
+  },
+  "group": {
+    "memberNames": [
+      "docker-hosted",
+      "docker-hub-proxy"
+    ]
+  },
+  "docker": {
+    "v1Enabled": false,
+    "forceBasicAuth": true,
+    "httpPort": 6001
+  }
+}
+EOF
+
+
 # configure nexus ldap with a groovy script.
 if [ "$config_authentication" = 'ldap' ]; then
     bash /vagrant/provision/execute-provision-ldap.groovy-script.sh
