@@ -16,20 +16,27 @@ choco sources add --name nexus --source https://$nexusDomain/repository/chocolat
 Write-Host 'Current Chocolatey sources:'
 choco sources list
 
-Write-Host 'Installing Google Chrome from the nexus server...'
-# NB --ignore-checksums is needed because chrome does not release a versioned
-#    installer... as such, sometimes this package installation breaks if we
-#    do not ignore the checksums and there's a new chrome version available.
-# see https://www.chromium.org/administrators/configuring-other-preferences
-choco install -y --ignore-checksums googlechrome
-$chromeLocation = 'C:\Program Files\Google\Chrome\Application'
-cp -Force GoogleChrome-external_extensions.json (Resolve-Path "$chromeLocation\*\default_apps\external_extensions.json")
-cp -Force GoogleChrome-master_preferences.json "$chromeLocation\master_preferences"
-cp -Force GoogleChrome-master_bookmarks.html "$chromeLocation\master_bookmarks.html"
+$browser = 'firefox'
 
-# set the default browser.
-choco install -y SetDefaultBrowser
-SetDefaultBrowser HKLM "Google Chrome"
+if ($browser -eq 'firefox') {
+  Write-Host 'Installing Firefox from the nexus server...'
+  choco install -y firefox --params 'l=en-US'
+  choco install -y SetDefaultBrowser
+  SetDefaultBrowser @((SetDefaultBrowser | Where-Object {$_ -like 'HKLM Firefox-*'}) -split ' ')
+} else {
+  Write-Host 'Installing Google Chrome from the nexus server...'
+  # NB --ignore-checksums is needed because chrome does not release a versioned
+  #    installer... as such, sometimes this package installation breaks if we
+  #    do not ignore the checksums and there's a new chrome version available.
+  # see https://www.chromium.org/administrators/configuring-other-preferences
+  choco install -y --ignore-checksums googlechrome
+  $chromeLocation = 'C:\Program Files\Google\Chrome\Application'
+  cp -Force GoogleChrome-external_extensions.json (Resolve-Path "$chromeLocation\*\default_apps\external_extensions.json")
+  cp -Force GoogleChrome-master_preferences.json "$chromeLocation\master_preferences"
+  cp -Force GoogleChrome-master_bookmarks.html "$chromeLocation\master_bookmarks.html"
+  choco install -y SetDefaultBrowser
+  SetDefaultBrowser HKLM "Google Chrome"
+}
 
 # see https://github.com/chocolatey/choco/wiki/CreatePackages
 # see https://docs.nuget.org/docs/reference/nuspec-reference
