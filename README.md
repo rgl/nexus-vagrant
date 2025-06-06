@@ -50,6 +50,15 @@ You can also login with one of the example accounts, e.g. `alice.doe` and passwo
 **NB** nginx is setup with a self-signed certificate that you have to trust before being
 able to access the local Nexus home page.
 
+## Network Packet Capture
+
+You can easily capture and see traffic from the host with the `wireshark.sh`
+script, e.g., to capture the traffic from the `lo` interface:
+
+```bash
+./wireshark.sh nexus lo
+```
+
 # Notes
 
 ## Check for a component existence
