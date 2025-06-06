@@ -61,17 +61,17 @@ EOF
 cat >go.mod <<'EOF'
 module example.com/go-hello
 
-go 1.20
+go 1.24.3
 EOF
 cat >Dockerfile <<'EOF'
-FROM golang:1.20-bullseye as builder
+FROM golang:1.24.3-bookworm as builder
 WORKDIR /app
 COPY go.* main.go ./
 RUN CGO_ENABLED=0 go build -ldflags="-s"
 
 # NB we use the buster-slim (instead of scratch) image so we
 #    can enter the container to execute bash etc.
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=builder /app/go-hello .
 WORKDIR /
 EXPOSE 8000
