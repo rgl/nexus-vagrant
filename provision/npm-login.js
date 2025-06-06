@@ -2,7 +2,7 @@ var RegistryClient = require('npm-registry-client');
 
 var client = new RegistryClient({});
 
-// see https://github.com/npm/npm-registry-client/blob/v8.5.0/lib/adduser.js
+// see https://github.com/npm/npm-registry-client/blob/v8.6.0/lib/adduser.js
 client.adduser(
   process.env.NPM_REGISTRY,
   {
