@@ -17,7 +17,7 @@ binaries: binaries-download
 
 binaries-download:
 	mkdir -p binaries
-	wget -qO- https://download.sonatype.com/nexus/3/nexus-3.75.1-01-unix.tar.gz \
+	wget -qO- https://download.sonatype.com/nexus/3/nexus-3.79.1-04-unix.tar.gz \
 		| tar xzf - --strip-components 1 -C binaries
 
 clean:

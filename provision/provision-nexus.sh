@@ -35,17 +35,17 @@ pushd /opt/nexus
 # see https://help.sonatype.com/repomanager3/product-information/download/download-archives---repository-manager-3
 # see https://help.sonatype.com/repomanager3/product-information/release-notes
 # see https://help.sonatype.com/repomanager3
-nexus_version=3.75.1-01
+nexus_version=3.79.1-04
 nexus_home=/opt/nexus/nexus-$nexus_version
-nexus_tarball=nexus-$nexus_version-unix.tar.gz
+nexus_tarball=nexus-$nexus_version-linux-x86_64.tar.gz
 nexus_download_url=https://download.sonatype.com/nexus/3/$nexus_tarball
-nexus_download_sha1=cfc9e7bdaeb1f1b9fb45aecc7a50821759c8b847
+nexus_download_sha256='048b5b588fcb337576f47e1cf8e89fb59273406b6b0789e90eb8f58726754115'
 wget -q $nexus_download_url
-if [ "$(sha1sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha1" ]; then
+if [ "$(sha256sum $nexus_tarball | awk '{print $1}')" != "$nexus_download_sha256" ]; then
     echo "downloaded $nexus_download_url failed the checksum verification"
     exit 1
 fi
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.75.1-01) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.79.1-04) and sonatype-work directories.
 rm $nexus_tarball
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
 install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc
@@ -110,7 +110,7 @@ apt-get install -y --no-install-recommends httpie
 apt-get install -y --no-install-recommends jq
 
 # wait for nexus to come up.
-bash -c "while [[ \"\$(wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq -r .data.data.status.value.edition)\" != 'OSS' ]]; do sleep 5; done"
+bash -c "while [[ \"\$(wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq -r .data.data.status.value.edition)\" != 'COMMUNITY' ]]; do sleep 5; done"
 
 # print the version using the API.
 wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq --raw-output .data.data.uiSettings.value.title
@@ -165,6 +165,24 @@ bash /vagrant/provision/execute-provision.groovy-script.sh
 
 # set the api credentials.
 api_auth="admin:admin"
+
+
+# accept the End User License Agreement (EULA).
+# see https://links.sonatype.com/products/nxrm3/docs/ce-onboarding.
+eula_disclaimer="$(http \
+    --check-status \
+    --auth "$api_auth" \
+    GET \
+    https://$nexus_domain/service/rest/v1/system/eula \
+    | jq -r .disclaimer)"
+http \
+    --check-status \
+    --auth "$api_auth" \
+    --ignore-stdin \
+    POST \
+    https://$nexus_domain/service/rest/v1/system/eula \
+    accepted=true \
+    disclaimer="$eula_disclaimer"
 
 
 # create the adhoc-package raw repository.
