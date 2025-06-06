@@ -12,7 +12,7 @@ cd tmp/use-maven-repository-from-gradle
 
 # download and install gradle.
 # see https://gradle.org/releases/
-gradle_version='8.2.1'
+gradle_version='8.14.2'
 if [ ! -f /opt/gradle/gradle-$gradle_version/bin/gradle ]; then
     apt-get install -y unzip
     wget -qO/tmp/gradle-$gradle_version-bin.zip https://services.gradle.org/distributions/gradle-$gradle_version-bin.zip
@@ -35,8 +35,8 @@ cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter'
 EOF
 cat >build.gradle <<'EOF'
-// see https://docs.gradle.org/8.2.1/userguide/java_library_plugin.html
-// see https://docs.gradle.org/8.2.1/userguide/maven_plugin.html
+// see https://docs.gradle.org/8.14.2/userguide/java_library_plugin.html
+// see https://docs.gradle.org/8.14.2/userguide/maven_plugin.html
 
 plugins {
     id 'java-library'
@@ -46,8 +46,10 @@ plugins {
 group = 'com.example'
 version = '1.0.0'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 jar {
     manifest {
@@ -67,7 +69,7 @@ publishing {
 
     repositories {
         maven {
-            url System.env.NEXUS_REPOSITORY_URL
+            url = System.env.NEXUS_REPOSITORY_URL
             credentials {
                 username = System.env.NEXUS_REPOSITORY_USERNAME
                 password = System.env.NEXUS_REPOSITORY_PASSWORD
@@ -100,26 +102,27 @@ cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter-application'
 EOF
 cat >build.gradle <<EOF
-// see https://docs.gradle.org/8.2.1/userguide/java_plugin.html
-// see https://docs.gradle.org/8.2.1/userguide/application_plugin.html
-// see http://imperceptiblethoughts.com/shadow/
+// see https://docs.gradle.org/8.14.2/userguide/java_plugin.html
+// see https://docs.gradle.org/8.14.2/userguide/application_plugin.html
+// see https://gradleup.com/shadow/
+// see https://github.com/GradleUp/shadow
 
 plugins {
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '8.3.6'
 }
 
 group = 'com.example'
 version = '1.0.0'
 
-mainClassName = 'Greet'
-
 application {
-    mainClass = project.mainClassName
+    mainClass = 'Greet'
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 jar {
     manifest {
@@ -132,7 +135,7 @@ jar {
 
 repositories {
     maven {
-        url 'https://$nexus_domain/repository/maven-public'
+        url = 'https://$nexus_domain/repository/maven-public'
     }
 }
 
