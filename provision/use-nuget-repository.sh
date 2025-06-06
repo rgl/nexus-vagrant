@@ -68,7 +68,7 @@ dotnet nuget list source
 cat >example-hello-world.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Version>1.0.0</Version>
     <Authors>Alice Doe</Authors>
     <Copyright>Copyleft Alice Doe</Copyright>
@@ -82,7 +82,7 @@ cat >example-hello-world.csproj <<'EOF'
     </NuspecProperties>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
   </ItemGroup>
 </Project>
 EOF
@@ -127,7 +127,7 @@ cat >test.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 </Project>
 EOF
@@ -159,7 +159,7 @@ EOF
 dotnet nuget list source
 dotnet add package example-hello-world
 # see https://www.nuget.org/packages/Serilog.Sinks.Console/
-dotnet add package Serilog.Sinks.Console --version 4.1.0
+dotnet add package Serilog.Sinks.Console --version 6.0.0
 dotnet build -v=n -c=Release
 dotnet publish -v=n -c=Release --no-build --output dist
 ./dist/test
