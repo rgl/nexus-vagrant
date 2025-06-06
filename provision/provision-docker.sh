@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # see https://github.com/moby/moby/releases
-docker_version="${1:-24.0.5}"; shift || true
+docker_version="${1:-28.2.2}"; shift || true
 registry_proxy_domain="${1:-$(hostname --fqdn)}"; shift || true
 # NB as-of docker 19.03.8, there is still no way to specify a registry mirror credentials,
 #    as such, we cannot use our docker-group registry, instead we must use the docker-proxy
@@ -22,12 +22,12 @@ apt-get update
 # install docker.
 # see https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
 apt-get install -y apt-transport-https software-properties-common
-wget -qO- https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+wget -qO- https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/download.docker.com.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/download.docker.com.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" >/etc/apt/sources.list.d/docker.list
 apt-get update
 apt-cache madison docker-ce
-docker_version="$(apt-cache madison docker-ce | awk "/$docker_version[~-]/{print \$3}")"
-apt-get install -y "docker-ce=$docker_version" "docker-ce-cli=$docker_version" containerd.io
+docker_package_version="$(apt-cache madison docker-ce | awk "/$docker_version/{print \$3}")"
+apt-get install -y "docker-ce=$docker_package_version" "docker-ce-cli=$docker_package_version" containerd.io
 
 # configure it.
 systemctl stop docker
@@ -35,6 +35,9 @@ cat >/etc/docker/daemon.json <<'EOF'
 {
     "experimental": false,
     "debug": false,
+    "features": {
+        "buildkit": true
+    },
     "log-driver": "journald",
     "labels": [
         "os=linux"
@@ -63,3 +66,6 @@ usermod -aG docker vagrant
 ctr version
 docker version
 docker info
+docker network ls
+ip link
+bridge link
