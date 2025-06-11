@@ -30,11 +30,12 @@ curl \
     --data-binary @hello-world_1.0.0_amd64.deb \
     https://$nexus_domain/repository/apt-hosted/
 
-# trust the apt-hosted key.
-apt-key add /vagrant/shared/apt-hosted-public.key
+# import the apt-hosted key.
+nexus_apt_hosted_keyring_path="/etc/apt/keyrings/$nexus_domain-apt-hosted.gpg"
+gpg --dearmor -o "$nexus_apt_hosted_keyring_path" </vagrant/shared/apt-hosted-public.key
 
 # install the hello-world package.
-echo "deb [arch=amd64] https://$nexus_domain/repository/apt-hosted jammy main" >/etc/apt/sources.list.d/nexus-apt-hosted.list
+echo "deb [arch=amd64 signed-by=$nexus_apt_hosted_keyring_path] https://$nexus_domain/repository/apt-hosted jammy main" >"/etc/apt/sources.list.d/$nexus_domain-apt-hosted.list"
 apt-get update
 apt-get install -y hello-world
 apt-cache show hello-world
