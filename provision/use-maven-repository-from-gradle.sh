@@ -12,6 +12,7 @@ cd tmp/use-maven-repository-from-gradle
 
 # download and install gradle.
 # see https://gradle.org/releases/
+# renovate: datasource=github-releases depName=gradle/gradle
 gradle_version='8.14.2'
 if [ ! -f /opt/gradle/gradle-$gradle_version/bin/gradle ]; then
     apt-get install -y unzip
@@ -101,6 +102,9 @@ EOF
 cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter-application'
 EOF
+# see https://mvnrepository.com/artifact/com.gradleup.shadow/shadow-gradle-plugin
+# renovate: datasource=maven depName=com.gradleup.shadow:shadow-gradle-plugin
+com_gradleup_shadow_version='8.3.6'
 cat >build.gradle <<EOF
 // see https://docs.gradle.org/8.14.2/userguide/java_plugin.html
 // see https://docs.gradle.org/8.14.2/userguide/application_plugin.html
@@ -109,7 +113,7 @@ cat >build.gradle <<EOF
 
 plugins {
     id 'application'
-    id 'com.gradleup.shadow' version '8.3.6'
+    id 'com.gradleup.shadow' version '$com_gradleup_shadow_version'
 }
 
 group = 'com.example'

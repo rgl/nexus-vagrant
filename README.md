@@ -50,6 +50,12 @@ You can also login with one of the example accounts, e.g. `alice.doe` and passwo
 **NB** nginx is setup with a self-signed certificate that you have to trust before being
 able to access the local Nexus home page.
 
+List this repository dependencies (and which have newer versions):
+
+```bash
+GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
+```
+
 ## Network Packet Capture
 
 You can easily capture and see traffic from the host with the `wireshark.sh`

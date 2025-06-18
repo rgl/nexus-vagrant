@@ -64,8 +64,10 @@ dotnet nuget list source
 # create the example project.
 # see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec
 # see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
-# see https://www.nuget.org/packages/serilog/
-cat >example-hello-world.csproj <<'EOF'
+# see https://www.nuget.org/packages/Serilog/
+# renovate: datasource=nuget depName=Serilog
+serilog_version='4.3.0'
+cat >example-hello-world.csproj <<EOF
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -82,7 +84,7 @@ cat >example-hello-world.csproj <<'EOF'
     </NuspecProperties>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog" Version="$serilog_version" />
   </ItemGroup>
 </Project>
 EOF
@@ -159,7 +161,9 @@ EOF
 dotnet nuget list source
 dotnet add package example-hello-world
 # see https://www.nuget.org/packages/Serilog.Sinks.Console/
-dotnet add package Serilog.Sinks.Console --version 6.0.0
+# renovate: datasource=nuget depName=Serilog.Sinks.Console
+serilog_sinks_console_version='6.0.0'
+dotnet add package Serilog.Sinks.Console --version "$serilog_sinks_console_version"
 dotnet build -v=n -c=Release
 dotnet publish -v=n -c=Release --no-build --output dist
 ./dist/test

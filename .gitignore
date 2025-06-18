@@ -3,6 +3,7 @@
 provision/provision-nexus/sources/
 shared/
 binaries/
+tmp/
 /hello-world-debian-package/hello-world/debian/.debhelper/
 /hello-world-debian-package/hello-world_*
 /hello-world-debian-package/hello-world-*
