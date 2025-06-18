@@ -1,9 +1,9 @@
 backports.tarfile==1.2.0
 build==1.2.2.post1
-certifi==2025.4.26
+certifi==2025.6.15
 cffi==1.17.1
 charset-normalizer==3.4.2
-cryptography==45.0.3
+cryptography==45.0.4
 docutils==0.21.2
 id==1.5.0
 idna==3.10
@@ -22,7 +22,7 @@ pycparser==2.22
 Pygments==2.19.1
 pyproject_hooks==1.2.0
 readme_renderer==44.0
-requests==2.32.3
+requests==2.32.4
 requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==14.0.0
@@ -31,4 +31,4 @@ tomli==2.2.1
 twine==6.1.0
 typing_extensions==4.14.0
 urllib3==2.4.0
-zipp==3.22.0
+zipp==3.23.0

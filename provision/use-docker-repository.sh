@@ -24,7 +24,7 @@ mkdir -p tmp/use-docker-repository && cd tmp/use-docker-repository
 
 # see https://github.com/golang/go/tags
 # renovate: datasource=github-tags depName=golang/go extractVersion=go(?<version>.+)
-go_version='1.24.3'
+go_version='1.24.4'
 
 cat >main.go <<'EOF'
 package main
