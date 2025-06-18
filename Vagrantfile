@@ -14,12 +14,6 @@ Vagrant.configure(2) do |config|
     lv.random :model => 'random'
   end
 
-  config.vm.provider :virtualbox do |vb|
-    vb.linked_clone = true
-    vb.cpus = 4
-    vb.memory = 2048
-  end
-
   config.vm.define :nexus do |config|
     config.vm.box = 'ubuntu-22.04-uefi-amd64'
     config.vm.hostname = nexus_domain
@@ -28,9 +22,6 @@ Vagrant.configure(2) do |config|
       lv.memory = 3*1024
       lv.machine_virtual_size = 32 # [GiB]
       config.vm.synced_folder '.', '/vagrant', type: 'nfs', nfs_version: '4.2', nfs_udp: false
-    end
-    config.vm.provider :virtualbox do |vb, config|
-      vb.memory = 3*1024
     end
     config.vm.provision :shell, path: 'provision/provision-resize-disk.sh'
     config.vm.provision :shell, path: 'provision/provision-base.sh'
@@ -52,10 +43,6 @@ Vagrant.configure(2) do |config|
     config.vm.network 'private_network', ip: '192.168.56.4'
     config.vm.provider :libvirt do |lv, config|
       config.vm.synced_folder '.', '/vagrant', type: 'smb', smb_username: ENV['USER'], smb_password: ENV['VAGRANT_SMB_PASSWORD']
-    end
-    config.vm.provider :virtualbox do |vb, config|
-      vb.customize ['modifyvm', :id, '--vram', 64]
-      vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
     end
     config.vm.provision :shell, inline: "echo '#{nexus_ip} #{nexus_domain}' | Out-File -Encoding Ascii -Append c:/Windows/System32/drivers/etc/hosts"
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-base.ps1', nexus_domain]

@@ -39,9 +39,13 @@ Add the following entry to your `/etc/hosts` file:
 192.168.56.3 nexus.example.com
 ```
 
-Install Vagrant 2.1+.
+Install Vagrant 2.4.6+.
 
-Run `vagrant up --provider=virtualbox # or --provider=libvirt` to launch the environment.
+Launch the environment:
+
+```bash
+time vagrant up --provider=libvirt --no-destroy-on-error --no-tty
+```
 
 Access the [Nexus home page](https://nexus.example.com) and login as the `admin` user and password `admin`.
 
