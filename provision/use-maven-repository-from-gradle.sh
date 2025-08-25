@@ -13,7 +13,7 @@ cd tmp/use-maven-repository-from-gradle
 # download and install gradle.
 # see https://gradle.org/releases/
 # renovate: datasource=github-releases depName=gradle/gradle
-gradle_version='8.14.2'
+gradle_version='9.0.0'
 if [ ! -f /opt/gradle/gradle-$gradle_version/bin/gradle ]; then
     apt-get install -y unzip
     wget -qO/tmp/gradle-$gradle_version-bin.zip https://services.gradle.org/distributions/gradle-$gradle_version-bin.zip
@@ -36,8 +36,8 @@ cat >settings.gradle <<'EOF'
 rootProject.name = 'gradle-greeter'
 EOF
 cat >build.gradle <<'EOF'
-// see https://docs.gradle.org/8.14.2/userguide/java_library_plugin.html
-// see https://docs.gradle.org/8.14.2/userguide/maven_plugin.html
+// see https://docs.gradle.org/9.0.0/userguide/java_library_plugin.html
+// see https://docs.gradle.org/9.0.0/userguide/maven_plugin.html
 
 plugins {
     id 'java-library'
@@ -104,10 +104,10 @@ rootProject.name = 'gradle-greeter-application'
 EOF
 # see https://mvnrepository.com/artifact/com.gradleup.shadow/shadow-gradle-plugin
 # renovate: datasource=maven depName=com.gradleup.shadow:shadow-gradle-plugin
-com_gradleup_shadow_version='8.3.6'
+com_gradleup_shadow_version='9.0.2'
 cat >build.gradle <<EOF
-// see https://docs.gradle.org/8.14.2/userguide/java_plugin.html
-// see https://docs.gradle.org/8.14.2/userguide/application_plugin.html
+// see https://docs.gradle.org/9.0.0/userguide/java_plugin.html
+// see https://docs.gradle.org/9.0.0/userguide/application_plugin.html
 // see https://gradleup.com/shadow/
 // see https://github.com/GradleUp/shadow
 

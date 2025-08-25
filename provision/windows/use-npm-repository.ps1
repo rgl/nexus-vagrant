@@ -30,7 +30,7 @@ Set-Location tmp/use-npm-repository
 
 # install node LTS.
 # see https://community.chocolatey.org/packages/nodejs-lts
-choco install -y nodejs-lts --version 22.16.0
+choco install -y nodejs-lts --version 22.18.0
 Import-Module C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1
 Update-SessionEnvironment
 node --version
