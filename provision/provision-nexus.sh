@@ -35,12 +35,12 @@ pushd /opt/nexus
 # see https://help.sonatype.com/repomanager3/product-information/download/download-archives---repository-manager-3
 # see https://help.sonatype.com/repomanager3/product-information/release-notes
 # see https://help.sonatype.com/repomanager3
-nexus_version=3.81.1-01
+nexus_version=3.82.0-08
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-linux-x86_64.tar.gz
 nexus_download_url=https://download.sonatype.com/nexus/3/$nexus_tarball
 wget -q $nexus_download_url
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.81.1-01) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.82.0-08) and sonatype-work directories.
 rm $nexus_tarball
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
 install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc
