@@ -104,7 +104,7 @@ rootProject.name = 'gradle-greeter-application'
 EOF
 # see https://mvnrepository.com/artifact/com.gradleup.shadow/shadow-gradle-plugin
 # renovate: datasource=maven depName=com.gradleup.shadow:shadow-gradle-plugin
-com_gradleup_shadow_version='9.0.2'
+com_gradleup_shadow_version='9.1.0'
 cat >build.gradle <<EOF
 // see https://docs.gradle.org/9.0.0/userguide/java_plugin.html
 // see https://docs.gradle.org/9.0.0/userguide/application_plugin.html
