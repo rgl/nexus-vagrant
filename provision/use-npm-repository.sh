@@ -45,10 +45,11 @@ cat >package.json <<'EOF'
 }
 EOF
 cat >hello-world.js <<'EOF'
-const leftPad = require('left-pad')
-console.log(leftPad('hello world', 40))
+import chalk from 'chalk';
+
+console.log(chalk.green('Hello, World!'));
 EOF
-npm install --save left-pad
+npm install --save chalk
 node hello-world.js
 
 #

@@ -70,10 +70,11 @@ Set-Content `
     -Encoding Ascii `
     hello-world-win.js `
     @'
-const leftPad = require('left-pad')
-console.log(leftPad('hello world', 40))
+import chalk from 'chalk';
+
+console.log(chalk.green('Hello, World!'));
 '@
-npm install --save left-pad
+npm install --save chalk
 node hello-world-win.js
 
 #
@@ -101,7 +102,7 @@ mkdir use-hello-world-win-npm | Out-Null
 Push-Location use-hello-world-win-npm
 Set-Content `
     -Encoding Ascii `
-    hello-world-win.js `
+    package.json `
     @'
 {
   "name": "use-hello-world-win",
