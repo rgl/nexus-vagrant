@@ -20,7 +20,12 @@ npm --version
 
 # configure npm to trust our system trusted CAs.
 # NB never turn off ssl verification with npm config set strict-ssl false
-npm config set cafile /etc/ssl/certs/ca-certificates.crt
+# NB since node.js 22.19.0 we no longer need to use npm config set cafile to use
+#    a private ca. instead, either set the NODE_USE_SYSTEM_CA environment
+#    variable or use the --use-system-ca command line option.
+#    see https://github.com/nodejs/node/pull/59276
+#    see https://nodejs.org/docs/latest-v22.x/api/cli.html#--use-system-ca
+export NODE_USE_SYSTEM_CA='1'
 
 #
 # configure npm to use the npm-group repository.
@@ -62,7 +67,7 @@ export NPM_PASS=password
 export NPM_EMAIL=alice.doe@example.com
 export NPM_REGISTRY=https://$nexus_domain/repository/npm-hosted/
 npm install npm-registry-client@8.6.0
-npm_auth_token=$(NODE_PATH=$PWD/node_modules node --use-openssl-ca /vagrant/provision/npm-login.js 2>/dev/null)
+npm_auth_token=$(NODE_PATH=$PWD/node_modules node /vagrant/provision/npm-login.js 2>/dev/null)
 npm set //$nexus_domain/repository/npm-hosted/:_authToken $npm_auth_token
 
 # publish.

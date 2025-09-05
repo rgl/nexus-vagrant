@@ -36,10 +36,14 @@ Update-SessionEnvironment
 node --version
 npm --version
 
-# configure npm to trust our system trusted CAs.
+# configure node/npm to trust our system trusted CAs.
 # NB never turn off ssl verification with npm config set strict-ssl false
-c:\vagrant\provision\windows\export-windows-ca-certificates.ps1
-npm config set cafile c:/ProgramData/ca-certificates.crt
+# NB since node.js 22.19.0 we no longer need to use npm config set cafile to use
+#    a private ca. instead, either set the NODE_USE_SYSTEM_CA environment
+#    variable or use the --use-system-ca command line option.
+#    see https://github.com/nodejs/node/pull/59276
+#    see https://nodejs.org/docs/latest-v22.x/api/cli.html#--use-system-ca
+$env:NODE_USE_SYSTEM_CA='1'
 
 #
 # configure npm to use the npm-group repository.
@@ -88,8 +92,7 @@ $env:NPM_EMAIL='alice.doe@example.com'
 $env:NPM_REGISTRY="https://$nexusDomain/repository/npm-hosted/"
 npm install npm-registry-client@8.6.0
 $env:NODE_PATH="$PWD/node_modules"
-$env:NODE_EXTRA_CA_CERTS='C:\ProgramData\ca-certificates.crt'
-$npmAuthToken = node --use-openssl-ca /vagrant/provision/npm-login.js 2>$null
+$npmAuthToken = node /vagrant/provision/npm-login.js 2>$null
 npm set "//$nexusDomain/repository/npm-hosted/:_authToken" $npmAuthToken
 
 # publish.
