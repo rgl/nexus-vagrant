@@ -58,6 +58,7 @@ Set-Content `
   "description": "the classic hello world",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "main": "hello-world-win.js",
   "repository": {
     "type": "git",
@@ -109,6 +110,7 @@ Set-Content `
   "description": "use the classic hello world",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://git.example.com/use-hello-world-win.git"

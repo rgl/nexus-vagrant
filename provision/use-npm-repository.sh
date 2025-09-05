@@ -36,6 +36,7 @@ cat >package.json <<'EOF'
   "description": "the classic hello world",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "main": "hello-world.js",
   "repository": {
     "type": "git",
@@ -79,6 +80,7 @@ cat >package.json <<'EOF'
   "description": "use the classic hello world",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://git.example.com/use-hello-world.git"
