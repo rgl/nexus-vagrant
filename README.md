@@ -1,4 +1,4 @@
-This is a Vagrant Environment for a [Nexus Repository OSS](https://github.com/sonatype/nexus-public) service.
+This is a Vagrant Environment for a [Nexus Repository Community Edition (CE)](https://github.com/sonatype/nexus-public) service.
 
 This will:
 
@@ -155,7 +155,7 @@ You can also access the database cli shell as:
 sudo su -l                            # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.82.0-08 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.83.2-01 # make sure you have the correct version here.
 nexus_data="$(realpath $nexus_home/../sonatype-work/nexus3)"
 function h2-shell {
   java \

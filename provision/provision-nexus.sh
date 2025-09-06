@@ -35,19 +35,20 @@ pushd /opt/nexus
 # see https://help.sonatype.com/repomanager3/product-information/download/download-archives---repository-manager-3
 # see https://help.sonatype.com/repomanager3/product-information/release-notes
 # see https://help.sonatype.com/repomanager3
-nexus_version=3.82.0-08
+nexus_version=3.83.2-01
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-linux-x86_64.tar.gz
 nexus_download_url=https://download.sonatype.com/nexus/3/$nexus_tarball
 wget -q $nexus_download_url
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.82.0-08) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.83.2-01) and sonatype-work directories.
 rm $nexus_tarball
+sed -i -E 's,#!.+,#!/usr/bin/bash,g' "$nexus_home/bin/nexus"
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
 install -d -o nexus -g nexus -m 700 sonatype-work/nexus3/etc
 chown -R nexus:nexus sonatype-work
 grep -v -E '\s*##.*' $nexus_home/etc/nexus-default.properties >sonatype-work/nexus3/etc/nexus.properties
 sed -i -E 's,(application-host=).+,\1127.0.0.1,g' sonatype-work/nexus3/etc/nexus.properties
-sed -i -E 's,nexus-pro-,nexus-oss-,g' sonatype-work/nexus3/etc/nexus.properties
+sed -i -E '/^(\s*(nexus-edition=.+|nexus-features=.+|nexus-pro-feature)\s*)/d' sonatype-work/nexus3/etc/nexus.properties
 cat >>sonatype-work/nexus3/etc/nexus.properties <<'EOF'
 
 # disable the wizard.
