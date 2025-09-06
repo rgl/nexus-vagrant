@@ -3,7 +3,7 @@ set -euxo pipefail
 
 # see https://github.com/moby/moby/releases
 # renovate: datasource=github-releases depName=moby/moby
-default_docker_version='28.3.3'
+default_docker_version='28.4.0'
 
 # see https://github.com/moby/moby/releases
 docker_version="${1:-$default_docker_version}"; shift || true

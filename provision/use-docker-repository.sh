@@ -24,7 +24,7 @@ mkdir -p tmp/use-docker-repository && cd tmp/use-docker-repository
 
 # see https://github.com/golang/go/tags
 # renovate: datasource=github-tags depName=golang/go extractVersion=go(?<version>.+)
-go_version='1.25.0'
+go_version='1.25.1'
 
 cat >main.go <<'EOF'
 package main
@@ -68,7 +68,7 @@ module example.com/go-hello
 go $go_version
 EOF
 cat >Dockerfile <<EOF
-FROM golang:$go_version-bookworm as builder
+FROM golang:$go_version-bookworm AS builder
 WORKDIR /app
 COPY go.* main.go ./
 RUN CGO_ENABLED=0 go build -ldflags="-s"
