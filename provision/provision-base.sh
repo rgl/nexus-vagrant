@@ -97,7 +97,7 @@ popd
 
 
 # install and configure nginx to proxy to nexus.
-# see https://help.sonatype.com/repomanager3/planning-your-implementation/run-behind-a-reverse-proxy
+# see https://help.sonatype.com/en/run-behind-a-reverse-proxy.html
 apt-get install -y --no-install-recommends nginx
 wget -qO /etc/ssl/certs/dhparam.pem https://ssl-config.mozilla.org/ffdhe2048.txt
 sed -i -E 's/^(\s*)((ssl_protocols|ssl_ciphers|ssl_prefer_server_ciphers)\s)/\1# \2/' /etc/nginx/nginx.conf

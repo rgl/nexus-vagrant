@@ -20,7 +20,7 @@ debuild -i -us -uc -b
 popd
 
 # upload.
-# see https://help.sonatype.com/repomanager3/formats/apt-repositories
+# see https://help.sonatype.com/en/apt-repositories.html
 apt-get install -y curl
 curl \
     --fail \

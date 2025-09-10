@@ -31,8 +31,7 @@ mkdir -p tmp/use-nuget-repository && cd tmp/use-nuget-repository
 
 #
 # test the NuGet repository.
-# see https://help.sonatype.com/repomanager3/formats/nuget-repositories
-# see https://help.sonatype.com/repomanager3/formats/nuget-repositories/grouping-nuget-repositories
+# see https://help.sonatype.com/en/nuget-repositories.html
 
 # install the dotnet sdk.
 if ! which dotnet; then

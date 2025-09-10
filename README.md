@@ -196,6 +196,6 @@ For more information see the [available Command Line Tools](https://h2database.c
 
 ## Reference
 
-* [How to reset a forgotten admin password in Nexus 3.x](https://support.sonatype.com/hc/en-us/articles/213467158-How-to-reset-a-forgotten-admin-password-in-Nexus-3-x)
-* [Backup and Restore](https://help.sonatype.com/repomanager3/backup-and-restore)
-* [Upgrading](https://help.sonatype.com/repomanager3/upgrading)
+* [How to reset a forgotten admin password in Nexus 3.x](https://support.sonatype.com/hc/en-us/articles/213467158-How-to-reset-a-forgotten-admin-password-in-Sonatype-Nexus-Repository-3)
+* [Backup and Restore](https://help.sonatype.com/en/backup-and-restore.html)
+* [Upgrading](https://help.sonatype.com/en/upgrade-nexus-repository.html)

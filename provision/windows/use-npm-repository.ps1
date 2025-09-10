@@ -24,7 +24,7 @@ Set-Location tmp/use-npm-repository
 
 #
 # test the npm repositories.
-# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+# see https://help.sonatype.com/en/npm-registry.html
 # see https://docs.npmjs.com/private-modules/ci-server-config
 # see https://docs.npmjs.com/cli/adduser
 

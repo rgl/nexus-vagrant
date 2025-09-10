@@ -11,7 +11,7 @@ config_authentication='nexus'
 
 
 # install java.
-# see https://help.sonatype.com/repomanager3/product-information/system-requirements#SystemRequirements-Java
+# see https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html#SystemRequirements-Java
 apt-get install -y openjdk-17-jre-headless
 apt-get install -y gnupg
 
@@ -32,9 +32,9 @@ install -d -o root -g nexus -m 750 /opt/nexus
 # download and install nexus.
 pushd /opt/nexus
 # see https://www.sonatype.com/download-oss-sonatype
-# see https://help.sonatype.com/repomanager3/product-information/download/download-archives---repository-manager-3
-# see https://help.sonatype.com/repomanager3/product-information/release-notes
-# see https://help.sonatype.com/repomanager3
+# see https://help.sonatype.com/en/download-archives---repository-manager-3.html
+# see https://help.sonatype.com/en/release-notes.html
+# see https://help.sonatype.com/en/sonatype-nexus-repository.html
 nexus_version=3.83.2-01
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-linux-x86_64.tar.gz
@@ -115,7 +115,7 @@ wget -qO- https://$nexus_domain/service/extdirect/poll/rapture_State_get | jq .d
 
 # generate a gpg key for the apt-hosted repository.
 # see https://www.gnupg.org/documentation//manuals/gnupg/Unattended-GPG-key-generation.html
-# see https://help.sonatype.com/repomanager3/formats/apt-repositories
+# see https://help.sonatype.com/en/apt-repositories.html
 # see https://wiki.archlinux.org/index.php/GnuPG#Unattended_passphrase
 export GNUPGHOME="$(mktemp -d)"
 cat >"$GNUPGHOME/apt-hosted-gpg-batch" <<EOF
@@ -206,7 +206,7 @@ EOF
 
 
 # create the apt-hosted apt repository.
-# see https://help.sonatype.com/repomanager3/formats/apt-repositories
+# see https://help.sonatype.com/en/apt-repositories.html
 http \
     --check-status \
     --auth "$api_auth" \
@@ -236,7 +236,7 @@ EOF
 
 
 # create the npm-hosted npm repository.
-# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+# see https://help.sonatype.com/en/npm-registry.html
 http \
     --check-status \
     --auth "$api_auth" \
@@ -259,7 +259,7 @@ EOF
 
 
 # create the npmjs.org-proxy npm proxy repository.
-# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+# see https://help.sonatype.com/en/npm-registry.html
 http \
     --check-status \
     --auth "$api_auth" \
@@ -292,7 +292,7 @@ EOF
 
 
 # create the npm-group npm group repository.
-# see https://help.sonatype.com/display/NXRM3/Node+Packaged+Modules+and+npm+Registries
+# see https://help.sonatype.com/en/npm-registry.html
 http \
     --check-status \
     --auth "$api_auth" \

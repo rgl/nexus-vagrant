@@ -16,7 +16,7 @@ set +x && source .venv/bin/activate && set -x
 
 # create the hello_world package.
 # see https://packaging.python.org/en/latest/tutorials/packaging-projects/
-# see https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/pypi-repositories
+# see https://help.sonatype.com/en/pypi-repositories.html
 # NB requirements.txt was created as:
 #       python3 -m pip install build twine
 #       python3 -m pip freeze >requirements.txt
