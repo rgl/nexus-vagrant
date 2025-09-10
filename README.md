@@ -152,14 +152,21 @@ The Web based H2 Database Console is available at https://nexus.example.com/h2-c
 You can also access the database cli shell as:
 
 ```bash
-sudo su -l                            # switch to the root user.
+sudo -i                               # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.83.2-01 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.84.0-03 # make sure you have the correct version here.
 nexus_data="$(realpath $nexus_home/../sonatype-work/nexus3)"
+install -d $nexus_data/../tmp
+rm -f $nexus_data/../tmp/h2-*.jar
+unzip \
+  -j \
+  -d $nexus_data/../tmp \
+  $nexus_home/bin/sonatype-nexus-repository-*.jar \
+  'BOOT-INF/lib/h2-*.jar'
 function h2-shell {
   java \
-    -cp $nexus_home/system/com/h2database/h2/*/h2*.jar \
+    -cp $nexus_data/../tmp/h2-*.jar \
     org.h2.tools.Shell \
     -url jdbc:h2:$nexus_data/db/nexus
 }
