@@ -161,7 +161,7 @@ dotnet nuget list source
 dotnet add package example-hello-world
 # see https://www.nuget.org/packages/Serilog.Sinks.Console/
 # renovate: datasource=nuget depName=Serilog.Sinks.Console
-serilog_sinks_console_version='6.0.0'
+serilog_sinks_console_version='6.1.1'
 dotnet add package Serilog.Sinks.Console --version "$serilog_sinks_console_version"
 dotnet build -v=n -c=Release
 dotnet publish -v=n -c=Release --no-build --output dist

@@ -104,8 +104,8 @@ sed -i -E 's/^(\s*)((ssl_protocols|ssl_ciphers|ssl_prefer_server_ciphers)\s)/\1#
 cat >/etc/nginx/conf.d/local.conf <<EOF
 # NB this is based on the mozilla intermediate configuration.
 # see https://ssl-config.mozilla.org/#server=nginx&version=1.18.0&config=intermediate&openssl=3.0.2&guideline=5.7
-# see https://packages.ubuntu.com/jammy/nginx
-# see https://packages.ubuntu.com/jammy/openssl
+# see https://packages.ubuntu.com/noble/nginx
+# see https://packages.ubuntu.com/noble/openssl
 ssl_protocols TLSv1.2 TLSv1.3;
 ssl_ecdh_curve X25519:prime256v1:secp384r1;
 ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;

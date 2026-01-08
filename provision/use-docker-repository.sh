@@ -24,7 +24,7 @@ mkdir -p tmp/use-docker-repository && cd tmp/use-docker-repository
 
 # see https://github.com/golang/go/tags
 # renovate: datasource=github-tags depName=golang/go extractVersion=go(?<version>.+)
-go_version='1.25.1'
+go_version='1.25.5'
 
 cat >main.go <<'EOF'
 package main
@@ -95,13 +95,19 @@ docker push $docker_hosted_registry_host/go-hello:1.0.0
 # see https://docs.docker.com/registry/spec/manifest-v2-2/
 wget -qO- --user "$registry_username" --password "$registry_password" \
     "https://$docker_hosted_registry_host/v2/go-hello/tags/list" | jq .
-manifest=$(wget -qO- --user "$registry_username" --password "$registry_password" \
-    '--header=Accept: application/vnd.docker.distribution.manifest.v2+json' \
+oci_image_index=$(wget -qO- --user "$registry_username" --password "$registry_password" \
+    '--header=Accept: application/vnd.oci.image.index.v1+json' \
     "https://$docker_hosted_registry_host/v2/go-hello/manifests/1.0.0")
-config_digest=$(echo "$manifest" | jq -r .config.digest)
-echo "$manifest" | jq .
+echo "$oci_image_index" | jq .
+oci_image_manifest_digest=$(echo "$oci_image_index" | jq -r .manifests[0].digest)
+oci_image_manifest=$(wget -qO- --user "$registry_username" --password "$registry_password" \
+    '--header=Accept: application/vnd.oci.image.manifest.v1+json' \
+    "https://$docker_hosted_registry_host/v2/go-hello/manifests/$oci_image_manifest_digest")
+echo "$oci_image_manifest" | jq .
+oci_image_config_digest=$(echo "$oci_image_manifest" | jq -r .config.digest)
+config_digest=$(echo "$oci_image_manifest" | jq -r .config.digest)
 wget -qO- --user "$registry_username" --password "$registry_password" \
-    "https://$docker_hosted_registry_host/v2/go-hello/blobs/$config_digest" | jq .
+    "https://$docker_hosted_registry_host/v2/go-hello/blobs/$oci_image_config_digest" | jq .
 
 # remove it from local cache.
 docker image remove go-hello:1.0.0

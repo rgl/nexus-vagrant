@@ -29,7 +29,7 @@ This will:
 
 # Usage
 
-Build and install the [Ubuntu 22.04 UEFI Base Box](https://github.com/rgl/ubuntu-vagrant).
+Build and install the [Ubuntu 24.04 UEFI Base Box](https://github.com/rgl/ubuntu-vagrant).
 
 Build and install the [Windows 2022 UEFI Base Box](https://github.com/rgl/windows-vagrant).
 

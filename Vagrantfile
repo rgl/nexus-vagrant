@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define :nexus do |config|
-    config.vm.box = 'ubuntu-22.04-uefi-amd64'
+    config.vm.box = 'ubuntu-24.04-uefi-amd64'
     config.vm.hostname = nexus_domain
     config.vm.network 'private_network', ip: nexus_ip
     config.vm.provider :libvirt do |lv, config|
