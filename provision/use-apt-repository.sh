@@ -23,7 +23,7 @@ popd
 # see https://help.sonatype.com/en/apt-repositories.html
 apt-get install -y curl
 curl \
-    --fail \
+    --fail-with-body \
     --show-error \
     --user 'alice.doe:password' \
     --header 'Content-Type: multipart/form-data' \
