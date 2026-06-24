@@ -35,12 +35,12 @@ pushd /opt/nexus
 # see https://help.sonatype.com/en/download-archives---repository-manager-3.html
 # see https://help.sonatype.com/en/release-notes.html
 # see https://help.sonatype.com/en/sonatype-nexus-repository.html
-nexus_version=3.87.1-01
+nexus_version=3.93.1-04
 nexus_home=/opt/nexus/nexus-$nexus_version
 nexus_tarball=nexus-$nexus_version-linux-x86_64.tar.gz
 nexus_download_url=https://download.sonatype.com/nexus/3/$nexus_tarball
 wget -q $nexus_download_url
-tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.87.1-01) and sonatype-work directories.
+tar xf $nexus_tarball # NB this creates the $nexus_home (e.g. nexus-3.93.1-04) and sonatype-work directories.
 rm $nexus_tarball
 sed -i -E 's,#!.+,#!/usr/bin/bash,g' "$nexus_home/bin/nexus"
 install -d -o nexus -g nexus -m 700 .java # java preferences are saved here (the default java.util.prefs.userRoot preference).
@@ -160,7 +160,7 @@ unset GNUPGHOME
 bash /vagrant/provision/execute-provision.groovy-script.sh
 
 # set the api credentials.
-api_auth="admin:admin"
+api_auth="admin:password"
 
 
 # accept the End User License Agreement (EULA).

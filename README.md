@@ -47,7 +47,7 @@ Launch the environment:
 time vagrant up --provider=libvirt --no-destroy-on-error --no-tty
 ```
 
-Access the [Nexus home page](https://nexus.example.com) and login as the `admin` user and password `admin`.
+Access the [Nexus home page](https://nexus.example.com) and login as the `admin` user and password `password`.
 
 You can also login with one of the example accounts, e.g. `alice.doe` and password `password`.
 
@@ -155,7 +155,7 @@ You can also access the database cli shell as:
 sudo -i                               # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.87.1-01 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.93.1-04 # make sure you have the correct version here.
 nexus_data="$(realpath $nexus_home/../sonatype-work/nexus3)"
 install -d $nexus_data/../tmp
 rm -f $nexus_data/../tmp/h2-*.jar

@@ -63,7 +63,7 @@ security.anonymousAccess = true
 // NB we set it to something different than the default (admin123) to get
 //    rid of the "Default Admin Credentials" warning... and because this
 //    password is easier to remember.
-security.securitySystem.changePassword('admin', 'admin')
+security.securitySystem.changePassword('admin', 'password')
 
 
 // create users in the deployer role.

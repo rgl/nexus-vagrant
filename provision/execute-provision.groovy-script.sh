@@ -6,7 +6,7 @@ nexus_domain=$(hostname --fqdn)
 . /vagrant/provision/nexus-groovy.sh
 
 # NB this is the default nexus password, which will be changed to
-#    'admin' by the provision.groovy script that we run bellow.
+#    'password' by the provision.groovy script that we run bellow.
 admin_password='admin123'
 
 # list existing scripts.

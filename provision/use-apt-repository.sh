@@ -33,6 +33,12 @@ curl \
 user = "alice.doe:password"
 EOF
 
+# wait until the Release file exists.
+# NB for some reason, after an upload, nexus seems to refresh the repo in
+#    background, so its unclear when its ready. here we loop and hope for
+#    the best.
+bash -c "while [[ -z \"\$(wget -qO- https://$nexus_domain/repository/apt-hosted/dists/noble/Release | grep '/Packages$')\" ]]; do sleep 5; done"
+
 # import the apt-hosted key.
 nexus_apt_hosted_keyring_path="/etc/apt/keyrings/$nexus_domain-apt-hosted.gpg"
 gpg --dearmor -o "$nexus_apt_hosted_keyring_path" </vagrant/shared/apt-hosted-public.key
