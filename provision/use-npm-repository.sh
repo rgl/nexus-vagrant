@@ -13,7 +13,7 @@ mkdir -p tmp/use-npm-repository && cd tmp/use-npm-repository
 
 # install node LTS.
 # see https://github.com/nodesource/distributions#debinstall
-curl -sL --fail --show-error https://deb.nodesource.com/setup_22.x | bash
+curl -sL --fail --show-error https://deb.nodesource.com/setup_24.x | bash
 apt-get install -y nodejs
 node --version
 npm --version
@@ -24,7 +24,7 @@ npm --version
 #    a private ca. instead, either set the NODE_USE_SYSTEM_CA environment
 #    variable or use the --use-system-ca command line option.
 #    see https://github.com/nodejs/node/pull/59276
-#    see https://nodejs.org/docs/latest-v22.x/api/cli.html#--use-system-ca
+#    see https://nodejs.org/docs/latest-v24.x/api/cli.html#--use-system-ca
 export NODE_USE_SYSTEM_CA='1'
 
 #

@@ -65,11 +65,11 @@ dotnet nuget list source
 # see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
 # see https://www.nuget.org/packages/Serilog/
 # renovate: datasource=nuget depName=Serilog
-serilog_version='4.3.0'
+serilog_version='4.3.1'
 cat >example-hello-world.csproj <<EOF
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Version>1.0.0</Version>
     <Authors>Alice Doe</Authors>
     <Copyright>Copyleft Alice Doe</Copyright>
@@ -128,7 +128,7 @@ cat >test.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 </Project>
 EOF

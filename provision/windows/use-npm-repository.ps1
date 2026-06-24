@@ -30,7 +30,7 @@ Set-Location tmp/use-npm-repository
 
 # install node LTS.
 # see https://community.chocolatey.org/packages/nodejs-lts
-choco install -y nodejs-lts --version 22.19.0
+choco install -y nodejs-lts --version 24.18.0
 Import-Module C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1
 Update-SessionEnvironment
 node --version
@@ -42,7 +42,7 @@ npm --version
 #    a private ca. instead, either set the NODE_USE_SYSTEM_CA environment
 #    variable or use the --use-system-ca command line option.
 #    see https://github.com/nodejs/node/pull/59276
-#    see https://nodejs.org/docs/latest-v22.x/api/cli.html#--use-system-ca
+#    see https://nodejs.org/docs/latest-v24.x/api/cli.html#--use-system-ca
 $env:NODE_USE_SYSTEM_CA='1'
 
 #

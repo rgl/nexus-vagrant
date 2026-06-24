@@ -12,7 +12,7 @@ cd tmp/use-maven-repository-from-mvn
 
 # install maven and the java development kit.
 sudo apt-get install -y maven
-sudo apt-get install -y openjdk-17-jdk-headless
+sudo apt-get install -y openjdk-21-jdk-headless
 sudo apt-get install -y xmlstarlet
 
 # setup the user maven configuration to use nexus as a mirror the
@@ -70,18 +70,12 @@ mvn \
   archetype:generate \
   -DgroupId=com.example.helloworld \
   -DartifactId=example-helloworld \
-  -DarchetypeArtifactId=maven-archetype-quickstart
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.5 \
+  -DjavaCompilerVersion=21
 
 # test publishing a package.
 pushd example-helloworld
-# set the java version.
-xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
-  --subnode /pom:project --type elem --name properties \
-  pom.xml
-xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
-  --subnode /pom:project/pom:properties --type elem --name maven.compiler.source --value 17 \
-  --subnode /pom:project/pom:properties --type elem --name maven.compiler.target --value 17 \
-  pom.xml
 # add the nexus repository to pom.xml.
 xmlstarlet ed --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
   --subnode '/pom:project' \

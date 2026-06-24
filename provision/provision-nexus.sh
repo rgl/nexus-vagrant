@@ -12,7 +12,7 @@ config_authentication='nexus'
 
 # install java.
 # see https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html#SystemRequirements-Java
-apt-get install -y openjdk-17-jre-headless
+apt-get install -y openjdk-21-jre-headless
 apt-get install -y gnupg
 
 
