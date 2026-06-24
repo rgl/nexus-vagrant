@@ -23,12 +23,15 @@ popd
 # see https://help.sonatype.com/en/apt-repositories.html
 apt-get install -y curl
 curl \
+    --silent \
     --fail-with-body \
     --show-error \
-    --user 'alice.doe:password' \
+    --config - \
     --header 'Content-Type: multipart/form-data' \
     --data-binary @hello-world_1.0.0_amd64.deb \
-    https://$nexus_domain/repository/apt-hosted/
+    https://$nexus_domain/repository/apt-hosted/ <<'EOF'
+user = "alice.doe:password"
+EOF
 
 # import the apt-hosted key.
 nexus_apt_hosted_keyring_path="/etc/apt/keyrings/$nexus_domain-apt-hosted.gpg"

@@ -14,7 +14,15 @@ apt-get install -y curl
 # see https://help.sonatype.com/display/NXRM3/Raw+Repositories+and+Maven+Sites#RawRepositoriesandMavenSites-UploadingFilestoHostedRawRepositories
 expected='this is an adhoc package'
 echo "$expected" >package-1.0.0.txt
-curl --silent --fail-with-body --show-error --user 'alice.doe:password' --upload-file package-1.0.0.txt https://$nexus_domain/repository/adhoc-package/package-1.0.0.txt
+curl \
+    --silent \
+    --fail-with-body \
+    --show-error \
+    --config - \
+    --upload-file package-1.0.0.txt \
+    https://$nexus_domain/repository/adhoc-package/package-1.0.0.txt <<'EOF'
+user = "alice.doe:password"
+EOF
 
 # download.
 actual=$(curl --silent --fail-with-body --show-error https://$nexus_domain/repository/adhoc-package/package-1.0.0.txt)
