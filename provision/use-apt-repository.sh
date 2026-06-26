@@ -39,12 +39,19 @@ EOF
 #    the best.
 bash -c "while [[ -z \"\$(wget -qO- https://$nexus_domain/repository/apt-hosted/dists/noble/Release | grep '/Packages$')\" ]]; do sleep 5; done"
 
-# import the apt-hosted key.
+# import the apt-hosted repository key.
 nexus_apt_hosted_keyring_path="/etc/apt/keyrings/$nexus_domain-apt-hosted.gpg"
 gpg --dearmor -o "$nexus_apt_hosted_keyring_path" </vagrant/shared/apt-hosted-public.key
 
-# configure the apt-hosted repository.
-echo "deb [arch=amd64 signed-by=$nexus_apt_hosted_keyring_path] https://$nexus_domain/repository/apt-hosted noble main" >"/etc/apt/sources.list.d/$nexus_domain-apt-hosted.list"
+# configure the apt-hosted repository sources.
+cat >"/etc/apt/sources.list.d/$nexus_domain-apt-hosted.sources" <<EOF
+Types: deb
+Architectures: amd64
+Signed-By: $nexus_apt_hosted_keyring_path
+URIs: https://$nexus_domain/repository/apt-hosted
+Suites: noble
+Components: main
+EOF
 apt-get update
 
 # install the hello-world package.
