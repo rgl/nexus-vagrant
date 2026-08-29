@@ -448,6 +448,10 @@ EOF
 
 
 # create a chocolatey.org-proxy nuget proxy repository.
+# NB chocolatey.org only supports nuget protocol v2.
+#    see https://github.com/orgs/chocolatey/discussions/261
+# NB chocolatey v2+ also supports nuget protocol v3.
+#    see https://docs.chocolatey.org/en-us/choco/new-in-v2/
 # see https://help.sonatype.com/en/nuget-repositories.html
 http \
     --check-status \
