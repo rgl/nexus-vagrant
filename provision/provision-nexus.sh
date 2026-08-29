@@ -362,6 +362,8 @@ EOF
 
 
 # create a powershellgallery.com-proxy powershell proxy repository.
+# NB powershellgallery.com only supports nuget protocol v2.
+#    see https://github.com/PowerShell/PowerShellGallery/issues/218
 # see https://help.sonatype.com/en/nuget-repositories.html
 http \
     --check-status \
