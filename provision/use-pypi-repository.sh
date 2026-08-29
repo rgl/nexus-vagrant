@@ -14,18 +14,17 @@ rm -rf .venv
 python3 -m venv .venv
 set +x && source .venv/bin/activate && set -x
 
-# create the hello_world package.
+# install the package build requirements.
+# see https://pypi.org/project/build/
+# see https://pypi.org/project/twine/
+python3 -m pip install -r build-requirements.txt
+
+# build the hello_world package.
 # see https://packaging.python.org/en/latest/tutorials/packaging-projects/
 # see https://help.sonatype.com/en/pypi-repositories.html
-# NB requirements.txt was created as:
-#       python3 -m pip install build twine
-#       python3 -m pip freeze >requirements.txt
-python3 -m pip install -r requirements.txt
 python3 -m build --wheel
-python3 -m pip freeze >.venv/requirements.txt
-diff -u requirements.txt .venv/requirements.txt || (echo ERROR: requirement.txt is not up-to-date && false)
 
-# upload.
+# publish the package.
 export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 cat >.venv/twine.conf <<EOF
 [pypi]
