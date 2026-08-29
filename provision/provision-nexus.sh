@@ -225,7 +225,7 @@ http \
     "proprietaryComponents": true
   },
   "apt": {
-    "distribution": "noble"
+    "distribution": "resolute"
   },
   "aptSigning": {
     "keypair": $(cat /vagrant/shared/apt-hosted-private.key | jq --slurp --raw-input .),

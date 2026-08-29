@@ -37,7 +37,7 @@ EOF
 # NB for some reason, after an upload, nexus seems to refresh the repo in
 #    background, so its unclear when its ready. here we loop and hope for
 #    the best.
-bash -c "while [[ -z \"\$(wget -qO- https://$nexus_domain/repository/apt-hosted/dists/noble/Release | grep '/Packages$')\" ]]; do sleep 5; done"
+bash -c "while [[ -z \"\$(wget -qO- https://$nexus_domain/repository/apt-hosted/dists/resolute/Release | grep '/Packages$')\" ]]; do sleep 5; done"
 
 # import the apt-hosted repository key.
 nexus_apt_hosted_keyring_path="/etc/apt/keyrings/$nexus_domain-apt-hosted.gpg"
@@ -49,7 +49,7 @@ Types: deb
 Architectures: amd64
 Signed-By: $nexus_apt_hosted_keyring_path
 URIs: https://$nexus_domain/repository/apt-hosted
-Suites: noble
+Suites: resolute
 Components: main
 EOF
 apt-get update

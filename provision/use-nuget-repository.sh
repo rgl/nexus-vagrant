@@ -65,7 +65,7 @@ dotnet nuget list source
 # see https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
 # see https://www.nuget.org/packages/Serilog/
 # renovate: datasource=nuget depName=Serilog
-serilog_version='4.3.1'
+serilog_version='4.4.0'
 cat >example-hello-world.csproj <<EOF
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
