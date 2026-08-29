@@ -7,7 +7,7 @@ nexus_ip = '192.168.56.3'
 
 Vagrant.configure(2) do |config|
   config.vm.provider :libvirt do |lv, config|
-    lv.memory = 2048
+    lv.memory = 2*1024
     lv.cpus = 4
     lv.cpu_mode = 'host-passthrough'
     lv.keymap = 'pt'
@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
     config.vm.hostname = nexus_domain
     config.vm.network 'private_network', ip: nexus_ip
     config.vm.provider :libvirt do |lv, config|
-      lv.memory = 3*1024
+      lv.memory = 6*1024
       lv.machine_virtual_size = 32 # [GiB]
       config.vm.synced_folder '.', '/vagrant', type: 'nfs', nfs_version: '4.2', nfs_udp: false
     end
