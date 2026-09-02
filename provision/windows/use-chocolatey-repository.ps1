@@ -2,9 +2,6 @@ param(
     [string]$nexusDomain = 'nexus.example.com'
 )
 
-# install chocolatey.
-Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
 Write-Host 'Default Chocolatey sources:'
 choco sources list
 

@@ -46,6 +46,8 @@ Vagrant.configure(2) do |config|
     end
     config.vm.provision :shell, inline: "echo '#{nexus_ip} #{nexus_domain}' | Out-File -Encoding Ascii -Append c:/Windows/System32/drivers/etc/hosts"
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-base.ps1', nexus_domain]
+    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-chocolatey.ps1']
+    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-powershellget.ps1']
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-chocolatey-repository.ps1', nexus_domain]
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-powershell-repository.ps1', nexus_domain]
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-npm-repository.ps1', nexus_domain]

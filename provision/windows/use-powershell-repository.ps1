@@ -10,7 +10,6 @@ Get-PSRepository
 
 Write-Host 'Configuring PowerShell to only use the nexus server...'
 Get-PSRepository | Unregister-PSRepository
-Install-PackageProvider NuGet -Force
 Register-PSRepository `
     -Name nexus `
     -SourceLocation https://$nexusDomain/repository/powershell-group/ `
@@ -19,19 +18,6 @@ Register-PSRepository `
 
 Write-Host 'Current PowerShell sources:'
 Get-PSRepository
-
-Write-Host 'Installing the Sql Server module from the nexus server...'
-Install-Module SqlServer
-
-Write-Host 'Installing nuget and configuring PowerShellGet to use it...'
-choco install -y nuget.commandline
-$psGetNugetPath = 'C:\ProgramData\Microsoft\Windows\PowerShell\PowerShellGet\NuGet.exe'
-mkdir (Split-Path -Parent $psGetNugetPath) | Out-Null
-New-Item `
-    -ItemType SymbolicLink `
-    -Path $psGetNugetPath `
-    -Target 'C:\ProgramData\chocolatey\lib\NuGet.CommandLine\tools\NuGet.exe' `
-    | Out-Null
 
 Write-Host 'Publishing the ExampleGreeter module into the nexus server...'
 Set-Location $env:TEMP
