@@ -19,5 +19,5 @@ the api browser at:
 
 the logs are at:
 
-   /opt/nexus/nexus3/log/
+   /opt/nexus/sonatype-work/nexus3/log/
 EOF
