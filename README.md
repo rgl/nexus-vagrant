@@ -155,7 +155,7 @@ You can also access the database cli shell as:
 sudo -i                               # switch to the root user.
 systemctl stop nexus                  # make sure nexus is not running while you use the database.
 su -s /bin/bash nexus                 # switch to the nexus user.
-nexus_home=/opt/nexus/nexus-3.95.3-02 # make sure you have the correct version here.
+nexus_home=/opt/nexus/nexus-3.96.0-09 # make sure you have the correct version here.
 nexus_data="$(realpath $nexus_home/../sonatype-work/nexus3)"
 install -d $nexus_data/../tmp
 rm -f $nexus_data/../tmp/h2-*.jar
