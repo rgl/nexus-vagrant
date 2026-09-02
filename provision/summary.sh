@@ -15,7 +15,7 @@ use the admin/$admin_password credentials to login.
 
 the api browser at:
 
-   https://$config_fqdn/swagger-ui/
+   https://$config_fqdn/#admin/system/api
 
 the logs are at:
 
