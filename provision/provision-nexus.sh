@@ -512,6 +512,35 @@ http \
 EOF
 
 
+# create the oci-hosted oci repository.
+# see https://help.sonatype.com/en/oci-repositories.html
+http \
+    --check-status \
+    --auth "$api_auth" \
+    POST \
+    https://$nexus_domain/service/rest/v1/repositories/oci/hosted \
+    <<'EOF'
+{
+  "name": "oci-hosted",
+  "online": true,
+  "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow_once",
+    "latestPolicy": true
+  },
+  "component": {
+    "proprietaryComponents": true
+  },
+  "oci": {
+    "v1Enabled": false,
+    "forceBasicAuth": true,
+    "pathEnabled": true
+  }
+}
+EOF
+
+
 # create the docker-hosted docker registry repository.
 # see https://help.sonatype.com/en/docker-registry.html
 http \
