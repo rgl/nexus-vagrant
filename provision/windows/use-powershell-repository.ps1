@@ -8,8 +8,10 @@ $ConfirmPreference = 'None'
 Write-Host 'Default PowerShell sources:'
 Get-PSRepository
 
-Write-Host 'Configuring PowerShell to only use the nexus server...'
+Write-Host "Unregistering the default PowerShell sources..."
 Get-PSRepository | Unregister-PSRepository
+
+Write-Host 'Configuring PowerShell to use the nexus server...'
 Register-PSRepository `
     -Name nexus `
     -SourceLocation https://$nexusDomain/repository/powershell-group/ `
@@ -54,8 +56,13 @@ Publish-Module `
     -NuGetApiKey (Get-Content c:\vagrant\shared\jenkins-nuget-api-key)
 Pop-Location
 
-Write-Host 'Installing and using the ExampleGreeter module...'
+Write-Host 'Installing the ExampleGreeter module...'
 Install-Module ExampleGreeter
+Get-Module ExampleGreeter -ListAvailable | Format-List
+
+Write-Host 'Using the ExampleGreeter module...'
 Import-Module ExampleGreeter
-Get-Module ExampleGreeter | Format-List
 Write-Greeting 'World'
+
+Write-Host 'Uninstalling the ExampleGreeter module...'
+Uninstall-Module ExampleGreeter
