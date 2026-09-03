@@ -48,8 +48,10 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-base.ps1', nexus_domain]
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-chocolatey.ps1']
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-powershellget.ps1']
+    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['provision-psresourceget.ps1']
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-chocolatey-repository.ps1', nexus_domain]
-    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-powershell-repository.ps1', nexus_domain]
+    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-powershell-repository-powershellget.ps1', nexus_domain]
+    config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-powershell-repository-psresourceget.ps1', nexus_domain]
     config.vm.provision :shell, path: 'provision/windows/ps.ps1', args: ['use-npm-repository.ps1', nexus_domain]
   end
 
