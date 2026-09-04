@@ -88,7 +88,24 @@ docker image ls go-hello-oci:1.0.0
 docker tag go-hello-oci:1.0.0 "$oci_hosted_repository_host/go-hello-oci:1.0.0"
 docker push "$oci_hosted_repository_host/go-hello-oci:1.0.0"
 
-# show the repository (image) details directly from the oci-hosted repository.
+# build the image sbom.
+syft \
+    scan \
+    "docker:$oci_hosted_repository_host/go-hello-oci:1.0.0" \
+    --output spdx-json=go-hello-oci-1.0.0.sbom.spdx.json \
+    --output cyclonedx-json=go-hello-oci-1.0.0.sbom.cyclonedx.json
+
+# attach the sbom to the image in the oci-hosted repository.
+oras attach \
+    "$oci_hosted_repository_host/go-hello-oci:1.0.0" \
+    --artifact-type application/spdx+json \
+    go-hello-oci-1.0.0.sbom.spdx.json
+oras attach \
+    "$oci_hosted_repository_host/go-hello-oci:1.0.0" \
+    --artifact-type application/vnd.cyclonedx+json \
+    go-hello-oci-1.0.0.sbom.cyclonedx.json
+
+# show the repository (image) details directly from the oci-hosted repository api.
 # see https://specs.opencontainers.org/distribution-spec/?v=v1.1.1
 # see https://github.com/opencontainers/distribution-spec
 wget -qO- --user "$registry_username" --password "$registry_password" \
@@ -106,6 +123,37 @@ oci_image_config_digest="$(echo "$oci_image_manifest" | jq -r .config.digest)"
 config_digest="$(echo "$oci_image_manifest" | jq -r .config.digest)"
 wget -qO- --user "$registry_username" --password "$registry_password" \
     "$oci_hosted_repository_api_url/go-hello-oci/blobs/$oci_image_config_digest" | jq .
+
+# show the repository (image) details using oras.
+oras repo tags "$oci_hosted_repository_host/go-hello-oci"
+oci_image_index="$(oras manifest fetch "$oci_hosted_repository_host/go-hello-oci:1.0.0")"
+echo "$oci_image_index" | jq .
+oci_image_manifest_digest="$(echo "$oci_image_index" | jq -r .manifests[0].digest)"
+oras manifest fetch "$oci_hosted_repository_host/go-hello-oci@$oci_image_manifest_digest" | jq .
+oras manifest fetch-config "$oci_hosted_repository_host/go-hello-oci@$oci_image_manifest_digest" | jq .
+
+# show the image referrers (aka references; aka associations; aka attachments;
+# aka artifacts; aka attestations) using oras.
+oras discover "$oci_hosted_repository_host/go-hello-oci:1.0.0"
+oras discover "$oci_hosted_repository_host/go-hello-oci:1.0.0" --format json | jq .
+
+# dump the first lines of the referenced image sbom.
+# NB the sbom is wrapped in a image artifact.
+sbom_image_manifest_digest="$(oras discover \
+    "$oci_hosted_repository_host/go-hello-oci:1.0.0" \
+    --artifact-type application/vnd.cyclonedx+json \
+    --format json \
+    | jq -r '.referrers[0].digest')"
+sbom_image_manifest="$(oras manifest fetch \
+    "$oci_hosted_repository_host/go-hello-oci@$sbom_image_manifest_digest" \
+    --format json)"
+sbom_blob_digest="$(echo "$sbom_image_manifest" | jq -r '.content.layers[0].digest')"
+oras blob fetch \
+    "$oci_hosted_repository_host/go-hello-oci@$sbom_blob_digest" \
+    --output - \
+    | jq . \
+    | head -n 10 \
+    || true
 
 # remove it from local cache.
 docker image remove go-hello-oci:1.0.0
