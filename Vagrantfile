@@ -29,6 +29,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: 'provision/provision-nexus.sh'
     config.vm.provision :shell, path: 'provision/provision-oras.sh'
     config.vm.provision :shell, path: 'provision/provision-regctl.sh'
+    config.vm.provision :shell, path: 'provision/provision-crane.sh'
     config.vm.provision :shell, path: 'provision/use-oci-repository.sh'
     config.vm.provision :shell, path: 'provision/use-docker-repository.sh'
     config.vm.provision :shell, path: 'provision/use-raw-repository.sh'
